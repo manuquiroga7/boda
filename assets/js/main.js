@@ -5,6 +5,7 @@ import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
 import { initReveal } from './reveal.js';
 import { guardImages } from './images.js';
+import { initPaper } from './paper.js';
 
 const problems = validateContent(content);
 if (problems.length) console.warn('Contenido incompleto:', problems);
@@ -14,6 +15,7 @@ const variant = document.body.dataset.variant || 'general';
 const basePath = document.body.dataset.base || '';
 app.innerHTML = renderPage(content, variant, basePath);
 guardImages(app);
+initPaper(app);
 
 // Al volver con el botón atrás el navegador puede restaurar la página a medias: se recarga limpia.
 window.addEventListener('pageshow', (e) => {

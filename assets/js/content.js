@@ -30,7 +30,7 @@ export const content = {
     },
   ],
   event: {
-    placeName: 'Iglesia de Ejemplo',
+    placeName: 'Iglesia Cristo es la Respuesta',
     address: 'Burgues 3826, Montevideo',
     time: '17:00 hs',
     mapsQuery: 'Burgues 3826, Montevideo',

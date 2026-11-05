@@ -19,7 +19,7 @@
 .date { font-family: var(--serif); font-size: 1.25rem; margin-top: 2.2rem; }
 .hint { position: absolute; bottom: 2rem; font-size: .8rem; letter-spacing: .15em; color: var(--verde); }
 
-.sec--versiculo { background: rgba(228, 211, 184, .55); max-width: none; }
+.sec--versiculo { background: linear-gradient(to right, transparent, rgba(228, 211, 184, .55) 8%, rgba(228, 211, 184, .55) 92%, transparent); max-width: none; }
 .sec--versiculo blockquote { max-width: 30rem; margin: 0 auto; }
 @font-face {
   font-family: 'Great Vibes';
@@ -48,21 +48,54 @@
 .sec--pdf { padding-bottom: 7rem; }
 
 /* Plantas decorativas: flotan despacio */
-/* La carta: una hoja de papel con bordes y sombra a los lados, textura suave y esquinas apenas redondeadas. */
-#app {
+/* La carta: papel envejecido, medio arrugado, doblado en tercios y con el borde quemado.
+   .carta da la sombra (el recorte irregular de #app la taparía); #app es el borde carbonizado y su
+   ::before es la hoja. Los recortes (--borde-exterior / --borde-interior) los calcula paper.js. */
+.carta {
   position: relative;
+  isolation: isolate;
   max-width: 38rem;
   margin: 0 auto;
+}
+/* Sombra de la carta sin filter (un filter sobre un elemento tan alto no se dibuja bien en algunos navegadores). */
+.carta::before {
+  content: "";
+  position: absolute;
+  inset: 8px 3px;
+  z-index: -1;
+  box-shadow: 0 16px 34px rgba(40, 22, 12, .5), 0 3px 8px rgba(40, 22, 12, .4);
+}
+#app {
+  position: relative;
+  isolation: isolate;
+  padding: 16px;
   overflow-x: clip;
-  border-radius: 4px;
-  background-color: var(--crema);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .23 0 0 0 0 .2 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: #241610;
+  clip-path: var(--borde-exterior, none);
+}
+#app::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  clip-path: var(--borde-interior, none);
+  background-color: #F1E3C4;
+  background-image:
+    linear-gradient(to bottom, transparent calc(33.3% - 2px), rgba(80, 50, 30, .14) calc(33.3% - 1px), rgba(255, 250, 235, .55) 33.3%, transparent calc(33.3% + 3px)),
+    linear-gradient(to bottom, transparent calc(66.6% - 2px), rgba(80, 50, 30, .14) calc(66.6% - 1px), rgba(255, 250, 235, .55) 66.6%, transparent calc(66.6% + 3px)),
+    radial-gradient(ellipse 180px 120px at 14% 12%, rgba(160, 105, 45, .20), transparent 70%),
+    radial-gradient(ellipse 220px 160px at 88% 38%, rgba(150, 95, 40, .16), transparent 70%),
+    radial-gradient(ellipse 200px 140px at 20% 62%, rgba(140, 85, 35, .14), transparent 72%),
+    radial-gradient(ellipse 240px 170px at 82% 90%, rgba(150, 95, 40, .20), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .016' numOctaves='5' seed='7' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2.4' diffuseConstant='1.05' lighting-color='%23ffffff'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .23 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: auto, auto, auto, auto, auto, auto, 600px 600px, 160px 160px;
+  background-blend-mode: normal, normal, normal, normal, normal, normal, multiply, multiply;
   box-shadow:
-    0 0 0 1px rgba(90, 58, 51, .12),
-    inset 14px 0 16px -14px rgba(90, 58, 51, .22),
-    inset -14px 0 16px -14px rgba(90, 58, 51, .22),
-    0 14px 36px rgba(90, 58, 51, .25),
-    0 3px 8px rgba(90, 58, 51, .15);
+    inset 0 0 3px 1px rgba(220, 105, 30, .6),
+    inset 0 0 18px 6px rgba(60, 25, 8, .8),
+    inset 0 0 52px 14px rgba(110, 55, 18, .5),
+    inset 0 0 120px 10px rgba(150, 95, 45, .2);
 }
 .plant { position: absolute; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
 .sec > *:not(.plant):not(.hint) { position: relative; z-index: 1; }
