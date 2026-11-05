@@ -39,3 +39,17 @@
 .map img { width: 100%; border-radius: 14px; margin-bottom: 1.2rem; background: var(--beige); }
 
 .sec--pdf { padding-bottom: 7rem; }
+
+/* Plantas decorativas: flotan despacio */
+#app { overflow-x: clip; }
+.plant { position: absolute; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
+.sec > *:not(.plant):not(.hint) { position: relative; z-index: 1; }
+.plant--tl { top: 1.5rem; left: -1.2rem; transform-origin: 50% 100%; }
+.plant--br { bottom: 4.5rem; right: -.8rem; animation-delay: -4s; }
+.plant--tr { top: .5rem; right: -.8rem; animation-delay: -2s; }
+.plant--bl { bottom: .5rem; left: -1rem; animation-delay: -6s; }
+
+@keyframes flotar {
+  from { transform: translateY(0) rotate(-3deg); }
+  to   { transform: translateY(-12px) rotate(3deg); }
+}

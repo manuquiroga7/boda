@@ -3,6 +3,7 @@ import { validateContent } from './validate.js';
 import { renderPage } from './render.js';
 import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
+import { initReveal } from './reveal.js';
 
 const problems = validateContent(content);
 if (problems.length) console.warn('Contenido incompleto:', problems);
@@ -34,5 +35,8 @@ openEnvelope({
   root: envelopeRoot,
   onOpen() {
     music.start().then(syncMute);
+    // Las secciones aparecen cuando el sobre empieza a salir (de inmediato con movimiento reducido).
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(() => initReveal(document), reduced ? 0 : 3400);
   },
 });

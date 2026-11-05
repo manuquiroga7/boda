@@ -6,9 +6,12 @@ const esc = (s) =>
 export function renderPage(c, variant = 'general', basePath = '') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
+  const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
 
   const portada = `
 <section id="portada" class="sec sec--portada reveal">
+  ${plant('rama-1.svg', 'plant--tl')}
+  ${plant('hojas-3.svg', 'plant--br')}
   <p class="eyebrow">Con la bendición de Dios</p>
   <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
   <p class="date">${esc(c.couple.dateText)}</p>
@@ -17,6 +20,7 @@ export function renderPage(c, variant = 'general', basePath = '') {
 
   const versiculo = `
 <section id="versiculo" class="sec sec--versiculo reveal">
+  ${plant('rama-2.svg', 'plant--tr')}
   <blockquote>
     <p>${esc(c.verse.text)}</p>
     <cite>${esc(c.verse.ref)}</cite>
@@ -47,6 +51,7 @@ export function renderPage(c, variant = 'general', basePath = '') {
   const e = c.event;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
+  ${plant('rama-1.svg', 'plant--bl')}
   <h2>Te esperamos</h2>
   <dl>
     <dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd>
@@ -69,6 +74,7 @@ export function renderPage(c, variant = 'general', basePath = '') {
 
   const pdf = `
 <section id="pdf" class="sec sec--pdf reveal">
+  ${plant('hojas-3.svg', 'plant--tr')}
   <h2>Guarda los datos</h2>
   <p>Descarga la invitación con toda la información.</p>
   <a class="btn" href="${a(c.pdf.src)}" download>Descargar PDF</a>
