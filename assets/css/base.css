@@ -1,6 +1,7 @@
 :root {
   --crema: #F6EEDF;
-  --mesa: #CDB791;
+  --mesa-1: #E8D9BE;
+  --mesa-2: #D9C6A3;
   --beige: #E4D3B8;
   --chocolate: #5A3A33;
   --bordo: #6E2B33;
@@ -16,10 +17,10 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  /* La "mesa" sobre la que descansa la carta (color plano: el marco de la carta lo usa para "recortar" el papel). */
+  /* La "mesa" sobre la que descansa la carta (degradé suave que scrollea con la página, sin fondo fijo). */
   padding: 1.25rem .75rem 3rem;
   min-height: 100svh;
-  background: var(--mesa);
+  background: linear-gradient(var(--mesa-1), var(--mesa-2));
   color: var(--chocolate);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -69,6 +70,3 @@ button, a.btn, .btn { cursor: pointer; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-@media (max-width: 480px) {
-  body { padding-inline: .4rem; }
-}
