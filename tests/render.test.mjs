@@ -142,3 +142,22 @@ test('las polaroids de datos respetan basePath', () => {
   const datos = renderPage(content, 'general', '../').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   assert.match(datos, /src="\.\.\/assets\/img\/pareja\//);
 });
+
+test('los datos van en una grilla de cuatro celdas: Fecha, Hora, Lugar y Vestimenta, en ese orden', () => {
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  const grilla = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/)[1];
+  const celdas = grilla.match(/<div class="dato">[\s\S]*?<\/div>/g) ?? [];
+  assert.equal(celdas.length, 4);
+  const titulos = celdas.map((c) => c.match(/<dt>([^<]+)<\/dt>/)[1]);
+  assert.deepEqual(titulos, ['Fecha', 'Hora', 'Lugar', 'Vestimenta']);
+  assert.match(celdas[0], /Sábado 20 de marzo de 2027/);
+  assert.match(celdas[1], /17:00 hs/);
+  assert.match(celdas[2], /Iglesia Cristo es la Respuesta[\s\S]*Burgues 3826/);
+});
+
+test('sin vestimenta la grilla tiene tres celdas', () => {
+  const c = structuredClone(content);
+  delete c.event.dressCode;
+  const datos = renderPage(c, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  assert.equal((datos.match(/<div class="dato">/g) ?? []).length, 3);
+});

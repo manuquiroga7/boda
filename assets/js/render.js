@@ -94,11 +94,11 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
     ${polaroid(e.photos[1], 2)}
   </div>
   <h2>Te esperamos</h2>
-  <dl>
-    <dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd>
-    <dt>Hora</dt><dd>${esc(e.time)}</dd>
-    <dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd>
-    ${e.dressCode ? `<dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd>` : ''}
+  <dl class="datos__grid">
+    <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
+    <div class="dato"><dt>Hora</dt><dd>${esc(e.time)}</dd></div>
+    <div class="dato"><dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd></div>
+    ${e.dressCode ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd></div>` : ''}
   </dl>
   <div class="mapa">
     <iframe src="${esc(mapsEmbedUrl(e.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(e.placeName)}, ${esc(e.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
