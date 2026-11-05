@@ -1,0 +1,10 @@
+{
+  "name": "invitacion-boda",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build:pdf": "node scripts/build-pdf.mjs"
+  }
+}
