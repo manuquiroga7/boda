@@ -15,7 +15,10 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--crema);
+  /* La "mesa" sobre la que descansa la carta: se ven sus bordes laterales al deslizar. */
+  padding: 1.25rem .75rem 3rem;
+  min-height: 100svh;
+  background: radial-gradient(ellipse at 50% 0%, #EBDCC1, #D6C09B) fixed;
   color: var(--chocolate);
   font-family: var(--sans);
   font-size: 1.0625rem;
