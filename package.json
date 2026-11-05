@@ -6,5 +6,8 @@
   "scripts": {
     "test": "node --test",
     "build:pdf": "node scripts/build-pdf.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.0"
   }
 }
