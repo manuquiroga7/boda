@@ -167,7 +167,7 @@ img.is-broken { visibility: hidden; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(to bottom, rgba(246, 238, 223, 0) 0%, rgba(246, 238, 223, .35) 38%, rgba(246, 238, 223, .92) 70%, var(--crema) 88%);
+  background: linear-gradient(to bottom, rgba(246, 238, 223, 0) 0%, rgba(246, 238, 223, .12) 30%, rgba(246, 238, 223, .82) 54%, rgba(246, 238, 223, .96) 68%, var(--crema) 82%);
 }
 
 /* Selector temporal para comparar portadas (?comparar=1) */
@@ -208,3 +208,6 @@ img.is-broken { visibility: hidden; }
 
 /* La portada C ocupa todo el ancho de la hoja (la foto va de borde a borde) */
 .sec.portada--c { max-width: none; }
+
+/* En la portada C el texto se apoya sobre la foto: más contraste */
+.portada--c .eyebrow { color: var(--chocolate); }

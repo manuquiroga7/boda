@@ -5,13 +5,16 @@ const esc = (s) =>
 
 
 // Portada con fotos. Tres estilos para comparar: a = foto en arco, b = polaroids, c = foto de fondo.
+// 'focus' (opcional) es el punto de la foto que no debe cortarse al recortarla: se aplica como object-position.
+const foco = (f) => (f.focus ? ` style="object-position:${esc(f.focus)}"` : '');
+
 export function renderPortada(c, estilo = 'a', basePath = '') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
   const fotos = c.couple.photos;
   const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
   const foto = (f, cls = '') =>
-    `<img${cls ? ` class="${cls}"` : ''} src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" decoding="async">`;
+    `<img${cls ? ` class="${cls}"` : ''} src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" decoding="async"${foco(f)}>`;
   const texto = `
   <p class="eyebrow">Con la bendición de Dios</p>
   <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
@@ -24,9 +27,9 @@ export function renderPortada(c, estilo = 'a', basePath = '') {
 ${abre('b')}
   <div class="polaroids">
     <figure class="polaroid polaroid--1">${foto(fotos[0])}</figure>
-    <figure class="polaroid polaroid--2">${foto(fotos[1])}</figure>
+    <figure class="polaroid polaroid--2">${foto(fotos[1] ?? fotos[0])}</figure>
   </div>${texto}
-  <figure class="polaroid polaroid--3">${foto(fotos[2])}</figure>
+  <figure class="polaroid polaroid--3">${foto(fotos[2] ?? fotos[0])}</figure>
 </section>`;
   }
   if (estilo === 'c') {
@@ -75,7 +78,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
     .map(
       (s) => `
   <article class="momento reveal">
-    <img src="${a(s.photo)}" alt="${esc(s.alt)}" loading="lazy" width="640" height="480">
+    <img src="${a(s.photo)}" alt="${esc(s.alt)}" loading="lazy" width="640" height="480"${foco(s)}>
     <h3>${esc(s.title)}</h3>
     <p>${esc(s.text)}</p>
   </article>`
@@ -85,7 +88,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 
   const e = c.event;
   const polaroid = (f, n) =>
-    `<figure class="polaroid polaroid--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"></figure>`;
+    `<figure class="polaroid polaroid--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}></figure>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
   ${plant('rama-1.svg', 'plant--bl')}

@@ -43,7 +43,7 @@ test('escapa el texto del contenido', () => {
 
 test('basePath se antepone a las rutas de assets', () => {
   const html = renderPage(content, 'general', '../');
-  assert.match(html, /src="\.\.\/assets\/img\/story\/momento-1\.svg"/);
+  assert.match(html, /src="\.\.\/assets\/img\/story\/historia-1.jpg"/);
   assert.match(html, /href="\.\.\/assets\/pdf\/invitacion\.pdf"/);
 });
 
@@ -160,4 +160,19 @@ test('sin vestimenta la grilla tiene tres celdas', () => {
   delete c.event.dressCode;
   const datos = renderPage(c, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   assert.equal((datos.match(/<div class="dato">/g) ?? []).length, 3);
+});
+
+test('el foco de cada foto se aplica como object-position (para que no se corten las caras)', () => {
+  const html = renderPage(content, 'general');
+  assert.match(html, /<img [^>]*style="object-position:\d+% \d+%"/);
+  const c = structuredClone(content);
+  c.story[0].focus = '10% 20%';
+  assert.match(renderPage(c, 'general'), /historia-1\.jpg"[^>]*style="object-position:10% 20%"/);
+});
+
+test('la portada B con una sola foto igual arma las tres polaroids', () => {
+  const c = structuredClone(content);
+  c.couple.photos = c.couple.photos.slice(0, 1);
+  const fotos = (renderPortada(c, 'b').match(/<figure class="polaroid/g) ?? []).length;
+  assert.equal(fotos, 3);
 });

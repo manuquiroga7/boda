@@ -41,8 +41,10 @@ test('reporta un problema cuando una foto de la pareja no tiene alt', () => {
   assert.ok(validateContent(c).some((p) => p.includes('couple.photos[0].alt')));
 });
 
-test('hay al menos tres fotos de la pareja (las usa la portada B)', () => {
-  assert.ok(content.couple.photos.length >= 3);
+test('alcanza con una foto de la pareja (la portada A y la C usan solo la primera)', () => {
+  const c = structuredClone(content);
+  c.couple.photos = c.couple.photos.slice(0, 1);
+  assert.deepEqual(validateContent(c), []);
 });
 
 test('reporta un problema cuando faltan las fotos de la sección de datos', () => {
