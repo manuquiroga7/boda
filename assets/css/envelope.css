@@ -9,7 +9,7 @@ body.is-locked { overflow: hidden; height: 100svh; }
     radial-gradient(circle at 12% 8%, rgba(214, 205, 228, .45), transparent 45%),
     radial-gradient(circle at 88% 92%, rgba(238, 214, 208, .40), transparent 45%),
     linear-gradient(160deg, #FAF8F4 0%, #F1EDE7 55%, #ECE7E0 100%);
-  background-size: 320px 320px, auto, auto, auto;
+  background-size: 400px 400px, auto, auto, auto;
   --w: min(86vw, 22rem);
 }
 
