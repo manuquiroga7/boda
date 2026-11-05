@@ -15,3 +15,19 @@ test('mapsUrl codifica la consulta', () => {
     'https://www.google.com/maps/search/?api=1&query=Iglesia%20Central%2C%20Montevideo'
   );
 });
+
+import { mapsEmbedUrl } from '../assets/js/links.js';
+
+test('mapsEmbedUrl sin clave usa el incrustado público', () => {
+  assert.equal(
+    mapsEmbedUrl('Burgues 3826, Montevideo'),
+    'https://www.google.com/maps?q=Burgues%203826%2C%20Montevideo&output=embed'
+  );
+});
+
+test('mapsEmbedUrl con clave usa el Embed API oficial', () => {
+  assert.equal(
+    mapsEmbedUrl('Burgues 3826, Montevideo', 'ABC123'),
+    'https://www.google.com/maps/embed/v1/place?key=ABC123&q=Burgues%203826%2C%20Montevideo'
+  );
+});

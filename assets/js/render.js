@@ -1,4 +1,4 @@
-import { whatsappUrl, mapsUrl } from './links.js';
+import { whatsappUrl, mapsUrl, mapsEmbedUrl } from './links.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -94,10 +94,11 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'a') 
     <dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd>
     ${e.dressCode ? `<dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd>` : ''}
   </dl>
-  <a class="map" href="${esc(mapsUrl(e.mapsQuery))}" target="_blank" rel="noopener">
-    <img src="${a('assets/img/map.svg')}" alt="Mapa estilizado del lugar de la ceremonia" loading="lazy" width="640" height="360">
-    <span class="btn">Cómo llegar</span>
-  </a>
+  <div class="mapa">
+    <iframe src="${esc(mapsEmbedUrl(e.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(e.placeName)}, ${esc(e.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
+  </div>
+  <a class="btn" href="${esc(mapsUrl(e.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>
 </section>`;
 
   const asistencia = `

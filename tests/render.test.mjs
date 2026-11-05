@@ -27,9 +27,9 @@ test('el enlace de asistencia es de WhatsApp', () => {
   assert.match(renderPage(content, 'general'), /href="https:\/\/wa\.me\//);
 });
 
-test('no hay iframes ni el marcador de galería visible', () => {
+test('el único iframe es el mapa de Google y el marcador de galería queda como comentario', () => {
   const html = renderPage(content, 'general');
-  assert.doesNotMatch(html, /<iframe/);
+  assert.equal((html.match(/<iframe/g) ?? []).length, 1);
   assert.match(html, /<!-- futuro: galería -->/);
 });
 
@@ -96,4 +96,27 @@ test('renderPage usa la portada a por defecto y acepta otra', () => {
 
 test('las fotos de la portada respetan basePath', () => {
   assert.match(renderPortada(content, 'a', '../'), /src="\.\.\/assets\/img\/pareja\//);
+});
+
+test('la sección de datos incrusta el Google Maps real, diferido y con título accesible', () => {
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  const iframe = datos.match(/<iframe [^>]*>/)[0];
+  assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\?q=Burgues%203826%2C%20Montevideo&amp;output=embed"/);
+  assert.match(iframe, /loading="lazy"/);
+  assert.match(iframe, /title="Mapa de Google Maps: [^"]+"/);
+  assert.match(iframe, /referrerpolicy="no-referrer-when-downgrade"/);
+});
+
+test('el mapa viene bloqueado hasta tocarlo (para no atrapar el scroll en el celular) y deja el botón Cómo llegar', () => {
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  assert.match(datos, /<button type="button" class="mapa__activar"/);
+  assert.match(datos, /Cómo llegar/);
+  assert.match(datos, /href="https:\/\/www\.google\.com\/maps\/search\/\?api=1/);
+});
+
+test('con una clave de API usa el Embed API oficial', () => {
+  const c = structuredClone(content);
+  c.event.mapsApiKey = 'CLAVE_DE_PRUEBA';
+  const iframe = renderPage(c, 'general').match(/<iframe [^>]*>/)[0];
+  assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\/embed\/v1\/place\?key=CLAVE_DE_PRUEBA&amp;q=Burgues%203826%2C%20Montevideo"/);
 });

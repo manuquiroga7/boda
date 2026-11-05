@@ -52,7 +52,8 @@ export function wrap(text, font, size, maxWidth) {
 // si el PDF quedó desactualizado respecto de content.js.
 export function pdfFingerprint(c) {
   const { names, dateISO, dateText } = c.couple; // las fotos no van en el PDF
-  const data = { couple: { names, dateISO, dateText }, verse: c.verse, event: c.event, pdf: c.pdf };
+  const { mapsApiKey, ...event } = c.event; // la clave de mapas tampoco va en el PDF
+  const data = { couple: { names, dateISO, dateText }, verse: c.verse, event, pdf: c.pdf };
   return createHash('sha256').update(JSON.stringify(data)).digest('hex');
 }
 

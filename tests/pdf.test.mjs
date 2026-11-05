@@ -41,3 +41,10 @@ test('la huella cambia cuando cambian fecha, lugar u hora', async () => {
   c.event.time = '19:00 hs';
   assert.notEqual(pdfFingerprint(c), pdfFingerprint(content));
 });
+
+test('agregar una clave de API de mapas no obliga a regenerar el PDF', async () => {
+  const { pdfFingerprint } = await import('../scripts/build-pdf.mjs');
+  const c = structuredClone(content);
+  c.event.mapsApiKey = 'CLAVE';
+  assert.equal(pdfFingerprint(c), pdfFingerprint(content));
+});

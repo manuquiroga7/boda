@@ -2,6 +2,7 @@ import { content } from './content.js';
 import { validateContent } from './validate.js';
 import { renderPage, renderPortada } from './render.js';
 import { mountCompare } from './compare.js';
+import { activarMapas } from './mapa.js';
 import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
 import { initReveal } from './reveal.js';
@@ -19,6 +20,7 @@ const ESTILOS = ['a', 'b', 'c'];
 const estilo = ESTILOS.includes(params.get('portada')) ? params.get('portada') : 'a';
 app.innerHTML = renderPage(content, variant, basePath, estilo);
 guardImages(app);
+activarMapas(app);
 
 // Al volver con el botón atrás el navegador puede restaurar la página a medias: se recarga limpia.
 window.addEventListener('pageshow', (e) => {
