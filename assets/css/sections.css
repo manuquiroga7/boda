@@ -21,7 +21,14 @@
 
 .sec--versiculo { background: rgba(228, 211, 184, .55); max-width: none; }
 .sec--versiculo blockquote { max-width: 30rem; margin: 0 auto; }
-.sec--versiculo p { font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 5.5vw, 1.9rem); line-height: 1.5; }
+@font-face {
+  font-family: 'Great Vibes';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/GreatVibes-Regular.woff2") format('woff2');
+}
+.sec--versiculo p { font-family: 'Great Vibes', cursive; font-size: clamp(1.9rem, 8.5vw, 2.4rem); line-height: 1.5; color: var(--bordo); }
 .sec--versiculo cite { display: block; margin-top: 1rem; font-style: normal; letter-spacing: .2em; font-size: .85rem; text-transform: uppercase; color: var(--bordo); }
 
 .sec--especial { background: var(--crema); border-top: 1px solid var(--beige); border-bottom: 1px solid var(--beige); }
@@ -59,6 +66,7 @@
 }
 .plant { position: absolute; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
 .sec > *:not(.plant):not(.hint) { position: relative; z-index: 1; }
+.sec--versiculo .plant { width: clamp(3.8rem, 17vw, 5rem); top: .2rem; }
 .plant--tl { top: 1.5rem; left: -1.2rem; transform-origin: 50% 100%; }
 .plant--br { bottom: 4.5rem; right: -.8rem; animation-delay: -4s; }
 .plant--tr { top: .5rem; right: -.8rem; animation-delay: -2s; }
