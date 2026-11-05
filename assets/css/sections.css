@@ -53,3 +53,6 @@
   from { transform: translateY(0) rotate(-3deg); }
   to   { transform: translateY(-12px) rotate(3deg); }
 }
+
+/* Foto que no cargó: sin ícono roto, queda el marco beige */
+img.is-broken { visibility: hidden; }

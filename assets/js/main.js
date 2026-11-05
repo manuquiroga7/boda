@@ -4,6 +4,7 @@ import { renderPage } from './render.js';
 import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
 import { initReveal } from './reveal.js';
+import { guardImages } from './images.js';
 
 const problems = validateContent(content);
 if (problems.length) console.warn('Contenido incompleto:', problems);
@@ -12,6 +13,12 @@ const app = document.getElementById('app');
 const variant = document.body.dataset.variant || 'general';
 const basePath = document.body.dataset.base || '';
 app.innerHTML = renderPage(content, variant, basePath);
+guardImages(app);
+
+// Al volver con el botón atrás el navegador puede restaurar la página a medias: se recarga limpia.
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) location.reload();
+});
 
 // Siempre empezar arriba, también al recargar o volver atrás.
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
