@@ -32,14 +32,26 @@ const syncMute = () => {
   muteBtn.setAttribute('aria-label', muted ? 'Activar música' : 'Silenciar música');
 };
 muteBtn.addEventListener('click', () => {
-  music.toggle();
+  const done = music.toggle();
   syncMute();
+  done.then(syncMute); // si el navegador rechaza el audio, el botón termina en "silenciado"
 });
+
+// Al salir de la página (por ejemplo a WhatsApp) la música se pausa; al volver se reanuda.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) music.suspend();
+  else music.resume();
+});
+
+const portadaTitle = app.querySelector('#portada h1');
+portadaTitle.tabIndex = -1;
 
 const envelopeRoot = document.createElement('div');
 document.body.prepend(envelopeRoot);
 openEnvelope({
   root: envelopeRoot,
+  inertElements: app.querySelectorAll('section'),
+  focusAfter: portadaTitle,
   onOpen() {
     music.start().then(syncMute);
     // Las secciones aparecen cuando el sobre empieza a salir (de inmediato con movimiento reducido).

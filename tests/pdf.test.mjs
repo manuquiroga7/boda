@@ -27,3 +27,17 @@ test('wrap parte las palabras más largas que el ancho disponible', async () => 
   assert.ok(lines.length > 1);
   for (const l of lines) assert.ok(font.widthOfTextAtSize(l, 7) <= 200, `línea demasiado ancha: ${l}`);
 });
+
+test('el PDF guardado corresponde al contenido actual (si cambia content.js hay que correr npm run build:pdf)', async () => {
+  const { pdfFingerprint } = await import('../scripts/build-pdf.mjs');
+  const { readFileSync } = await import('node:fs');
+  const doc = await PDFDocument.load(readFileSync('assets/pdf/invitacion.pdf'));
+  assert.equal(doc.getSubject(), pdfFingerprint(content));
+});
+
+test('la huella cambia cuando cambian fecha, lugar u hora', async () => {
+  const { pdfFingerprint } = await import('../scripts/build-pdf.mjs');
+  const c = structuredClone(content);
+  c.event.time = '19:00 hs';
+  assert.notEqual(pdfFingerprint(c), pdfFingerprint(content));
+});

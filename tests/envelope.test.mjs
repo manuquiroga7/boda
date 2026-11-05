@@ -41,6 +41,34 @@ test('al abrir se inicia la animación y el contenido queda bloqueado hasta term
   mock.timers.reset();
 });
 
+test('el sobre es modal y deja inertes las secciones hasta que termina', () => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  const { root, doc } = setup();
+  const section = doc.createElement('section');
+  doc.body.append(section);
+  openEnvelope({ root, onOpen() {}, inertElements: [section] });
+  assert.equal(root.querySelector('.envelope').getAttribute('aria-modal'), 'true');
+  assert.ok(section.hasAttribute('inert'));
+  root.querySelector('button.seal').click();
+  assert.ok(section.hasAttribute('inert'));
+  mock.timers.tick(6000);
+  assert.ok(!section.hasAttribute('inert'));
+  mock.timers.reset();
+});
+
+test('al terminar, el foco pasa al elemento indicado', () => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  const { root, doc } = setup();
+  const target = doc.createElement('h1');
+  target.tabIndex = -1;
+  doc.body.append(target);
+  openEnvelope({ root, onOpen() {}, focusAfter: target });
+  root.querySelector('button.seal').click();
+  mock.timers.tick(6000);
+  assert.equal(doc.activeElement, target);
+  mock.timers.reset();
+});
+
 test('con movimiento reducido salta la animación', () => {
   const { root, doc } = setup();
   globalThis.matchMedia = () => ({ matches: true });

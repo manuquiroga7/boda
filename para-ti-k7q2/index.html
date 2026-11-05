@@ -12,14 +12,15 @@
   <link rel="stylesheet" href="../assets/css/envelope.css">
 </head>
 <body data-variant="especial" data-base="../">
-  <main id="app"></main>
-  <noscript>
+  <!-- Respaldo: se ve si el script no carga o falla; main.js lo reemplaza al dibujar la invitación. -->
+  <main id="app">
     <section class="sec">
       <h1 class="names"><span>Nuestra boda</span></h1>
       <p class="date">Sábado 20 de marzo de 2027</p>
       <p>17:00 hs<br>Iglesia de Ejemplo<br>Calle Ejemplo 1234, Montevideo</p>
+      <p><a class="btn" href="../assets/pdf/invitacion.pdf" download>Descargar PDF</a></p>
     </section>
-  </noscript>
+  </main>
   <script type="module" src="../assets/js/main.js"></script>
 </body>
 </html>

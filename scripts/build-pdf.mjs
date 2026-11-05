@@ -2,6 +2,7 @@
 // Uso: npm run build:pdf
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { content } from '../assets/js/content.js';
 import { mapsUrl } from '../assets/js/links.js';
@@ -47,8 +48,16 @@ export function wrap(text, font, size, maxWidth) {
   return lines;
 }
 
+// Huella de los datos que lleva el PDF. Se guarda dentro del archivo para que un test detecte
+// si el PDF quedó desactualizado respecto de content.js.
+export function pdfFingerprint(c) {
+  const data = { couple: c.couple, verse: c.verse, event: c.event, pdf: c.pdf };
+  return createHash('sha256').update(JSON.stringify(data)).digest('hex');
+}
+
 export async function buildPdf(c) {
   const doc = await PDFDocument.create();
+  doc.setSubject(pdfFingerprint(c));
   const page = doc.addPage([420, 595]);
   const { width, height } = page.getSize();
   const serif = await doc.embedFont(StandardFonts.TimesRoman);

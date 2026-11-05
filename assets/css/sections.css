@@ -56,3 +56,6 @@
 
 /* Foto que no cargó: sin ícono roto, queda el marco beige */
 img.is-broken { visibility: hidden; }
+
+/* El título de la portada recibe el foco al abrir el sobre (sin recuadro) */
+.names:focus { outline: none; }

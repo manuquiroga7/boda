@@ -1,4 +1,4 @@
-import { test } from 'node:test';
+import { test, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createMusic } from '../assets/js/music.js';
 
@@ -40,10 +40,57 @@ test('toggle() alterna el silencio y devuelve el nuevo estado', async () => {
   const a = fakeAudio();
   const m = createMusic('x.wav', () => a);
   await m.start();
-  assert.equal(m.toggle(), true);
+  assert.equal(await m.toggle(), true);
   assert.equal(m.isMuted(), true);
-  assert.equal(m.toggle(), false);
+  assert.equal(await m.toggle(), false);
   assert.equal(m.isMuted(), false);
+});
+
+test('si al reactivar el audio el navegador lo rechaza, toggle() termina en silenciado', async () => {
+  const a = fakeAudio({ rejectPlay: true });
+  const m = createMusic('x.wav', () => a);
+  await m.start();
+  assert.equal(m.isMuted(), true);
+  assert.equal(await m.toggle(), true);
+  assert.equal(m.isMuted(), true);
+});
+
+test('silenciar y reactivar rápido no deja la música detenida', async () => {
+  mock.timers.enable({ apis: ['setInterval'] });
+  const a = fakeAudio();
+  const m = createMusic('x.wav', () => a);
+  await m.start();
+  mock.timers.tick(2000);
+  m.toggle();
+  const back = m.toggle();
+  await back;
+  mock.timers.tick(3000);
+  assert.equal(m.isMuted(), false);
+  assert.equal(a.paused, false);
+  assert.equal(a.volume, 0.5);
+  mock.timers.reset();
+});
+
+test('suspend() pausa sin cambiar el estado de silencio y resume() reanuda', async () => {
+  const a = fakeAudio();
+  const m = createMusic('x.wav', () => a);
+  await m.start();
+  m.suspend();
+  assert.equal(a.paused, true);
+  assert.equal(m.isMuted(), false);
+  await m.resume();
+  assert.equal(a.paused, false);
+});
+
+test('resume() no reanuda si la persona había silenciado', async () => {
+  const a = fakeAudio();
+  const m = createMusic('x.wav', () => a);
+  await m.start();
+  await m.toggle();
+  m.suspend();
+  await m.resume();
+  assert.equal(a.plays, 1);
+  assert.equal(a.paused, true);
 });
 
 test('llamar start() dos veces no crea dos reproductores', async () => {
