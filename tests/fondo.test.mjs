@@ -94,3 +94,10 @@ test('todo el mosaico es semitransparente: un grupo general con opacidad entre .
     assert.ok(dentro.includes(`class='${clase}'`), `${clase} quedó fuera del grupo semitransparente`);
   }
 });
+
+test('los símbolos son bien suaves: opacidad general de .65 o menos, sin desaparecer (mínimo .4)', () => {
+  const svg = readFileSync(RUTA, 'utf8');
+  const o = Number(svg.match(/<g class='mosaico' opacity='(0?\.\d+)'>/)[1]);
+  assert.ok(o <= 0.65, `todavía muy opaco: ${o}`);
+  assert.ok(o >= 0.4, `demasiado transparente: ${o}`);
+});
