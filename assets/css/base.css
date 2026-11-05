@@ -23,8 +23,8 @@ body {
   background-color: var(--perla);
   background-image:
     url("../img/fondo-perla.svg"),
-    radial-gradient(circle at 12% 8%, rgba(214, 205, 228, .45), transparent 45%),
-    radial-gradient(circle at 88% 92%, rgba(238, 214, 208, .40), transparent 45%),
+    radial-gradient(circle at 12% 8%, rgba(228, 211, 184, .45), transparent 45%),
+    radial-gradient(circle at 88% 92%, rgba(111, 129, 100, .12), transparent 45%),
     linear-gradient(160deg, #FAF8F4 0%, #F1EDE7 55%, #ECE7E0 100%);
   background-size: 400px 400px, auto, auto, auto;
   color: var(--chocolate);

@@ -31,26 +31,27 @@
     </g>
     <path id='p-destello' d='M0 -6C.6 -1.2 1.2 -.6 6 0C1.2 .6 .6 1.2 0 6C-.6 1.2 -1.2 .6 -6 0C-1.2 -.6 -.6 -1.2 0 -6Z'/>
   </defs>
+  <g class='mosaico' opacity='.75'>
 
   <g fill='none' stroke-linecap='round' stroke-linejoin='round'>
     <!-- cruces -->
     <use class='cruz' href='#p-cruz' transform='translate(50 60)' stroke='#8E9F82' stroke-opacity='.55' stroke-width='1.5'/>
-    <use class='cruz' href='#p-cruz' transform='translate(327 65) scale(.8)' stroke='#8C4F55' stroke-opacity='.4' stroke-width='1.6'/>
+    <use class='cruz' href='#p-cruz' transform='translate(327 65) scale(.8)' stroke='#5A3A33' stroke-opacity='.4' stroke-width='1.6'/>
     <use class='cruz' href='#p-cruz' transform='translate(210 197) scale(1.1)' stroke='#8E9F82' stroke-opacity='.5' stroke-width='1.4'/>
-    <use class='cruz' href='#p-cruz' transform='translate(42 200) scale(.75)' stroke='#8C4F55' stroke-opacity='.35' stroke-width='1.7'/>
+    <use class='cruz' href='#p-cruz' transform='translate(42 200) scale(.75)' stroke='#5A3A33' stroke-opacity='.35' stroke-width='1.7'/>
     <use class='cruz' href='#p-cruz' transform='translate(357 327)' stroke='#8E9F82' stroke-opacity='.5' stroke-width='1.5'/>
     <use class='cruz' href='#p-cruz' transform='translate(187 357) scale(.8)' stroke='#8E9F82' stroke-opacity='.45' stroke-width='1.6'/>
     <!-- palomas -->
-    <use class='paloma' href='#p-paloma' transform='translate(255 40) rotate(-8) scale(1.1)' stroke='#9AA58F' stroke-opacity='.65' stroke-width='1.3'/>
-    <use class='paloma' href='#p-paloma' transform='translate(178 266) rotate(6)' stroke='#B8A98D' stroke-opacity='.6' stroke-width='1.3'/>
+    <use class='paloma' href='#p-paloma' transform='translate(255 40) rotate(-8) scale(1.1)' stroke='#5A3A33' stroke-opacity='.65' stroke-width='1.3'/>
+    <use class='paloma' href='#p-paloma' transform='translate(178 266) rotate(6)' stroke='#5A3A33' stroke-opacity='.6' stroke-width='1.3'/>
     <!-- anillos -->
-    <use class='anillos' href='#p-anillos' transform='translate(214 112) rotate(-12)' stroke='#C2A878' stroke-opacity='.65' stroke-width='1.3'/>
-    <use class='anillos' href='#p-anillos' transform='translate(48 262) rotate(10) scale(.9)' stroke='#C2A878' stroke-opacity='.6' stroke-width='1.3'/>
+    <use class='anillos' href='#p-anillos' transform='translate(214 112) rotate(-12)' stroke='#5A3A33' stroke-opacity='.65' stroke-width='1.3'/>
+    <use class='anillos' href='#p-anillos' transform='translate(48 262) rotate(10) scale(.9)' stroke='#5A3A33' stroke-opacity='.6' stroke-width='1.3'/>
     <!-- corazones -->
-    <use class='corazon' href='#p-corazon' transform='translate(270 104)' stroke='#B77A80' stroke-opacity='.6' stroke-width='1.3'/>
-    <use class='corazon' href='#p-corazon' transform='translate(132 352) scale(.9)' stroke='#B77A80' stroke-opacity='.55' stroke-width='1.3'/>
-    <use class='corazon' href='#p-corazon' transform='translate(372 152) scale(.8)' stroke='#B77A80' stroke-opacity='.5' stroke-width='1.3'/>
-    <use class='corazon' href='#p-corazon' transform='translate(20 352) scale(.85)' fill='#B77A80' fill-opacity='.22' stroke='#B77A80' stroke-opacity='.5' stroke-width='1.2'/>
+    <use class='corazon' href='#p-corazon' transform='translate(270 104)' stroke='#5A3A33' stroke-opacity='.6' stroke-width='1.3'/>
+    <use class='corazon' href='#p-corazon' transform='translate(132 352) scale(.9)' stroke='#5A3A33' stroke-opacity='.55' stroke-width='1.3'/>
+    <use class='corazon' href='#p-corazon' transform='translate(372 152) scale(.8)' stroke='#5A3A33' stroke-opacity='.5' stroke-width='1.3'/>
+    <use class='corazon' href='#p-corazon' transform='translate(20 352) scale(.85)' fill='#5A3A33' fill-opacity='.22' stroke='#5A3A33' stroke-opacity='.5' stroke-width='1.2'/>
   </g>
 
   <!-- ramitas de olivo -->
@@ -61,7 +62,7 @@
   </g>
 
   <!-- flores pequeñas -->
-  <g fill='#E8C9C4' fill-opacity='.55' stroke='#C9A29E' stroke-opacity='.5' stroke-width='1'>
+  <g fill='#E4D3B8' fill-opacity='.8' stroke='#5A3A33' stroke-opacity='.45' stroke-width='1'>
     <use class='flor' href='#p-flor' transform='translate(182 126)'/>
     <use class='flor' href='#p-flor' transform='translate(336 120) scale(.85)'/>
     <use class='flor' href='#p-flor' transform='translate(64 346) scale(.9)'/>
@@ -91,8 +92,8 @@
   </g>
   <g class='foto' transform='translate(295 172) rotate(7)'>
     <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
-    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#EAD9D3' fill-opacity='.9'/>
-    <path d='M0 -2C-1 -6 -7 -6 -6 -1C-5 3 0 6 0 6C0 6 5 3 6 -1C7 -6 1 -6 0 -2Z' fill='#B77A80' fill-opacity='.75'/>
+    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#E4D3B8' fill-opacity='.9'/>
+    <path d='M0 -2C-1 -6 -7 -6 -6 -1C-5 3 0 6 0 6C0 6 5 3 6 -1C7 -6 1 -6 0 -2Z' fill='#5A3A33' fill-opacity='.75'/>
   </g>
   <g class='foto' transform='translate(95 298) rotate(-5)'>
     <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
@@ -105,5 +106,6 @@
     <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#E9DFCB' fill-opacity='.9'/>
     <circle cx='0' cy='-8' r='3.4' fill='#F6EEDF'/>
     <path d='M-13 10C-12 2 12 2 13 10Z' fill='#C9B79A' fill-opacity='.85'/>
+  </g>
   </g>
 </svg>
