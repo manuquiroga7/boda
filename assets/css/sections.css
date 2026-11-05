@@ -38,12 +38,11 @@
 .momento img { width: 100%; border-radius: 14px; box-shadow: 0 12px 28px rgba(90, 58, 51, .18); background: var(--beige); aspect-ratio: 4 / 3; object-fit: cover; margin-bottom: 1.2rem; }
 .momento h3 { font-size: 1.5rem; color: var(--bordo); margin-bottom: .5rem; }
 
-/* Datos: grilla de dos columnas (Fecha | Hora, Lugar | Vestimenta) con líneas finas entre celdas */
+/* Datos: grilla de dos columnas (Fecha | Hora, Lugar | Vestimenta) con una línea fina horizontal entre filas */
 .datos__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 0 2rem; }
 .dato { padding: 1.3rem .6rem; }
-.dato:nth-child(odd) { border-right: 1px solid var(--beige); }
 .dato:nth-child(n+3) { border-top: 1px solid var(--beige); }
-.dato:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }
+.dato:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .datos__grid dt { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); margin-bottom: .35rem; }
 .datos__grid dd { margin: 0; font-family: var(--serif); font-size: clamp(1.02rem, 4.2vw, 1.3rem); line-height: 1.35; overflow-wrap: anywhere; }
 .datos__grid dd span { display: block; margin-top: .25rem; font-family: var(--sans); font-size: .85rem; opacity: .8; }

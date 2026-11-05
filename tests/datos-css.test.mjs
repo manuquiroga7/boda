@@ -11,3 +11,8 @@ test('los datos se acomodan en dos columnas', () => {
 test('si queda una celda sola en la última fila, ocupa todo el ancho', () => {
   assert.match(css, /\.dato:last-child:nth-child\(odd\)\s*{[^}]*grid-column:\s*1\s*\/\s*-1/);
 });
+
+test('no hay línea divisora vertical entre las columnas de datos (solo la horizontal)', () => {
+  assert.doesNotMatch(css, /\.dato[^{]*{[^}]*border-right\s*:\s*1px/);
+  assert.match(css, /\.dato:nth-child\(n\+3\)\s*{[^}]*border-top:\s*1px/);
+});
