@@ -48,3 +48,10 @@ test('agregar una clave de API de mapas no obliga a regenerar el PDF', async () 
   c.event.mapsApiKey = 'CLAVE';
   assert.equal(pdfFingerprint(c), pdfFingerprint(content));
 });
+
+test('cambiar las fotos de la sección de datos no obliga a regenerar el PDF', async () => {
+  const { pdfFingerprint } = await import('../scripts/build-pdf.mjs');
+  const c = structuredClone(content);
+  c.event.photos[0].src = 'assets/img/pareja/otra.jpg';
+  assert.equal(pdfFingerprint(c), pdfFingerprint(content));
+});

@@ -197,3 +197,10 @@ img.is-broken { visibility: hidden; }
   cursor: pointer;
 }
 .comparar button[aria-pressed="true"] { background: var(--bordo); border-color: var(--bordo); color: var(--crema); }
+
+/* Polaroids de "Te esperamos": dos arriba del título y una al final */
+.sec--datos .polaroids { margin-bottom: 2.2rem; }
+.sec--datos .polaroid--3 { margin: 2.6rem auto 0; }
+
+/* La portada C ocupa todo el ancho de la hoja (la foto va de borde a borde) */
+.sec.portada--c { max-width: none; }

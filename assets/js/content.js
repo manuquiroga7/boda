@@ -40,6 +40,12 @@ export const content = {
     time: '17:00 hs',
     mapsQuery: 'Burgues 3826, Montevideo',
     dressCode: 'Elegante, en tonos tierra y verde',
+    // Fotos de la sección "Te esperamos" (polaroids; reemplazar por las reales). Distintas de las de la portada.
+    photos: [
+      { src: 'assets/img/pareja/foto-4.svg', alt: 'Emanuel y Belén en un paseo' },
+      { src: 'assets/img/pareja/foto-5.svg', alt: 'Emanuel y Belén riendo juntos' },
+      { src: 'assets/img/pareja/foto-6.svg', alt: 'Emanuel y Belén en un momento especial' },
+    ],
   },
   rsvp: {
     whatsappNumber: '+598 99 000 000',

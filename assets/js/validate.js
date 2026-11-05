@@ -26,6 +26,11 @@ export function validateContent(c) {
   });
 
   for (const k of ['placeName', 'address', 'time', 'mapsQuery']) need(isText(c?.event?.[k]), `event.${k}`);
+  need(Array.isArray(c?.event?.photos) && c.event.photos.length >= 3, 'event.photos');
+  (c?.event?.photos ?? []).forEach((p, i) => {
+    need(isText(p?.src), `event.photos[${i}].src`);
+    need(isText(p?.alt), `event.photos[${i}].alt`);
+  });
   need(isText(c?.rsvp?.whatsappNumber), 'rsvp.whatsappNumber');
   need(isText(c?.rsvp?.message), 'rsvp.message');
   need(isText(c?.special?.title), 'special.title');

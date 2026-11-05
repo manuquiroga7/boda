@@ -44,3 +44,15 @@ test('reporta un problema cuando una foto de la pareja no tiene alt', () => {
 test('hay al menos tres fotos de la pareja (las usa la portada B)', () => {
   assert.ok(content.couple.photos.length >= 3);
 });
+
+test('reporta un problema cuando faltan las fotos de la sección de datos', () => {
+  const c = structuredClone(content);
+  delete c.event.photos;
+  assert.ok(validateContent(c).some((p) => p.includes('event.photos')));
+});
+
+test('reporta un problema cuando una foto de la sección de datos no tiene alt', () => {
+  const c = structuredClone(content);
+  c.event.photos[1].alt = '';
+  assert.ok(validateContent(c).some((p) => p.includes('event.photos[1].alt')));
+});

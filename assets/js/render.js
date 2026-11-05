@@ -46,7 +46,7 @@ ${abre('a')}
 </section>`;
 }
 
-export function renderPage(c, variant = 'general', basePath = '', estilo = 'a') {
+export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
   const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
@@ -84,9 +84,15 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'a') 
 </section>`;
 
   const e = c.event;
+  const polaroid = (f, n) =>
+    `<figure class="polaroid polaroid--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"></figure>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
   ${plant('rama-1.svg', 'plant--bl')}
+  <div class="polaroids">
+    ${polaroid(e.photos[0], 1)}
+    ${polaroid(e.photos[1], 2)}
+  </div>
   <h2>Te esperamos</h2>
   <dl>
     <dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd>
@@ -99,6 +105,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'a') 
     <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
   </div>
   <a class="btn" href="${esc(mapsUrl(e.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>
+  ${polaroid(e.photos[2], 3)}
 </section>`;
 
   const asistencia = `

@@ -23,3 +23,10 @@ test('al tocar un botón avisa el estilo y actualiza cuál está marcado', () =>
   assert.equal(c.getAttribute('aria-pressed'), 'true');
   assert.equal(doc.querySelector('.comparar button').getAttribute('aria-pressed'), 'false');
 });
+
+import { readFileSync } from 'node:fs';
+
+test('la portada por defecto es la C (foto de fondo)', () => {
+  const main = readFileSync('assets/js/main.js', 'utf8');
+  assert.match(main, /ESTILOS\.includes\(params\.get\('portada'\)\)\s*\?\s*params\.get\('portada'\)\s*:\s*'c'/);
+});

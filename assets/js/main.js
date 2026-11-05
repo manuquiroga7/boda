@@ -17,7 +17,7 @@ const basePath = document.body.dataset.base || '';
 // Portada con fotos: ?portada=a|b|c elige el estilo; ?comparar=1 muestra un selector para alternar en vivo.
 const params = new URLSearchParams(location.search);
 const ESTILOS = ['a', 'b', 'c'];
-const estilo = ESTILOS.includes(params.get('portada')) ? params.get('portada') : 'a';
+const estilo = ESTILOS.includes(params.get('portada')) ? params.get('portada') : 'c';
 app.innerHTML = renderPage(content, variant, basePath, estilo);
 guardImages(app);
 activarMapas(app);
