@@ -2,7 +2,7 @@
   position: relative;
   max-width: 34rem;
   margin: 0 auto;
-  padding: 5rem 1.5rem;
+  padding: 5rem 1.1rem;
   text-align: center;
 }
 .sec h2 { font-size: clamp(1.7rem, 6vw, 2.3rem); color: var(--bordo); margin-bottom: 1.2rem; }
@@ -48,56 +48,29 @@
 .sec--pdf { padding-bottom: 7rem; }
 
 /* Plantas decorativas: flotan despacio */
-/* La carta: papel envejecido, medio arrugado, doblado en tercios y con el borde quemado.
-   .carta da la sombra (el recorte irregular de #app la taparía); #app es el borde carbonizado y su
-   ::before es la hoja. Los recortes (--borde-exterior / --borde-interior) los calcula paper.js. */
-.carta {
-  position: relative;
-  isolation: isolate;
-  max-width: 38rem;
-  margin: 0 auto;
-}
-/* Sombra de la carta sin filter (un filter sobre un elemento tan alto no se dibuja bien en algunos navegadores). */
-.carta::before {
+/* La carta: papel envejecido, medio arrugado y doblado en tercios (la textura va en un solo mosaico).
+   El borde irregular y quemado es una imagen estática (--marco, la calcula paper.js) encima, en
+   .carta::after. Sin clip-path, filter ni fondos fijos: la página es muy alta y eso la volvía lenta. */
+.carta { position: relative; max-width: 38rem; margin: 0 auto; }
+.carta::after {
   content: "";
   position: absolute;
-  inset: 8px 3px;
-  z-index: -1;
-  box-shadow: 0 16px 34px rgba(40, 22, 12, .5), 0 3px 8px rgba(40, 22, 12, .4);
+  inset: -28px;
+  z-index: 5;
+  pointer-events: none;
+  background: var(--marco) no-repeat 0 0 / 100% 100%;
 }
 #app {
-  position: relative;
-  isolation: isolate;
-  padding: 16px;
+  padding: 24px;
   overflow-x: clip;
-  background: #241610;
-  clip-path: var(--borde-exterior, none);
-}
-#app::before {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  z-index: -1;
-  clip-path: var(--borde-interior, none);
-  background-color: #F1E3C4;
+  background-color: #EBD9B0;
   background-image:
-    linear-gradient(to bottom, transparent calc(33.3% - 2px), rgba(80, 50, 30, .14) calc(33.3% - 1px), rgba(255, 250, 235, .55) 33.3%, transparent calc(33.3% + 3px)),
-    linear-gradient(to bottom, transparent calc(66.6% - 2px), rgba(80, 50, 30, .14) calc(66.6% - 1px), rgba(255, 250, 235, .55) 66.6%, transparent calc(66.6% + 3px)),
-    radial-gradient(ellipse 180px 120px at 14% 12%, rgba(160, 105, 45, .20), transparent 70%),
-    radial-gradient(ellipse 220px 160px at 88% 38%, rgba(150, 95, 40, .16), transparent 70%),
-    radial-gradient(ellipse 200px 140px at 20% 62%, rgba(140, 85, 35, .14), transparent 72%),
-    radial-gradient(ellipse 240px 170px at 82% 90%, rgba(150, 95, 40, .20), transparent 70%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .016' numOctaves='5' seed='7' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2.4' diffuseConstant='1.05' lighting-color='%23ffffff'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23f)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .23 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: auto, auto, auto, auto, auto, auto, 600px 600px, 160px 160px;
-  background-blend-mode: normal, normal, normal, normal, normal, normal, multiply, multiply;
-  box-shadow:
-    inset 0 0 3px 1px rgba(220, 105, 30, .6),
-    inset 0 0 18px 6px rgba(60, 25, 8, .8),
-    inset 0 0 52px 14px rgba(110, 55, 18, .5),
-    inset 0 0 120px 10px rgba(150, 95, 45, .2);
+    linear-gradient(to bottom, transparent calc(33.3% - 2px), rgba(80, 50, 30, .16) calc(33.3% - 1px), rgba(255, 250, 235, .55) 33.3%, transparent calc(33.3% + 3px)),
+    linear-gradient(to bottom, transparent calc(66.6% - 2px), rgba(80, 50, 30, .16) calc(66.6% - 1px), rgba(255, 250, 235, .55) 66.6%, transparent calc(66.6% + 3px)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='m' filterUnits='userSpaceOnUse' x='0' y='0' width='800' height='800' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0045' numOctaves='4' seed='3' stitchTiles='stitch' result='blot'/%3E%3CfeColorMatrix in='blot' type='matrix' values='0 0 0 0 .60  0 0 0 0 .42  0 0 0 0 .20  0 0 0 1.15 -.48' result='stain'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .016' numOctaves='5' seed='7' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='1.7' diffuseConstant='1.05' lighting-color='%23ffffff' result='light'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='1' stitchTiles='stitch' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .08 0' result='grain'/%3E%3CfeFlood flood-color='%23EBD9B0' result='base'/%3E%3CfeMerge result='b1'%3E%3CfeMergeNode in='base'/%3E%3CfeMergeNode in='stain'/%3E%3C/feMerge%3E%3CfeBlend in='light' in2='b1' mode='multiply' result='b2'/%3E%3CfeMerge%3E%3CfeMergeNode in='b2'/%3E%3CfeMergeNode in='grain'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='800' height='800' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size: auto, auto, 800px 800px;
 }
-.plant { position: absolute; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
+.plant { position: absolute; will-change: transform; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
 .sec > *:not(.plant):not(.hint) { position: relative; z-index: 1; }
 .sec--versiculo .plant { width: clamp(3.8rem, 17vw, 5rem); top: .2rem; }
 .plant--tl { top: 1.5rem; left: -1.2rem; transform-origin: 50% 100%; }
