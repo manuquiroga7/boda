@@ -1,0 +1,2 @@
+Pista de ejemplo generada por scripts/make-ambient.mjs (obra propia, sin licencia de terceros).
+Reemplazar por la pista real y confirmar su licencia antes de publicar.

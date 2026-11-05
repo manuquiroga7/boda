@@ -75,5 +75,10 @@ export function renderPage(c, variant = 'general', basePath = '') {
 </section>
 <!-- futuro: galería -->`;
 
-  return [portada, versiculo, variant === 'especial' ? especial : '', historia, datos, asistencia, pdf].join('\n');
+  const mute = `
+<button id="mute" class="mute" type="button" aria-pressed="false" aria-label="Silenciar música">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path class="mute__cono" d="M4 9v6h4l5 4V5L8 9H4z"/><path class="mute__on" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="mute__off" d="M16 9l5 6m0-6l-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+</button>`;
+
+  return [mute, portada, versiculo, variant === 'especial' ? especial : '', historia, datos, asistencia, pdf].join('\n');
 }

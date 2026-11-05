@@ -45,6 +45,21 @@ button, a.btn, .btn { cursor: pointer; }
 .btn:hover, .btn:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(110, 43, 51, .3); }
 .btn:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
 
+.mute {
+  position: fixed; top: 1rem; right: 1rem; z-index: 60;
+  width: 2.8rem; height: 2.8rem; border-radius: 50%; border: 1px solid var(--beige);
+  background: rgba(246, 238, 223, .9); color: var(--chocolate);
+  display: flex; align-items: center; justify-content: center; padding: 0;
+  box-shadow: 0 4px 12px rgba(90, 58, 51, .18); cursor: pointer;
+  transition: transform .6s var(--suave);
+}
+.mute:hover { transform: scale(1.06); }
+.mute:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+.mute svg { width: 1.5rem; height: 1.5rem; fill: currentColor; }
+.mute__off { display: none; stroke: var(--bordo); }
+.mute[aria-pressed="true"] .mute__on { display: none; }
+.mute[aria-pressed="true"] .mute__off { display: inline; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
