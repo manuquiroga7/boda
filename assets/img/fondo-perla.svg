@@ -1,0 +1,38 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'>
+  <!-- Mosaico del fondo: cruces finas y fotitos inclinadas, muy suaves. Se repite en toda la página. -->
+  <g fill='none' stroke-linecap='round' stroke-linejoin='round'>
+    <g class='cruz' transform='translate(40 48)' stroke='#8E9F82' stroke-opacity='.55' stroke-width='1.5'><path d='M0 -10V10M-6 -4H6'/></g>
+    <g class='cruz' transform='translate(262 52) scale(.8)' stroke='#8C4F55' stroke-opacity='.4' stroke-width='1.6'><path d='M0 -10V10M-6 -4H6'/></g>
+    <g class='cruz' transform='translate(168 158) scale(1.1)' stroke='#8E9F82' stroke-opacity='.5' stroke-width='1.4'><path d='M0 -10V10M-6 -4H6'/></g>
+    <g class='cruz' transform='translate(34 160) scale(.75)' stroke='#8C4F55' stroke-opacity='.35' stroke-width='1.7'><path d='M0 -10V10M-6 -4H6'/></g>
+    <g class='cruz' transform='translate(286 262)' stroke='#8E9F82' stroke-opacity='.5' stroke-width='1.5'><path d='M0 -10V10M-6 -4H6'/></g>
+    <g class='cruz' transform='translate(150 286) scale(.8)' stroke='#8E9F82' stroke-opacity='.45' stroke-width='1.6'><path d='M0 -10V10M-6 -4H6'/></g>
+  </g>
+  <g fill='#C7B79B' fill-opacity='.45'>
+    <circle cx='96' cy='150' r='1.6'/><circle cx='230' cy='20' r='1.6'/><circle cx='306' cy='140' r='1.6'/>
+    <circle cx='80' cy='296' r='1.6'/><circle cx='214' cy='232' r='1.6'/><circle cx='20' cy='96' r='1.6'/>
+  </g>
+  <g class='foto' transform='translate(112 58) rotate(-8)'>
+    <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
+    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#E7DCC7' fill-opacity='.9'/>
+    <circle cx='-5' cy='-9' r='3' fill='#F6EEDF'/>
+    <path d='M-13 10L-6 0L0 6L5 -1L13 10Z' fill='#BFCAB5' fill-opacity='.9'/>
+  </g>
+  <g class='foto' transform='translate(236 138) rotate(7)'>
+    <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
+    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#EAD9D3' fill-opacity='.9'/>
+    <path d='M0 -2C-1 -6 -7 -6 -6 -1C-5 3 0 6 0 6C0 6 5 3 6 -1C7 -6 1 -6 0 -2Z' fill='#B77A80' fill-opacity='.75'/>
+  </g>
+  <g class='foto' transform='translate(76 236) rotate(-5)'>
+    <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
+    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#DDE3D2' fill-opacity='.9'/>
+    <circle cx='4' cy='-8' r='3' fill='#F6EEDF'/>
+    <path d='M-13 10L-4 -2L3 5L8 0L13 10Z' fill='#9FB08F' fill-opacity='.85'/>
+  </g>
+  <g class='foto' transform='translate(224 286) rotate(6)'>
+    <rect x='-17' y='-21' width='34' height='42' rx='2' fill='#fff' fill-opacity='.85' stroke='#D8CBB4' stroke-opacity='.9' stroke-width='1'/>
+    <rect x='-13' y='-17' width='26' height='27' rx='1' fill='#E9DFCB' fill-opacity='.9'/>
+    <circle cx='0' cy='-8' r='3.4' fill='#F6EEDF'/>
+    <path d='M-13 10C-12 2 12 2 13 10Z' fill='#C9B79A' fill-opacity='.85'/>
+  </g>
+</svg>

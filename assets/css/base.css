@@ -1,7 +1,6 @@
 :root {
   --crema: #F6EEDF;
-  --mesa-1: #E8D9BE;
-  --mesa-2: #D9C6A3;
+  --perla: #F3F0EB;
   --beige: #E4D3B8;
   --chocolate: #5A3A33;
   --bordo: #6E2B33;
@@ -17,10 +16,17 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  /* La "mesa" sobre la que descansa la carta (degradé suave que scrollea con la página, sin fondo fijo). */
+  /* Fondo perla: reflejos suaves rosados y lilas, y encima un mosaico de cruces y fotitos.
+     Todo se mueve con la página (sin fondo fijo): es solo un mosaico pequeño que se repite. */
   padding: 1.25rem .75rem 3rem;
   min-height: 100svh;
-  background: linear-gradient(var(--mesa-1), var(--mesa-2));
+  background-color: var(--perla);
+  background-image:
+    url("../img/fondo-perla.svg"),
+    radial-gradient(circle at 12% 8%, rgba(214, 205, 228, .45), transparent 45%),
+    radial-gradient(circle at 88% 92%, rgba(238, 214, 208, .40), transparent 45%),
+    linear-gradient(160deg, #FAF8F4 0%, #F1EDE7 55%, #ECE7E0 100%);
+  background-size: 320px 320px, auto, auto, auto;
   color: var(--chocolate);
   font-family: var(--sans);
   font-size: 1.0625rem;
