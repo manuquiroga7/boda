@@ -1,7 +1,7 @@
 // Único lugar del contenido de la invitación. Textos de ejemplo: reemplazar antes de publicar.
 export const content = {
   couple: {
-    names: ['Nombre', 'Nombre'],
+    names: ['Emanuel', 'Belén'],
     dateISO: '2027-03-20',
     dateText: 'Sábado 20 de marzo de 2027',
   },
@@ -31,9 +31,9 @@ export const content = {
   ],
   event: {
     placeName: 'Iglesia de Ejemplo',
-    address: 'Calle Ejemplo 1234, Montevideo',
+    address: 'Burgues 3826, Montevideo',
     time: '17:00 hs',
-    mapsQuery: 'Iglesia de Ejemplo, Calle Ejemplo 1234, Montevideo',
+    mapsQuery: 'Burgues 3826, Montevideo',
     dressCode: 'Elegante, en tonos tierra y verde',
   },
   rsvp: {
