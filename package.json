@@ -8,6 +8,7 @@
     "build:pdf": "node scripts/build-pdf.mjs"
   },
   "devDependencies": {
-    "jsdom": "^31.0.0"
+    "jsdom": "^31.0.0",
+    "pdf-lib": "^1.17.1"
   }
 }
