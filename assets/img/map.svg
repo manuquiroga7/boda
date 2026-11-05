@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Mapa estilizado">
+  <rect width="640" height="360" fill="#EFE4CF"/>
+  <path d="M-10 250 C140 200 220 300 360 240 S560 150 660 190" stroke="#F6EEDF" stroke-width="22" fill="none"/>
+  <path d="M120 -10 C150 90 90 170 190 250 S300 330 280 380" stroke="#F6EEDF" stroke-width="16" fill="none"/>
+  <path d="M440 -10 C420 70 500 120 470 200" stroke="#F6EEDF" stroke-width="12" fill="none"/>
+  <rect x="470" y="250" width="110" height="70" rx="14" fill="#8E9F82" opacity=".55"/>
+  <rect x="40" y="40" width="90" height="60" rx="14" fill="#8E9F82" opacity=".45"/>
+  <path d="M330 110 c-30 0 -50 22 -50 48 c0 36 50 82 50 82 s50 -46 50 -82 c0 -26 -20 -48 -50 -48z" fill="#6E2B33"/>
+  <circle cx="330" cy="158" r="17" fill="#F6EEDF"/>
+</svg>
