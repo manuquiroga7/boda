@@ -9,6 +9,11 @@ export function validateContent(c) {
   need(Array.isArray(c?.couple?.names) && c.couple.names.length === 2 && c.couple.names.every(isText), 'couple.names');
   need(isText(c?.couple?.dateISO), 'couple.dateISO');
   need(isText(c?.couple?.dateText), 'couple.dateText');
+  need(Array.isArray(c?.couple?.photos) && c.couple.photos.length >= 3, 'couple.photos');
+  (c?.couple?.photos ?? []).forEach((p, i) => {
+    need(isText(p?.src), `couple.photos[${i}].src`);
+    need(isText(p?.alt), `couple.photos[${i}].alt`);
+  });
   need(isText(c?.verse?.text), 'verse.text');
   need(isText(c?.verse?.ref), 'verse.ref');
 

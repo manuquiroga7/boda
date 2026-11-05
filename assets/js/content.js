@@ -4,6 +4,11 @@ export const content = {
     names: ['Emanuel', 'Belén'],
     dateISO: '2027-03-20',
     dateText: 'Sábado 20 de marzo de 2027',
+    photos: [
+      { src: 'assets/img/pareja/foto-1.svg', alt: 'Emanuel y Belén juntos, sonriendo' },
+      { src: 'assets/img/pareja/foto-2.svg', alt: 'Emanuel y Belén caminando de la mano' },
+      { src: 'assets/img/pareja/foto-3.svg', alt: 'Emanuel y Belén abrazados' },
+    ],
   },
   verse: {
     text: 'Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto.',

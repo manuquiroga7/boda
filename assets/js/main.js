@@ -1,6 +1,7 @@
 import { content } from './content.js';
 import { validateContent } from './validate.js';
-import { renderPage } from './render.js';
+import { renderPage, renderPortada } from './render.js';
+import { mountCompare } from './compare.js';
 import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
 import { initReveal } from './reveal.js';
@@ -12,7 +13,11 @@ if (problems.length) console.warn('Contenido incompleto:', problems);
 const app = document.getElementById('app');
 const variant = document.body.dataset.variant || 'general';
 const basePath = document.body.dataset.base || '';
-app.innerHTML = renderPage(content, variant, basePath);
+// Portada con fotos: ?portada=a|b|c elige el estilo; ?comparar=1 muestra un selector para alternar en vivo.
+const params = new URLSearchParams(location.search);
+const ESTILOS = ['a', 'b', 'c'];
+const estilo = ESTILOS.includes(params.get('portada')) ? params.get('portada') : 'a';
+app.innerHTML = renderPage(content, variant, basePath, estilo);
 guardImages(app);
 
 // Al volver con el botón atrás el navegador puede restaurar la página a medias: se recarga limpia.
@@ -45,6 +50,19 @@ document.addEventListener('visibilitychange', () => {
 
 const portadaTitle = app.querySelector('#portada h1');
 portadaTitle.tabIndex = -1;
+
+if (params.has('comparar')) {
+  mountCompare(document, estilo, (nuevo) => {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderPortada(content, nuevo, basePath);
+    const seccion = wrap.firstElementChild;
+    seccion.classList.add('is-visible');
+    document.getElementById('portada').replaceWith(seccion);
+    guardImages(seccion);
+    seccion.querySelector('h1').tabIndex = -1;
+    window.scrollTo(0, 0);
+  });
+}
 
 const envelopeRoot = document.createElement('div');
 document.body.prepend(envelopeRoot);

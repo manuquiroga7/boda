@@ -51,7 +51,8 @@ export function wrap(text, font, size, maxWidth) {
 // Huella de los datos que lleva el PDF. Se guarda dentro del archivo para que un test detecte
 // si el PDF quedó desactualizado respecto de content.js.
 export function pdfFingerprint(c) {
-  const data = { couple: c.couple, verse: c.verse, event: c.event, pdf: c.pdf };
+  const { names, dateISO, dateText } = c.couple; // las fotos no van en el PDF
+  const data = { couple: { names, dateISO, dateText }, verse: c.verse, event: c.event, pdf: c.pdf };
   return createHash('sha256').update(JSON.stringify(data)).digest('hex');
 }
 

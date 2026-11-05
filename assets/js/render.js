@@ -3,20 +3,55 @@ import { whatsappUrl, mapsUrl } from './links.js';
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-export function renderPage(c, variant = 'general', basePath = '') {
+
+// Portada con fotos. Tres estilos para comparar: a = foto en arco, b = polaroids, c = foto de fondo.
+export function renderPortada(c, estilo = 'a', basePath = '') {
+  const a = (path) => esc(basePath + path);
+  const [n1, n2] = c.couple.names;
+  const fotos = c.couple.photos;
+  const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
+  const foto = (f, cls = '') =>
+    `<img${cls ? ` class="${cls}"` : ''} src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" decoding="async">`;
+  const texto = `
+  <p class="eyebrow">Con la bendición de Dios</p>
+  <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
+  <p class="date">${esc(c.couple.dateText)}</p>`;
+  const hint = '<p class="hint" aria-hidden="true">Desliza para continuar</p>';
+  const abre = (e) => `<section id="portada" class="sec sec--portada portada--${e} reveal">`;
+
+  if (estilo === 'b') {
+    return `
+${abre('b')}
+  <div class="polaroids">
+    <figure class="polaroid polaroid--1">${foto(fotos[0])}</figure>
+    <figure class="polaroid polaroid--2">${foto(fotos[1])}</figure>
+  </div>${texto}
+  <figure class="polaroid polaroid--3">${foto(fotos[2])}</figure>
+</section>`;
+  }
+  if (estilo === 'c') {
+    return `
+${abre('c')}
+  ${foto(fotos[0], 'portada__fondo')}
+  <div class="portada__velo"></div>${texto}
+  ${hint}
+</section>`;
+  }
+  return `
+${abre('a')}
+  ${plant('rama-1.svg', 'plant--tl')}
+  ${plant('hojas-3.svg', 'plant--br')}
+  <div class="portada__arco">${foto(fotos[0])}</div>${texto}
+  ${hint}
+</section>`;
+}
+
+export function renderPage(c, variant = 'general', basePath = '', estilo = 'a') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
   const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
 
-  const portada = `
-<section id="portada" class="sec sec--portada reveal">
-  ${plant('rama-1.svg', 'plant--tl')}
-  ${plant('hojas-3.svg', 'plant--br')}
-  <p class="eyebrow">Con la bendición de Dios</p>
-  <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
-  <p class="date">${esc(c.couple.dateText)}</p>
-  <p class="hint" aria-hidden="true">Desliza para continuar</p>
-</section>`;
+  const portada = renderPortada(c, estilo, basePath);
 
   const versiculo = `
 <section id="versiculo" class="sec sec--versiculo reveal">

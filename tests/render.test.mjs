@@ -57,3 +57,43 @@ test('las plantas decorativas son aria-hidden, sin alt y con ruta de assets', ()
     assert.match(p, /src="\.\.\/assets\/img\/plants\//);
   }
 });
+
+import { renderPortada } from '../assets/js/render.js';
+
+const imgsDe = (html) => [...html.matchAll(/<img [^>]*>/g)].map((m) => m[0]);
+
+for (const estilo of ['a', 'b', 'c']) {
+  test(`portada ${estilo}: tiene nombres, fecha, fotos con alt y no se difiere la carga`, () => {
+    const html = renderPortada(content, estilo);
+    assert.match(html, new RegExp(`id="portada"[^>]*class="[^"]*portada--${estilo}`));
+    assert.match(html, /<h1/);
+    assert.match(html, /Emanuel/);
+    assert.match(html, /Belén/);
+    assert.match(html, /Sábado 20 de marzo de 2027/);
+    const fotos = imgsDe(html).filter((i) => !/class="plant/.test(i));
+    assert.ok(fotos.length >= 1);
+    for (const f of fotos) {
+      assert.match(f, /alt="[^"]+"/);
+      assert.doesNotMatch(f, /loading="lazy"/);
+    }
+  });
+}
+
+test('portada a usa una foto en arco; b usa tres polaroids; c usa una foto de fondo', () => {
+  const fotos = (e) => imgsDe(renderPortada(content, e)).filter((i) => !/class="plant/.test(i)).length;
+  assert.equal(fotos('a'), 1);
+  assert.equal(fotos('b'), 3);
+  assert.equal(fotos('c'), 1);
+  assert.match(renderPortada(content, 'a'), /portada__arco/);
+  assert.match(renderPortada(content, 'b'), /polaroid/);
+  assert.match(renderPortada(content, 'c'), /portada__fondo/);
+});
+
+test('renderPage usa la portada a por defecto y acepta otra', () => {
+  assert.match(renderPage(content, 'general'), /portada--a/);
+  assert.match(renderPage(content, 'general', '', 'c'), /portada--c/);
+});
+
+test('las fotos de la portada respetan basePath', () => {
+  assert.match(renderPortada(content, 'a', '../'), /src="\.\.\/assets\/img\/pareja\//);
+});

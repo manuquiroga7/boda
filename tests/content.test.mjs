@@ -28,3 +28,19 @@ test('reporta un problema cuando una foto no tiene alt', () => {
 test('el versículo de ejemplo es Eclesiastés 4:12', () => {
   assert.match(content.verse.ref, /Eclesiastés 4:12/);
 });
+
+test('reporta un problema cuando faltan las fotos de la pareja', () => {
+  const c = structuredClone(content);
+  delete c.couple.photos;
+  assert.ok(validateContent(c).some((p) => p.includes('couple.photos')));
+});
+
+test('reporta un problema cuando una foto de la pareja no tiene alt', () => {
+  const c = structuredClone(content);
+  c.couple.photos[0].alt = '';
+  assert.ok(validateContent(c).some((p) => p.includes('couple.photos[0].alt')));
+});
+
+test('hay al menos tres fotos de la pareja (las usa la portada B)', () => {
+  assert.ok(content.couple.photos.length >= 3);
+});
