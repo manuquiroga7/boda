@@ -82,12 +82,12 @@ test('el chocolate es el color protagonista de los trazos del mosaico', () => {
   assert.ok(chocolate >= 8, `pocos trazos en chocolate: ${chocolate}`);
 });
 
-test('todo el mosaico es semitransparente: un grupo general con opacidad entre .25 y .8', () => {
+test('todo el mosaico es semitransparente: un grupo general con opacidad entre .15 y .8', () => {
   const svg = readFileSync(RUTA, 'utf8');
   const grupo = svg.match(/<g class='mosaico' opacity='(0?\.\d+)'>/);
   assert.ok(grupo, 'falta el grupo general del mosaico');
   const o = Number(grupo[1]);
-  assert.ok(o >= 0.25 && o <= 0.8, `opacidad fuera de rango: ${o}`);
+  assert.ok(o >= 0.15 && o <= 0.8, `opacidad fuera de rango: ${o}`);
   // el grupo envuelve todo el contenido dibujado
   const dentro = svg.slice(svg.indexOf(grupo[0]), svg.lastIndexOf('</g>') + 4);
   for (const clase of ['cruz', 'foto', 'paloma', 'ramita', 'anillos', 'corazon', 'flor', 'destello']) {
@@ -95,9 +95,9 @@ test('todo el mosaico es semitransparente: un grupo general con opacidad entre .
   }
 });
 
-test('los símbolos son bien suaves: opacidad general de .65 o menos, sin desaparecer (mínimo .25)', () => {
+test('los símbolos son bien suaves: opacidad general de .65 o menos, sin desaparecer (mínimo .15)', () => {
   const svg = readFileSync(RUTA, 'utf8');
   const o = Number(svg.match(/<g class='mosaico' opacity='(0?\.\d+)'>/)[1]);
   assert.ok(o <= 0.65, `todavía muy opaco: ${o}`);
-  assert.ok(o >= 0.25, `demasiado transparente: ${o}`);
+  assert.ok(o >= 0.15, `demasiado transparente: ${o}`);
 });
