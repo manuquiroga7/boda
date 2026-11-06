@@ -26,15 +26,15 @@ export const content = {
       title: 'Aprendimos a esperar',
       text: 'Hubo días difíciles y silencios largos. En cada uno de ellos Él nos sostuvo, nos enseñó a confiar y nos fue acercando.',
       photo: 'assets/img/story/historia-2.jpg',
-      alt: 'Emanuel y Belén en un selfie, paseando por un jardín',
-      focus: '60% 50%',
+      alt: 'Emanuel y Belén de pie, abrazados, en un hall',
+      focus: '50% 25%',
     },
     {
       title: 'Y dijimos que sí',
       text: 'Hoy queremos compartir contigo la alegría de empezar este camino, con Dios en el centro de nuestro hogar.',
       photo: 'assets/img/story/historia-3.jpg',
-      alt: 'Emanuel y Belén abrazados, de pie, dentro de un edificio',
-      focus: '50% 0%',
+      alt: 'Belén sonriendo y mostrando su anillo en un jardín',
+      focus: '50% 22%',
     },
   ],
   event: {
@@ -46,8 +46,8 @@ export const content = {
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.
     photos: [
       { src: 'assets/img/pareja/polaroid-1.jpg', alt: 'Emanuel y Belén sentados en un restaurante, sonriendo', focus: '45% 50%' },
-      { src: 'assets/img/pareja/polaroid-2.jpg', alt: 'Emanuel y Belén de pie, abrazados, en un hall', focus: '50% 10%' },
-      { src: 'assets/img/pareja/polaroid-3.jpg', alt: 'Belén sonriendo y mostrando su anillo en un jardín', focus: '50% 20%' },
+      { src: 'assets/img/pareja/polaroid-2.jpg', alt: 'Emanuel y Belén en un selfie, paseando por un jardín', focus: '65% 50%' },
+      { src: 'assets/img/pareja/polaroid-3.jpg', alt: 'Emanuel y Belén de pie, abrazados, en un hall', focus: '50% 10%' },
     ],
   },
   rsvp: {
