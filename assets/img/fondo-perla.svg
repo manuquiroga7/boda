@@ -31,7 +31,7 @@
     </g>
     <path id='p-destello' d='M0 -6C.6 -1.2 1.2 -.6 6 0C1.2 .6 .6 1.2 0 6C-.6 1.2 -1.2 .6 -6 0C-1.2 -.6 -.6 -1.2 0 -6Z'/>
   </defs>
-  <g class='mosaico' opacity='.26'>
+  <g class='mosaico' opacity='.17'>
 
   <g fill='none' stroke-linecap='round' stroke-linejoin='round'>
     <!-- cruces -->
