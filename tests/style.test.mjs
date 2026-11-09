@@ -32,8 +32,10 @@ test('no hay fondos fijos (provocan repintado al scrollear)', () => {
   assert.doesNotMatch(css, /background-attachment\s*:\s*fixed/);
 });
 
-test('las plantas se mueven con will-change para no repintar la carta', () => {
-  assert.match(css, /\.plant\s*{[^}]*will-change:\s*transform/);
+test('no quedan plantas decorativas y las fotos de fondo se funden con el papel sin filtros', () => {
+  assert.doesNotMatch(css, /\.plant|flotar/);
+  assert.match(css, /\.sec__velo\s*{[^}]*linear-gradient/);
+  assert.match(css, /\.sec \.sec__fondo\s*{[^}]*object-fit:\s*cover/);
 });
 
 test('las fotos entran deslizándose desde los costados, alternando lados, sin pisar el rotate de los polaroids', () => {

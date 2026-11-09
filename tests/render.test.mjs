@@ -47,14 +47,16 @@ test('basePath se antepone a las rutas de assets', () => {
   assert.match(html, /href="\.\.\/assets\/pdf\/invitacion\.pdf"/);
 });
 
-test('las plantas decorativas son aria-hidden, sin alt y con ruta de assets', () => {
+test('no hay plantas y las fotos de fondo son decorativas (aria-hidden, sin alt) con ruta de assets', () => {
   const html = renderPage(content, 'general', '../');
-  const plants = [...html.matchAll(/<img [^>]*class="plant[^"]*"[^>]*>/g)].map((m) => m[0]);
-  assert.ok(plants.length >= 3);
-  for (const p of plants) {
+  assert.doesNotMatch(html, /class="plant|assets\/img\/plants/);
+  const fondos = [...html.matchAll(/<img [^>]*class="sec__fondo"[^>]*>/g)].map((m) => m[0]);
+  assert.equal(fondos.length, 3);
+  for (const p of fondos) {
     assert.match(p, /alt=""/);
     assert.match(p, /aria-hidden="true"/);
-    assert.match(p, /src="\.\.\/assets\/img\/plants\//);
+    assert.match(p, /src="\.\.\/assets\/img\/story\//);
+    assert.match(p, /loading="lazy"/);
   }
 });
 
