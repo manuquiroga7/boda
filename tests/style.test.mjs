@@ -8,7 +8,7 @@ const main = readFileSync('assets/js/main.js', 'utf8');
 
 test('la carta es una hoja de papel con sombra a los lados (se nota que es una carta)', () => {
   const app = css.match(/#app\s*{[^}]*}/)[0];
-  assert.match(app, /background-color:\s*var\(--crema\)/);
+  assert.match(app, /background-color:\s*var\(--papel\)/);
   assert.match(app, /box-shadow:/);
   assert.match(app, /inset/);
 });

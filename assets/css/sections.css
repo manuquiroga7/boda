@@ -48,7 +48,7 @@
 .sec--versiculo p { font-family: 'Great Vibes', cursive; font-size: clamp(1.9rem, 8.5vw, 2.4rem); line-height: 1.5; color: var(--bordo); }
 .sec--versiculo cite { display: block; margin-top: 1rem; font-style: normal; letter-spacing: .2em; font-size: .85rem; text-transform: uppercase; color: var(--bordo); }
 
-.sec--especial { background: var(--crema); border-top: 1px solid var(--beige); border-bottom: 1px solid var(--beige); }
+.sec--especial { background: var(--papel); border-top: 1px solid var(--beige); border-bottom: 1px solid var(--beige); }
 .sec--especial h2 { color: var(--verde); }
 
 .momento { margin-bottom: 3.5rem; }
@@ -105,7 +105,7 @@
   position: relative;
   overflow-x: clip;
   border-radius: 4px;
-  background-color: var(--crema);
+  background-color: var(--papel);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .23 0 0 0 0 .2 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   box-shadow:
     0 0 0 1px rgba(90, 58, 51, .12),
@@ -184,7 +184,7 @@ img.is-broken { visibility: hidden; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(to bottom, rgba(246, 238, 223, 0) 0%, rgba(246, 238, 223, .12) 30%, rgba(246, 238, 223, .82) 54%, rgba(246, 238, 223, .96) 68%, var(--crema) 82%);
+  background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, .12) 30%, rgba(254, 252, 248, .82) 54%, rgba(254, 252, 248, .96) 68%, var(--papel) 82%);
 }
 
 /* Selector temporal para comparar portadas (?comparar=1) */
@@ -199,7 +199,7 @@ img.is-broken { visibility: hidden; }
   gap: .4rem;
   padding: .35rem .5rem .35rem .9rem;
   border-radius: 999px;
-  background: rgba(246, 238, 223, .95);
+  background: rgba(254, 252, 248, .95);
   border: 1px solid var(--beige);
   box-shadow: 0 6px 16px rgba(90, 58, 51, .25);
   font-size: .8rem;
