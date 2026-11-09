@@ -21,17 +21,11 @@ test('el mosaico conserva las cruces y las fotitos', () => {
   assert.ok(cuantos(svg, 'foto') >= 3, 'faltan fotitos');
 });
 
-test('el mosaico suma más elementos: palomas, anillos, corazones y destellos', () => {
+test('el mosaico suma más elementos: palomas, ramitas de olivo, anillos, corazones, flores y destellos', () => {
   const svg = readFileSync(RUTA, 'utf8');
-  for (const [clase, minimo] of [['paloma', 2], ['anillos', 2], ['corazon', 3], ['destello', 4]]) {
+  for (const [clase, minimo] of [['paloma', 2], ['ramita', 2], ['anillos', 2], ['corazon', 3], ['flor', 3], ['destello', 4]]) {
     assert.ok(cuantos(svg, clase) >= minimo, `faltan elementos: ${clase} (hay ${cuantos(svg, clase)}, mínimo ${minimo})`);
   }
-});
-
-test('el mosaico no tiene flores ni ramas', () => {
-  const svg = readFileSync(RUTA, 'utf8');
-  assert.equal(cuantos(svg, 'flor'), 0);
-  assert.equal(cuantos(svg, 'ramita'), 0);
 });
 
 test('la página usa el mosaico sobre un fondo perla que se mueve con el scroll', () => {
@@ -96,7 +90,7 @@ test('todo el mosaico es semitransparente: un grupo general con opacidad entre .
   assert.ok(o >= 0.1 && o <= 0.8, `opacidad fuera de rango: ${o}`);
   // el grupo envuelve todo el contenido dibujado
   const dentro = svg.slice(svg.indexOf(grupo[0]), svg.lastIndexOf('</g>') + 4);
-  for (const clase of ['cruz', 'foto', 'paloma', 'anillos', 'corazon', 'destello']) {
+  for (const clase of ['cruz', 'foto', 'paloma', 'ramita', 'anillos', 'corazon', 'flor', 'destello']) {
     assert.ok(dentro.includes(`class='${clase}'`), `${clase} quedó fuera del grupo semitransparente`);
   }
 });

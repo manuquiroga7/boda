@@ -12,6 +12,7 @@ export function renderPortada(c, estilo = 'a', basePath = '') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
   const fotos = c.couple.photos;
+  const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
   const foto = (f, cls = '') =>
     `<img${cls ? ` class="${cls}"` : ''} src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" decoding="async"${foco(f)}>`;
   const texto = `
@@ -41,6 +42,8 @@ ${abre('c')}
   }
   return `
 ${abre('a')}
+  ${plant('rama-1.svg', 'plant--tl')}
+  ${plant('hojas-3.svg', 'plant--br')}
   <div class="portada__arco">${foto(fotos[0])}</div>${texto}
   ${hint}
 </section>`;
@@ -49,16 +52,13 @@ ${abre('a')}
 export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') {
   const a = (path) => esc(basePath + path);
   const [n1, n2] = c.couple.names;
-  // Foto de fondo decorativa que se funde con el papel (como la portada). Va sin alt: es adorno.
-  const fondo = (f) =>
-    `<img class="sec__fondo" src="${a(f.photo ?? f.src)}" alt="" aria-hidden="true" width="640" height="480" loading="lazy" decoding="async"${foco(f)}>
-  <div class="sec__velo"></div>`;
+  const plant = (file, cls) => `<img class="plant ${cls}" src="${a('assets/img/plants/' + file)}" alt="" aria-hidden="true" width="160" height="160">`;
 
   const portada = renderPortada(c, estilo, basePath);
 
   const versiculo = `
-<section id="versiculo" class="sec sec--foto sec--versiculo reveal">
-  ${fondo(c.story[0])}
+<section id="versiculo" class="sec sec--versiculo reveal">
+  ${plant('rama-2.svg', 'plant--tr')}
   <blockquote>
     <p>${esc(c.verse.text)}</p>
     <cite>${esc(c.verse.ref)}</cite>
@@ -91,6 +91,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
     `<figure class="polaroid polaroid--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}></figure>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
+  ${plant('rama-1.svg', 'plant--bl')}
   <div class="polaroids">
     ${polaroid(e.photos[0], 1)}
     ${polaroid(e.photos[1], 2)}
@@ -111,16 +112,15 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 </section>`;
 
   const asistencia = `
-<section id="asistencia" class="sec sec--foto sec--asistencia reveal">
-  ${fondo(c.story[2] ?? c.story[0])}
+<section id="asistencia" class="sec sec--asistencia reveal">
   <h2>¿Nos acompañas?</h2>
   <p>Cuéntanos si podrás estar con nosotros.</p>
   <a class="btn" href="${esc(whatsappUrl(c.rsvp.whatsappNumber, c.rsvp.message))}" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
 </section>`;
 
   const pdf = `
-<section id="pdf" class="sec sec--foto sec--pdf reveal">
-  ${fondo(c.story[1] ?? c.story[0])}
+<section id="pdf" class="sec sec--pdf reveal">
+  ${plant('hojas-3.svg', 'plant--tr')}
   <h2>Guarda los datos</h2>
   <p>Descarga la invitación con toda la información.</p>
   <a class="btn" href="${a(c.pdf.src)}" download>Descargar PDF</a>
