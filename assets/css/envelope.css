@@ -59,11 +59,6 @@ body.is-locked { overflow: hidden; height: 100svh; }
 .env-lema { font-family: var(--serif); font-style: italic; font-size: calc(var(--w) * .05); color: var(--chocolate); }
 .env-te { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .085); color: var(--bordo); }
 .env-fecha { font-family: var(--serif); font-size: calc(var(--w) * .038); letter-spacing: .12em; text-transform: uppercase; color: var(--chocolate); }
-.pan--2 .pan__txt { padding-bottom: 3.4rem; }
-.pan--2 .pan__txt::before {
-  content: ""; position: absolute; left: 50%; bottom: .9rem; width: 4rem; height: 4rem; margin-left: -2rem; opacity: .8; transform: rotate(90deg);
-  background: url("../img/plants/rama-1.svg") center / contain no-repeat;
-}
 
 .seal {
   position: absolute; left: 50%; top: 58%; z-index: 5; width: 3.4rem; height: 3.4rem; margin: -1.7rem 0 0 -1.7rem;

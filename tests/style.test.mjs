@@ -32,15 +32,20 @@ test('no hay fondos fijos (provocan repintado al scrollear)', () => {
   assert.doesNotMatch(css, /background-attachment\s*:\s*fixed/);
 });
 
-test('las plantas se mueven con will-change para no repintar la carta', () => {
-  assert.match(css, /\.plant\s*{[^}]*will-change:\s*transform/);
+test('no quedan plantas decorativas', () => {
+  assert.doesNotMatch(css, /\.plant|flotar/);
 });
 
-test('las fotos entran deslizándose desde los costados, alternando lados, sin pisar el rotate de los polaroids', () => {
-  assert.match(css, /\.js-reveal \.momento img,\s*\.js-reveal \.polaroid\s*{[^}]*translate:\s*var\(--lado/);
-  assert.match(css, /\.momento:nth-of-type\(even\) img,\s*\.js-reveal \.polaroid--2\s*{\s*--lado:\s*5rem/);
-  assert.match(css, /\.js-reveal \.is-visible \.polaroid[^{]*{\s*translate:\s*0 0/);
+test('las fotos entran deslizándose desde los costados, alternando lados, con las fotos de ancho completo', () => {
+  assert.match(css, /\.js-reveal \.momento img,\s*\.js-reveal \.banda img\s*{[^}]*translate:\s*var\(--lado/);
+  assert.match(css, /\.momento:nth-of-type\(even\) img,\s*\.js-reveal \.banda--2 img\s*{\s*--lado:\s*5rem/);
+  assert.match(css, /\.js-reveal \.banda\.is-visible img\s*{\s*translate:\s*0 0/);
   // se mueve con 'translate' (no 'transform') y sin efectos pesados
   const bloque = css.slice(css.indexOf('Las fotos entran'), css.indexOf('.js-reveal .is-visible img'));
   assert.doesNotMatch(bloque, /filter|clip-path|transform:/);
+});
+
+test('las fotos de datos van de borde a borde y se funden con el papel (sin marcos ni filtros)', () => {
+  assert.match(css, /\.banda__velo\s*{[^}]*linear-gradient/);
+  assert.match(css, /\.sec--datos\s*{[^}]*max-width:\s*none/);
 });

@@ -47,15 +47,10 @@ test('basePath se antepone a las rutas de assets', () => {
   assert.match(html, /href="\.\.\/assets\/pdf\/invitacion\.pdf"/);
 });
 
-test('las plantas decorativas son aria-hidden, sin alt y con ruta de assets', () => {
+test('no hay plantas decorativas', () => {
   const html = renderPage(content, 'general', '../');
-  const plants = [...html.matchAll(/<img [^>]*class="plant[^"]*"[^>]*>/g)].map((m) => m[0]);
-  assert.ok(plants.length >= 3);
-  for (const p of plants) {
-    assert.match(p, /alt=""/);
-    assert.match(p, /aria-hidden="true"/);
-    assert.match(p, /src="\.\.\/assets\/img\/plants\//);
-  }
+  assert.doesNotMatch(html, /class="plant|assets\/img\/plants/);
+  assert.doesNotMatch(renderPortada(content, 'a'), /class="plant/);
 });
 
 import { renderPortada } from '../assets/js/render.js';
@@ -121,9 +116,9 @@ test('con una clave de API usa el Embed API oficial', () => {
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\/embed\/v1\/place\?key=CLAVE_DE_PRUEBA&amp;q=Burgues%203826%2C%20Montevideo"/);
 });
 
-test('la sección de datos lleva tres polaroids propias, diferidas y con alt', () => {
+test('la sección de datos lleva tres fotos de ancho completo propias, diferidas y con alt', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  const figuras = datos.match(/<figure class="polaroid[^"]*">[\s\S]*?<\/figure>/g) ?? [];
+  const figuras = datos.match(/<figure class="banda[^"]*">[\s\S]*?<\/figure>/g) ?? [];
   assert.equal(figuras.length, 3);
   for (const f of figuras) {
     assert.match(f, /loading="lazy"/);
@@ -133,12 +128,12 @@ test('la sección de datos lleva tres polaroids propias, diferidas y con alt', (
   for (const s of fuentes) assert.ok(content.event.photos.some((p) => s.endsWith(p.src)), `foto inesperada: ${s}`);
 });
 
-test('las polaroids de datos no repiten las fotos de la portada', () => {
+test('las fotos de datos no repiten las fotos de la portada', () => {
   const portada = new Set(content.couple.photos.map((p) => p.src));
   for (const p of content.event.photos) assert.ok(!portada.has(p.src), `repetida: ${p.src}`);
 });
 
-test('las polaroids de datos respetan basePath', () => {
+test('las fotos de datos respetan basePath', () => {
   const datos = renderPage(content, 'general', '../').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   assert.match(datos, /src="\.\.\/assets\/img\/pareja\//);
 });

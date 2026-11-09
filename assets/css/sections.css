@@ -13,20 +13,20 @@
 .js-reveal .reveal.is-visible { opacity: 1; transform: none; }
 
 /* Las fotos entran deslizándose desde el costado (alternando izquierda y derecha) cuando su sección se revela.
-   Usan la propiedad 'translate', que no pisa el 'rotate' de los polaroids. Solo movimiento: sin filtros ni recortes.
+   Usan la propiedad 'translate' (no 'transform'). Solo movimiento: sin filtros ni recortes.
    #app recorta lo que sobresale a los lados. Con movimiento reducido las transiciones ya se anulan en base.css. */
 .js-reveal .momento img,
-.js-reveal .polaroid {
+.js-reveal .banda img {
   translate: var(--lado, -5rem) 0;
   transition: translate 1.3s var(--suave) .25s;
 }
 .js-reveal .momento:nth-of-type(even) img,
-.js-reveal .polaroid--2 { --lado: 5rem; }
-.js-reveal .polaroid--2 { transition-delay: .5s; }
-.js-reveal .polaroid--3 { transition-delay: .75s; }
+.js-reveal .banda--2 img { --lado: 5rem; }
+.js-reveal .banda--2 img { transition-delay: .5s; }
+.js-reveal .banda--3 img { transition-delay: .75s; }
 .js-reveal .is-visible img,
-.js-reveal .is-visible .polaroid,
-.js-reveal .momento.is-visible img { translate: 0 0; }
+.js-reveal .momento.is-visible img,
+.js-reveal .banda.is-visible img { translate: 0 0; }
 
 
 .sec--portada { min-height: calc(100svh - 1.25rem); display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -54,6 +54,8 @@
 .momento { margin-bottom: 3.5rem; }
 .momento img { width: 100%; border-radius: 14px; box-shadow: 0 12px 28px rgba(90, 58, 51, .18); background: var(--beige); aspect-ratio: 4 / 3; object-fit: cover; margin-bottom: 1.2rem; }
 .momento h3 { font-size: 1.5rem; color: var(--bordo); margin-bottom: .5rem; }
+.banda img { position: absolute; top: 0; bottom: 0; left: -5rem; width: calc(100% + 10rem); height: 100%; max-width: none; object-fit: cover; background: var(--beige); }
+.banda__velo { position: absolute; inset: 0; pointer-events: none; }
 
 /* Datos: grilla de dos columnas (Fecha | Hora, Lugar | Vestimenta) con una línea fina horizontal entre filas */
 .datos__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 0 2rem; }
@@ -114,18 +116,7 @@
     0 14px 36px rgba(90, 58, 51, .25),
     0 3px 8px rgba(90, 58, 51, .15);
 }
-.plant { position: absolute; will-change: transform; width: clamp(5.5rem, 26vw, 8rem); height: auto; pointer-events: none; opacity: .9; z-index: 0; animation: flotar 9s ease-in-out infinite alternate; }
-.sec > *:not(.plant):not(.hint):not(.portada__fondo):not(.portada__velo) { position: relative; z-index: 1; }
-.sec--versiculo .plant { width: clamp(3.8rem, 17vw, 5rem); top: .2rem; }
-.plant--tl { top: 1.5rem; left: -1.2rem; transform-origin: 50% 100%; }
-.plant--br { bottom: 4.5rem; right: -.8rem; animation-delay: -4s; }
-.plant--tr { top: .5rem; right: -.8rem; animation-delay: -2s; }
-.plant--bl { bottom: .5rem; left: -1rem; animation-delay: -6s; }
-
-@keyframes flotar {
-  from { transform: translateY(0) rotate(-3deg); }
-  to   { transform: translateY(-12px) rotate(3deg); }
-}
+.sec > *:not(.hint):not(.portada__fondo):not(.portada__velo) { position: relative; z-index: 1; }
 
 /* Foto que no cargó: sin ícono roto, queda el marco beige */
 img.is-broken { visibility: hidden; }
@@ -134,7 +125,7 @@ img.is-broken { visibility: hidden; }
 .names:focus { outline: none; }
 
 /* ---- Portada con fotos (tres estilos para comparar) ---- */
-.sec--portada img:not(.plant) { display: block; max-width: 100%; }
+.sec--portada img { display: block; max-width: 100%; }
 
 /* A: foto de ustedes en un marco de arco */
 .portada--a { padding-top: 3.5rem; }
@@ -219,9 +210,16 @@ img.is-broken { visibility: hidden; }
 }
 .comparar button[aria-pressed="true"] { background: var(--bordo); border-color: var(--bordo); color: var(--crema); }
 
-/* Polaroids de "Te esperamos": dos arriba del título y una al final */
-.sec--datos .polaroids { margin-bottom: 2.2rem; }
-.sec--datos .polaroid--3 { margin: 2.6rem auto 0; }
+/* "Te esperamos": fotos de ancho completo (sin marcos) que se funden con el papel arriba y abajo */
+.sec--datos { max-width: none; padding-left: 0; padding-right: 0; padding-top: 0; overflow: hidden; }
+.sec--datos > :not(.banda) { max-width: 31rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+.sec--datos > .datos__grid, .sec--datos > .mapa { width: calc(100% - 3rem); padding: 0; }
+.banda { position: relative; overflow: hidden; margin: 0; height: min(125vw, 34rem); }
+.banda--1 { margin-bottom: 1rem; }
+.banda--2 { margin-top: 3rem; }
+.banda--3 { margin-top: -2rem; margin-bottom: -5rem; }
+.banda__velo { background: linear-gradient(to bottom, var(--papel) 0%, rgba(254, 252, 248, 0) 22%, rgba(254, 252, 248, 0) 62%, var(--papel) 100%); }
+.banda--1 .banda__velo { background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 50%, rgba(254, 252, 248, .9) 82%, var(--papel) 100%); }
 
 /* La portada C ocupa todo el ancho de la hoja (la foto va de borde a borde) */
 .sec.portada--c { max-width: none; }
