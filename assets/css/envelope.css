@@ -16,17 +16,58 @@ body.is-locked { overflow: hidden; height: 100svh; }
 .env-scene { position: relative; width: var(--w); height: calc(var(--w) * .68); }
 .env-body { position: absolute; inset: 0; background: #D9C4A3; border-radius: 6px; box-shadow: 0 18px 40px rgba(90, 58, 51, .28); }
 
-.env-card {
-  position: absolute; left: 6%; right: 6%; top: 8%; height: 84%;
-  background: var(--crema); border-radius: 4px; z-index: 2;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--chocolate);
-}
 .env-front { position: absolute; inset: 0; z-index: 3; background: #CDB694; border-radius: 6px; clip-path: polygon(0 100%, 0 28%, 50% 64%, 100% 28%, 100% 100%); }
 .env-flap {
   position: absolute; left: 0; right: 0; top: 0; height: 64%; z-index: 4;
   background: #D2BB98; clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
   transform-origin: top center; backface-visibility: visible;
+}
+
+/* La carta viene doblada en tres: se ve el primer tercio (pan--1) y los otros dos están plegados detrás.
+   Todo se anima solo con transform y opacity. */
+.env-card {
+  position: absolute; left: 6%; right: 6%; top: 8%; height: 84%; z-index: 2;
+  perspective: 1400px; transform-style: preserve-3d; transform-origin: 50% 0;
+}
+.pan {
+  position: relative; height: 100%;
+  background: var(--crema); border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(90, 58, 51, .12);
+  transform-style: preserve-3d;
+}
+.pan::after {
+  content: ""; position: absolute; inset: .45rem; pointer-events: none;
+  border: 1px solid rgba(110, 43, 51, .3); border-radius: 2px;
+}
+.pan--1 { box-shadow: 0 6px 18px rgba(90, 58, 51, .18); }
+.pan--2, .pan--3 { position: absolute; left: 0; top: 100%; width: 100%; transform-origin: 50% 0; }
+.pan--2 { transform: translateZ(-1px) rotateX(180deg); }
+.pan--3 { transform: translateZ(1px) rotateX(-180deg); }
+.pan--2::before, .pan--3::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1.6rem; z-index: 1; pointer-events: none;
+  background: linear-gradient(rgba(90, 58, 51, .1), transparent);
+}
+
+.pan__txt {
+  position: absolute; inset: 0; z-index: 2; padding: 1rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: .35rem;
+  backface-visibility: hidden;
+}
+.pan__txt p { margin: 0; }
+.env-titulo { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .125); line-height: 1.05; color: var(--bordo); }
+.env-nombres { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .085); line-height: 1.1; color: var(--chocolate); }
+.env-nombres::before { content: ""; display: block; width: 3rem; height: 1px; margin: 0 auto .6rem; background: rgba(110, 43, 51, .45); }
+.env-lema { font-family: var(--serif); font-style: italic; font-size: calc(var(--w) * .05); color: var(--chocolate); }
+.env-cruz { position: relative; display: block; width: 1.2rem; height: 1.6rem; margin-bottom: .3rem; }
+.env-cruz::before, .env-cruz::after { content: ""; position: absolute; background: var(--verde); border-radius: 1px; }
+.env-cruz::before { left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; }
+.env-cruz::after { top: 32%; left: 0; right: 0; height: 2px; }
+.env-te { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .085); color: var(--bordo); }
+.env-fecha { font-family: var(--serif); font-size: calc(var(--w) * .038); letter-spacing: .12em; text-transform: uppercase; color: var(--chocolate); }
+.pan--3 .pan__txt { padding-bottom: 3.4rem; }
+.pan--3 .pan__txt::before {
+  content: ""; position: absolute; left: 50%; bottom: .9rem; width: 4rem; height: 4rem; margin-left: -2rem; opacity: .8; transform: rotate(90deg);
+  background: url("../img/plants/rama-1.svg") center / contain no-repeat;
 }
 
 .seal {
@@ -41,14 +82,27 @@ body.is-locked { overflow: hidden; height: 100svh; }
 
 @keyframes latido { 50% { transform: scale(1.08); } }
 
-/* Secuencia: sello 0–.7s · solapa .7–2s · carta 2–3.4s · salida 3.6–4.8s */
+/* Secuencia: sello 0–.7s · solapa .7–2s · la carta sale 1.9–3.2s · se despliega 3.3–4.95s ·
+   se acerca 4.2–5.8s · el sobre se desvanece 5.5–6.5s. Duración total: 6.6s (envelope.js). */
 .is-opening .seal { animation: sello .7s ease forwards; pointer-events: none; }
 .is-opening .env-hint { opacity: 0; transition: opacity .6s; }
 .is-opening .env-flap { animation: solapa 1.3s .7s var(--suave) forwards; }
-.is-opening .env-card { animation: carta 1.4s 2s var(--suave) forwards; }
-.is-opening.envelope { animation: salida 1.2s 3.6s ease forwards; }
+.is-opening .env-card { animation: carta 3.9s 1.9s forwards; }
+.is-opening .pan--2 { animation: abre-2 1s 3.3s var(--suave) forwards; }
+.is-opening .pan--3 { animation: abre-3 1s 3.95s var(--suave) forwards; }
+.is-opening.envelope { animation: salida 1s 5.5s ease forwards; }
 
 @keyframes sello { to { opacity: 0; transform: scale(.3); } }
 @keyframes solapa { 0% { transform: rotateX(0); z-index: 4; } 49% { z-index: 4; } 50% { z-index: 1; } 100% { transform: rotateX(180deg); z-index: 1; } }
-@keyframes carta { to { transform: translateY(-62%) scale(1.08); } }
-@keyframes salida { to { opacity: 0; transform: scale(1.15); } }
+/* La carta sube fuera del sobre (0–33%), espera mientras se despliega y se acerca al final (59–100%).
+   Pasa por delante del sobre justo cuando ya salió del todo (32–33%). */
+@keyframes carta {
+  0% { transform: translateY(0) scale(1); z-index: 2; animation-timing-function: cubic-bezier(.22, .61, .36, 1); }
+  32% { z-index: 2; }
+  33% { transform: translateY(calc(var(--w) * -.45)) scale(1); z-index: 6; }
+  59% { transform: translateY(calc(var(--w) * -.45)) scale(1); animation-timing-function: cubic-bezier(.3, .1, .2, 1); }
+  100% { transform: translateY(calc(var(--w) * -.65)) scale(1.2); z-index: 6; }
+}
+@keyframes abre-2 { to { transform: translateZ(0) rotateX(0); } }
+@keyframes abre-3 { to { transform: translateZ(0) rotateX(0); } }
+@keyframes salida { to { opacity: 0; } }

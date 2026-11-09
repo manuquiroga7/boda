@@ -72,10 +72,11 @@ openEnvelope({
   root: envelopeRoot,
   inertElements: app.querySelectorAll('section'),
   focusAfter: portadaTitle,
+  carta: { nombres: content.couple.names.join(' y '), fecha: content.couple.dateText },
   onOpen() {
     music.start().then(syncMute);
     // Las secciones aparecen cuando el sobre empieza a salir (de inmediato con movimiento reducido).
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setTimeout(() => initReveal(document), reduced ? 0 : 3400);
+    setTimeout(() => initReveal(document), reduced ? 0 : 5600);
   },
 });

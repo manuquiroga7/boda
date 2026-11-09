@@ -35,7 +35,7 @@ test('al abrir se inicia la animación y el contenido queda bloqueado hasta term
   root.querySelector('button.seal').click();
   assert.ok(root.querySelector('.envelope').classList.contains('is-opening'));
   assert.ok(doc.body.classList.contains('is-locked'));
-  mock.timers.tick(6000);
+  mock.timers.tick(7000);
   assert.ok(!doc.body.classList.contains('is-locked'));
   assert.equal(root.querySelector('.envelope'), null);
   mock.timers.reset();
@@ -51,7 +51,7 @@ test('el sobre es modal y deja inertes las secciones hasta que termina', () => {
   assert.ok(section.hasAttribute('inert'));
   root.querySelector('button.seal').click();
   assert.ok(section.hasAttribute('inert'));
-  mock.timers.tick(6000);
+  mock.timers.tick(7000);
   assert.ok(!section.hasAttribute('inert'));
   mock.timers.reset();
 });
@@ -64,7 +64,7 @@ test('al terminar, el foco pasa al elemento indicado', () => {
   doc.body.append(target);
   openEnvelope({ root, onOpen() {}, focusAfter: target });
   root.querySelector('button.seal').click();
-  mock.timers.tick(6000);
+  mock.timers.tick(7000);
   assert.equal(doc.activeElement, target);
   mock.timers.reset();
 });
