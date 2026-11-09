@@ -6,7 +6,7 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 const CARTA = { titulo: '¡Llegó la hora!', nombres: 'Emanuel y Belén', lema: 'Con Dios en el centro', fecha: 'Te esperamos' };
 
-// carta: textos de la carta, que viene doblada en tres (titulo y nombres se ven al salir del sobre;
+// carta: textos de la carta, que viene doblada en dos (titulo y nombres se ven al salir del sobre;
 // lema y fecha aparecen al desplegarla).
 // inertElements: secciones que no deben recibir foco ni lectura mientras el sobre está cerrado.
 // focusAfter: elemento que recibe el foco cuando el sobre desaparece.
@@ -28,14 +28,9 @@ export function openEnvelope({ root, onOpen, inertElements = [], focusAfter = nu
         </div>
         <div class="pan pan--2">
           <div class="pan__txt">
-            <span class="env-cruz" aria-hidden="true"></span>
             <p class="env-lema">${esc(t.lema)}</p>
-          </div>
-          <div class="pan pan--3">
-            <div class="pan__txt">
-              <p class="env-te">Te esperamos</p>
-              <p class="env-fecha">${esc(t.fecha)}</p>
-            </div>
+            <p class="env-te">Te esperamos</p>
+            <p class="env-fecha">${esc(t.fecha)}</p>
           </div>
         </div>
       </div>
