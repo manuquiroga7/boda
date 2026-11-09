@@ -35,3 +35,12 @@ test('no hay fondos fijos (provocan repintado al scrollear)', () => {
 test('las plantas se mueven con will-change para no repintar la carta', () => {
   assert.match(css, /\.plant\s*{[^}]*will-change:\s*transform/);
 });
+
+test('las fotos entran deslizándose desde los costados, alternando lados, sin pisar el rotate de los polaroids', () => {
+  assert.match(css, /\.js-reveal \.momento img,\s*\.js-reveal \.polaroid\s*{[^}]*translate:\s*var\(--lado/);
+  assert.match(css, /\.momento:nth-of-type\(even\) img,\s*\.js-reveal \.polaroid--2\s*{\s*--lado:\s*5rem/);
+  assert.match(css, /\.js-reveal \.is-visible \.polaroid[^{]*{\s*translate:\s*0 0/);
+  // se mueve con 'translate' (no 'transform') y sin efectos pesados
+  const bloque = css.slice(css.indexOf('Las fotos entran'), css.indexOf('.js-reveal .is-visible img'));
+  assert.doesNotMatch(bloque, /filter|clip-path|transform:/);
+});

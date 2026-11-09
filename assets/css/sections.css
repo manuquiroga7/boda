@@ -12,6 +12,23 @@
 .js-reveal .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1.2s var(--suave), transform 1.2s var(--suave); }
 .js-reveal .reveal.is-visible { opacity: 1; transform: none; }
 
+/* Las fotos entran deslizándose desde el costado (alternando izquierda y derecha) cuando su sección se revela.
+   Usan la propiedad 'translate', que no pisa el 'rotate' de los polaroids. Solo movimiento: sin filtros ni recortes.
+   #app recorta lo que sobresale a los lados. Con movimiento reducido las transiciones ya se anulan en base.css. */
+.js-reveal .momento img,
+.js-reveal .polaroid {
+  translate: var(--lado, -5rem) 0;
+  transition: translate 1.3s var(--suave) .25s;
+}
+.js-reveal .momento:nth-of-type(even) img,
+.js-reveal .polaroid--2 { --lado: 5rem; }
+.js-reveal .polaroid--2 { transition-delay: .5s; }
+.js-reveal .polaroid--3 { transition-delay: .75s; }
+.js-reveal .is-visible img,
+.js-reveal .is-visible .polaroid,
+.js-reveal .momento.is-visible img { translate: 0 0; }
+
+
 .sec--portada { min-height: calc(100svh - 1.25rem); display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .eyebrow { letter-spacing: .3em; text-transform: uppercase; font-size: .78rem; color: var(--verde); }
 .names { display: flex; flex-direction: column; align-items: center; gap: .2rem; font-size: clamp(2.6rem, 14vw, 4.4rem); line-height: 1.1; color: var(--chocolate); overflow-wrap: anywhere; }
