@@ -59,6 +59,6 @@ export const content = {
     message:
       'Gracias por el lugar tan importante que tienes en nuestras vidas. Tu cariño, tu apoyo y tu presencia han sido un regalo de Dios para nosotros. Por eso queremos que estés a nuestro lado en este día tan especial.',
   },
-  music: { src: 'assets/audio/ambient.wav' },
+  music: { src: 'assets/audio/ambient.mp3' },
   pdf: { src: 'assets/pdf/invitacion.pdf' },
 };

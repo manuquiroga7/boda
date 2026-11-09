@@ -1,2 +1,2 @@
-Pista de ejemplo generada por scripts/make-ambient.mjs (obra propia, sin licencia de terceros).
-Reemplazar por la pista real y confirmar su licencia antes de publicar.
+Pista aportada por Emanuel y Belén (ambient.mp3).
+Confirmar que se puede usar y publicar (derechos de autor) antes de poner la invitación en un dominio público.
