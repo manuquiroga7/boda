@@ -7,7 +7,7 @@ export const content = {
     // Foto de la portada. La portada A y la C usan la primera; la B usa hasta tres (si hay menos, repite).
     // 'focus' es el punto de la foto que no debe cortarse al recortarla (object-position).
     photos: [
-      { src: 'assets/img/pareja/portada.jpg', alt: 'Emanuel y Belén abrazados, vestidos de gala, en blanco y negro', focus: '50% 0%' },
+      { src: 'assets/img/pareja/portada.jpg', alt: 'Emanuel y Belén abrazados, vestidos de gala, en blanco y negro', focus: '50% 22%' },
     ],
   },
   verse: {
@@ -59,6 +59,8 @@ export const content = {
     message:
       'Gracias por el lugar tan importante que tienes en nuestras vidas. Tu cariño, tu apoyo y tu presencia han sido un regalo de Dios para nosotros. Por eso queremos que estés a nuestro lado en este día tan especial.',
   },
+  // Video de fondo de "¿Nos acompañas?" (assets/video/). Sin foto de respaldo: mientras carga se ve el papel.
+  video: { src: 'assets/video/nosotros.mp4', focus: '50% 22%', speed: 0.6 },
   music: { src: 'assets/audio/ambient.mp3' },
   pdf: { src: 'assets/pdf/invitacion.pdf' },
 };

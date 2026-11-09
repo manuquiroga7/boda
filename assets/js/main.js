@@ -22,6 +22,15 @@ app.innerHTML = renderPage(content, variant, basePath, estilo);
 guardImages(app);
 activarMapas(app);
 
+// Video de fondo en cámara lenta (velocidad en content.video.speed). Se reaplica al cargar y al reproducir porque algunos navegadores la reinician.
+app.querySelectorAll('.banda--video video').forEach((v) => {
+  const speed = content.video.speed ?? 1;
+  const aplicar = () => { v.playbackRate = speed; };
+  aplicar();
+  v.addEventListener('loadedmetadata', aplicar);
+  v.addEventListener('play', aplicar);
+});
+
 // Al volver con el botón atrás el navegador puede restaurar la página a medias: se recarga limpia.
 window.addEventListener('pageshow', (e) => {
   if (e.persisted) location.reload();
@@ -78,5 +87,7 @@ openEnvelope({
     // Las secciones aparecen cuando el sobre empieza a salir (de inmediato con movimiento reducido).
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     setTimeout(() => initReveal(document), reduced ? 0 : 5600);
+    // Con movimiento reducido el video de fondo no se reproduce: queda detenido en su primer cuadro.
+    if (reduced) document.querySelectorAll('.banda--video video').forEach((v) => { v.removeAttribute('autoplay'); v.pause?.(); });
   },
 });

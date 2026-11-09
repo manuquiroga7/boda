@@ -116,10 +116,10 @@ test('con una clave de API usa el Embed API oficial', () => {
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\/embed\/v1\/place\?key=CLAVE_DE_PRUEBA&amp;q=Burgues%203826%2C%20Montevideo"/);
 });
 
-test('la sección de datos lleva tres fotos de ancho completo propias, diferidas y con alt', () => {
+test('la sección de datos lleva una foto de ancho completo propia, diferidas y con alt', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   const figuras = datos.match(/<figure class="banda[^"]*">[\s\S]*?<\/figure>/g) ?? [];
-  assert.equal(figuras.length, 3);
+  assert.equal(figuras.length, 1);
   for (const f of figuras) {
     assert.match(f, /loading="lazy"/);
     assert.match(f, /alt="[^"]+"/);
@@ -170,4 +170,15 @@ test('la portada B con una sola foto igual arma las tres polaroids', () => {
   c.couple.photos = c.couple.photos.slice(0, 1);
   const fotos = (renderPortada(c, 'b').match(/<figure class="polaroid/g) ?? []).length;
   assert.equal(fotos, 3);
+});
+
+test('"¿Nos acompañas?" lleva un video de fondo mudo, en bucle, sin foto de respaldo y el botón de WhatsApp', () => {
+  const html = renderPage(content, 'general', '../');
+  const sec = html.match(/<section id="asistencia"[\s\S]*?<\/section>/)[0];
+  const video = sec.match(/<video [^>]*>/)[0];
+  for (const a of ['muted', 'loop', 'playsinline', 'autoplay']) assert.match(video, new RegExp(` ${a}[ >]`));
+  assert.doesNotMatch(video, /poster=/);
+  assert.match(sec, /<source src="\.\.\/assets\/video\/[^"]+\.mp4"/);
+  assert.match(sec, /href="https:\/\/wa\.me\//);
+  assert.match(sec, /<h2>¿Nos acompañas\?<\/h2>/);
 });

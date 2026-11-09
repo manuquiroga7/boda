@@ -38,7 +38,7 @@ test('no quedan plantas decorativas', () => {
 
 test('las fotos entran deslizándose desde los costados, alternando lados, con las fotos de ancho completo', () => {
   assert.match(css, /\.js-reveal \.momento img,\s*\.js-reveal \.banda img\s*{[^}]*translate:\s*var\(--lado/);
-  assert.match(css, /\.momento:nth-of-type\(even\) img,\s*\.js-reveal \.banda--2 img\s*{\s*--lado:\s*5rem/);
+  assert.match(css, /\.momento:nth-of-type\(even\) img\s*{\s*--lado:\s*5rem/);
   assert.match(css, /\.js-reveal \.banda\.is-visible img\s*{\s*translate:\s*0 0/);
   // se mueve con 'translate' (no 'transform') y sin efectos pesados
   const bloque = css.slice(css.indexOf('Las fotos entran'), css.indexOf('.js-reveal .is-visible img'));

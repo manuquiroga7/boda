@@ -20,10 +20,8 @@
   translate: var(--lado, -5rem) 0;
   transition: translate 1.3s var(--suave) .25s;
 }
-.js-reveal .momento:nth-of-type(even) img,
-.js-reveal .banda--2 img { --lado: 5rem; }
-.js-reveal .banda--2 img { transition-delay: .5s; }
-.js-reveal .banda--3 img { transition-delay: .75s; }
+.js-reveal .banda img { --lado: -2.5rem; }
+.js-reveal .momento:nth-of-type(even) img { --lado: 5rem; }
 .js-reveal .is-visible img,
 .js-reveal .momento.is-visible img,
 .js-reveal .banda.is-visible img { translate: 0 0; }
@@ -54,7 +52,7 @@
 .momento { margin-bottom: 3.5rem; }
 .momento img { width: 100%; border-radius: 14px; box-shadow: 0 12px 28px rgba(90, 58, 51, .18); background: var(--beige); aspect-ratio: 4 / 3; object-fit: cover; margin-bottom: 1.2rem; }
 .momento h3 { font-size: 1.5rem; color: var(--bordo); margin-bottom: .5rem; }
-.banda img { position: absolute; top: 0; bottom: 0; left: -5rem; width: calc(100% + 10rem); height: 100%; max-width: none; object-fit: cover; background: var(--beige); }
+.banda img { position: absolute; top: 0; bottom: 0; left: -2.5rem; width: calc(100% + 5rem); height: 100%; max-width: none; object-fit: cover; background: var(--beige); }
 .banda__velo { position: absolute; inset: 0; pointer-events: none; }
 
 /* Datos: grilla de dos columnas (Fecha | Hora, Lugar | Vestimenta) con una línea fina horizontal entre filas */
@@ -210,19 +208,32 @@ img.is-broken { visibility: hidden; }
 }
 .comparar button[aria-pressed="true"] { background: var(--bordo); border-color: var(--bordo); color: var(--crema); }
 
-/* "Te esperamos": fotos de ancho completo (sin marcos) que se funden con el papel arriba y abajo */
+/* "Te esperamos": fotos de ancho completo con un tinte cálido (capa de color, sin filter) (sin marcos) que se funden con el papel arriba y abajo */
 .sec--datos { max-width: none; padding-left: 0; padding-right: 0; padding-top: 0; overflow: hidden; }
 .sec--datos > :not(.banda) { max-width: 31rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
 .sec--datos > .datos__grid, .sec--datos > .mapa { width: calc(100% - 3rem); padding: 0; }
-.banda { position: relative; overflow: hidden; margin: 0; height: min(125vw, 34rem); }
-.banda--1 { margin-bottom: 1rem; }
-.banda--2 { margin-top: 3rem; }
-.banda--3 { margin-top: -2rem; margin-bottom: -5rem; }
-.banda__velo { background: linear-gradient(to bottom, var(--papel) 0%, rgba(254, 252, 248, 0) 22%, rgba(254, 252, 248, 0) 62%, var(--papel) 100%); }
-.banda--1 .banda__velo { background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 50%, rgba(254, 252, 248, .9) 82%, var(--papel) 100%); }
+.banda { position: relative; overflow: hidden; margin: 0; height: min(75vw, 20rem); }
+/* Portada de "Te esperamos": nuestra foto que se funde a blanco, con el título y los datos sobre el degradado (como el inicio) */
+.banda--1, .banda--video { margin-bottom: 1rem; height: auto; min-height: min(165vw, 46rem); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+/* La foto es más alta que el contenedor y queda pegada abajo: sube y se corta el fondo de arriba sin mover el contenedor */
+.banda--1 img { top: -6rem; bottom: auto; height: calc(100% + 6rem); }
+.banda--1 .banda__velo { background: linear-gradient(to bottom, rgba(120, 82, 60, .14) 0%, rgba(120, 82, 60, .14) 45%, rgba(120, 82, 60, 0) 85%), linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }
+.banda__txt { position: relative; z-index: 1; width: 100%; max-width: 31rem; padding: 0 1.5rem 1.5rem; }
+.banda__txt h2 { margin: 0 0 .4rem; }
+.banda__txt .datos__grid { margin-bottom: 0; }
+/* Difuminado inferior suave: curva tipo smoothstep (muchas paradas) para que no se note el corte */
+.banda__velo { background: linear-gradient(to bottom, rgba(120, 82, 60, .14) 0%, rgba(120, 82, 60, .14) 45%, rgba(120, 82, 60, 0) 85%), linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 34%, rgba(254, 252, 248, 0.02) 41%, rgba(254, 252, 248, 0.07) 47%, rgba(254, 252, 248, 0.16) 54%, rgba(254, 252, 248, 0.28) 60%, rgba(254, 252, 248, 0.43) 67%, rgba(254, 252, 248, 0.59) 74%, rgba(254, 252, 248, 0.74) 80%, rgba(254, 252, 248, 0.87) 87%, rgba(254, 252, 248, 0.96) 93%, rgba(254, 252, 248, 1) 100%); }
 
 /* La portada C ocupa todo el ancho de la hoja (la foto va de borde a borde) */
 .sec.portada--c { max-width: none; }
 
 /* En la portada C el texto se apoya sobre la foto: más contraste */
 .portada--c .eyebrow { color: var(--chocolate); }
+
+/* "¿Nos acompañas?": video de fondo con el mismo degradado a blanco que "Te esperamos" */
+.sec--asistencia { max-width: none; padding: 0; overflow: hidden; }
+.banda--video { margin-bottom: 0; min-height: min(150vw, 40rem); }
+/* El video baja dentro del contenedor (encuadre fino con object-position, sin difuminado arriba */
+.banda--video video { filter: grayscale(1) contrast(1.05); position: absolute; left: 0; width: 100%; top: 0; height: 100%; object-fit: cover; background: var(--papel); }
+.banda--video .banda__txt { padding-bottom: 3.5rem; }
+.banda--video .banda__velo { background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }

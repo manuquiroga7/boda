@@ -35,6 +35,7 @@ export function validateContent(c) {
   need(isText(c?.rsvp?.message), 'rsvp.message');
   need(isText(c?.special?.title), 'special.title');
   need(isText(c?.special?.message), 'special.message');
+  need(isText(c?.video?.src), 'video.src');
   need(isText(c?.music?.src), 'music.src');
   need(isText(c?.pdf?.src), 'pdf.src');
   return problems;

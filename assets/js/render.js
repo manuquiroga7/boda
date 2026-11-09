@@ -83,32 +83,36 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 
   const e = c.event;
   // Foto de ancho completo que se funde con el papel (sin marco ni sombra).
-  const banda = (f, n) =>
-    `<figure class="banda banda--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}><div class="banda__velo"></div></figure>`;
+  const banda = (f, n, txt = '') =>
+    `<figure class="banda banda--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}><div class="banda__velo"></div>${txt ? `<figcaption class="banda__txt">${txt}</figcaption>` : ''}</figure>`;
+  const grilla = `
+<dl class="datos__grid">
+  <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
+  <div class="dato"><dt>Hora</dt><dd>${esc(e.time)}</dd></div>
+  <div class="dato"><dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd></div>
+  ${e.dressCode ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd></div>` : ''}
+</dl>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
-  ${banda(e.photos[0], 1)}
-  <h2>Te esperamos</h2>
-  <dl class="datos__grid">
-    <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
-    <div class="dato"><dt>Hora</dt><dd>${esc(e.time)}</dd></div>
-    <div class="dato"><dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd></div>
-    ${e.dressCode ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd></div>` : ''}
-  </dl>
+  ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}`)}
   <div class="mapa">
     <iframe src="${esc(mapsEmbedUrl(e.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(e.placeName)}, ${esc(e.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
   </div>
   <a class="btn" href="${esc(mapsUrl(e.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>
-  ${banda(e.photos[1], 2)}
-  ${banda(e.photos[2], 3)}
 </section>`;
 
   const asistencia = `
 <section id="asistencia" class="sec sec--asistencia reveal">
-  <h2>¿Nos acompañas?</h2>
-  <p>Cuéntanos si podrás estar con nosotros.</p>
-  <a class="btn" href="${esc(whatsappUrl(c.rsvp.whatsappNumber, c.rsvp.message))}" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+  <figure class="banda banda--video">
+    <video muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"${foco(c.video)}><source src="${a(c.video.src)}" type="video/mp4"></video>
+    <div class="banda__velo"></div>
+    <figcaption class="banda__txt">
+      <h2>¿Nos acompañas?</h2>
+      <p>Cuéntanos si podrás estar con nosotros.</p>
+      <a class="btn" href="${esc(whatsappUrl(c.rsvp.whatsappNumber, c.rsvp.message))}" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+    </figcaption>
+  </figure>
 </section>`;
 
   const pdf = `
