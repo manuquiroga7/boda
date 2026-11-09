@@ -1,0 +1,13 @@
+# Lo que NO se publica en Cloudflare (solo el sitio: index.html, para-ti-k7q2/ y assets/)
+.git
+.gitignore
+.claude
+.assetsignore
+wrangler.jsonc
+node_modules
+package.json
+package-lock.json
+docs
+tests
+scripts
+fotos-originales
