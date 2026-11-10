@@ -56,7 +56,6 @@ body.is-locked { overflow: hidden; height: 100svh; }
 .env-titulo { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .125); line-height: 1.05; color: var(--bordo); }
 .env-nombres { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .085); line-height: 1.1; color: var(--chocolate); }
 .env-nombres::before { content: ""; display: block; width: 3rem; height: 1px; margin: 0 auto .6rem; background: rgba(110, 43, 51, .45); }
-.env-lema { font-family: var(--serif); font-style: italic; font-size: calc(var(--w) * .05); color: var(--chocolate); }
 .env-te { font-family: 'Great Vibes', cursive; font-size: calc(var(--w) * .085); color: var(--bordo); }
 .env-fecha { font-family: var(--serif); font-size: calc(var(--w) * .038); letter-spacing: .12em; text-transform: uppercase; color: var(--chocolate); }
 

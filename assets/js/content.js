@@ -2,6 +2,7 @@
 export const content = {
   couple: {
     names: ['Emanuel', 'Belén'],
+    surnames: ['Quiroga', 'Medina'], // se muestran en cursiva bajo los nombres (opcional)
     dateISO: '2027-03-20',
     dateText: 'Sábado 20 de marzo de 2027',
     // Foto de la portada. La portada A y la C usan la primera; la B usa hasta tres (si hay menos, repite).

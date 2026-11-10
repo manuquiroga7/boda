@@ -31,7 +31,9 @@
 .eyebrow { letter-spacing: .3em; text-transform: uppercase; font-size: .78rem; color: var(--verde); }
 .names { display: flex; flex-direction: column; align-items: center; gap: .2rem; font-size: clamp(2.6rem, 14vw, 4.4rem); line-height: 1.1; color: var(--chocolate); overflow-wrap: anywhere; }
 .names em { font-size: .6em; color: var(--bordo); font-style: italic; }
+.apellidos { margin: 1.2rem 0 0; padding: 0 .5rem; font-family: 'Great Vibes', cursive; font-style: italic; font-size: clamp(1.3rem, 6.2vw, 1.9rem); line-height: 1.2; color: var(--bordo); }
 .date { font-family: var(--serif); font-size: 1.25rem; margin-top: 2.2rem; }
+.apellidos + .date { margin-top: 1.4rem; }
 .hint { position: absolute; bottom: 2rem; font-size: .8rem; letter-spacing: .15em; color: var(--verde); }
 
 .sec--versiculo { background: rgba(228, 211, 184, .55); max-width: none; }
@@ -217,12 +219,11 @@ img.is-broken { visibility: hidden; }
 .banda--1, .banda--video { margin-bottom: 1rem; height: auto; min-height: min(165vw, 46rem); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
 /* La foto es más alta que el contenedor y queda pegada abajo: sube y se corta el fondo de arriba sin mover el contenedor */
 .banda--1 img { top: -6rem; bottom: auto; height: calc(100% + 6rem); }
-.banda--1 .banda__velo { background: linear-gradient(to bottom, rgba(120, 82, 60, .14) 0%, rgba(120, 82, 60, .14) 45%, rgba(120, 82, 60, 0) 85%), linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }
+.banda--1 .banda__velo { background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }
 .banda__txt { position: relative; z-index: 1; width: 100%; max-width: 31rem; padding: 0 1.5rem 1.5rem; }
 .banda__txt h2 { margin: 0 0 .4rem; }
 .banda__txt .datos__grid { margin-bottom: 0; }
 /* Difuminado inferior suave: curva tipo smoothstep (muchas paradas) para que no se note el corte */
-.banda__velo { background: linear-gradient(to bottom, rgba(120, 82, 60, .14) 0%, rgba(120, 82, 60, .14) 45%, rgba(120, 82, 60, 0) 85%), linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 34%, rgba(254, 252, 248, 0.02) 41%, rgba(254, 252, 248, 0.07) 47%, rgba(254, 252, 248, 0.16) 54%, rgba(254, 252, 248, 0.28) 60%, rgba(254, 252, 248, 0.43) 67%, rgba(254, 252, 248, 0.59) 74%, rgba(254, 252, 248, 0.74) 80%, rgba(254, 252, 248, 0.87) 87%, rgba(254, 252, 248, 0.96) 93%, rgba(254, 252, 248, 1) 100%); }
 
 /* La portada C ocupa todo el ancho de la hoja (la foto va de borde a borde) */
 .sec.portada--c { max-width: none; }

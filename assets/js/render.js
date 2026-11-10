@@ -17,6 +17,7 @@ export function renderPortada(c, estilo = 'a', basePath = '') {
   const texto = `
   <p class="eyebrow">Con la bendición de Dios</p>
   <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
+  ${c.couple.surnames ? `<p class="apellidos">${esc(n1)} ${esc(c.couple.surnames[0])} y ${esc(n2)} ${esc(c.couple.surnames[1])}</p>` : ''}
   <p class="date">${esc(c.couple.dateText)}</p>`;
   const hint = '<p class="hint" aria-hidden="true">Desliza para continuar</p>';
   const abre = (e) => `<section id="portada" class="sec sec--portada portada--${e} reveal">`;
