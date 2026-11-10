@@ -1,5 +1,8 @@
 {
   "name": "boda",
+  "main": "worker/index.js",
   "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./" }
+  "assets": { "directory": "./", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  // Base de datos de las confirmaciones. Si no existe, Wrangler la crea al desplegar.
+  "d1_databases": [{ "binding": "DB", "database_name": "boda-confirmaciones" }]
 }

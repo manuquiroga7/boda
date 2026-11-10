@@ -52,8 +52,7 @@ export const content = {
     ],
   },
   rsvp: {
-    whatsappNumber: '+598 99 000 000',
-    message: 'Hola, confirmo mi asistencia a la boda.',
+    endpoint: 'api/rsvp', // Worker de Cloudflare que guarda las confirmaciones (ver worker/)
   },
   special: {
     title: 'Para ti, que has sido parte de nuestra historia',

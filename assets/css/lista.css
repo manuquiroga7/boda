@@ -1,0 +1,15 @@
+.lista { max-width: 46rem; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+.lista h1 { color: var(--bordo); margin-bottom: 1.2rem; }
+.lista__entrar { display: flex; flex-wrap: wrap; gap: .8rem; align-items: flex-end; margin-bottom: 1rem; }
+.lista__entrar label { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--verde); }
+.lista input { font: inherit; padding: .6rem .8rem; border: 1px solid var(--beige); border-radius: 8px; background: #fff; color: var(--chocolate); }
+.lista__resumen { list-style: none; display: flex; flex-wrap: wrap; gap: 1.2rem 2rem; padding: 0; margin: 0 0 1.2rem; }
+.lista__resumen b { display: block; font-size: 2rem; font-weight: 400; color: var(--bordo); line-height: 1.1; }
+.lista__resumen span { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--verde); }
+.lista__tabla { overflow-x: auto; }
+.lista table { width: 100%; border-collapse: collapse; }
+.lista th, .lista td { padding: .6rem .5rem; text-align: left; border-bottom: 1px solid var(--beige); }
+.lista th { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--verde); font-weight: 400; }
+.lista .no { color: var(--bordo); }
+.lista td button { border: 0; background: transparent; color: var(--bordo); cursor: pointer; font-size: .85rem; text-decoration: underline; }
+#estado { color: var(--bordo); min-height: 1.4em; }

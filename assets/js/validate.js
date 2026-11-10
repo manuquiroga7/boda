@@ -31,8 +31,7 @@ export function validateContent(c) {
     need(isText(p?.src), `event.photos[${i}].src`);
     need(isText(p?.alt), `event.photos[${i}].alt`);
   });
-  need(isText(c?.rsvp?.whatsappNumber), 'rsvp.whatsappNumber');
-  need(isText(c?.rsvp?.message), 'rsvp.message');
+  need(isText(c?.rsvp?.endpoint), 'rsvp.endpoint');
   need(isText(c?.special?.title), 'special.title');
   need(isText(c?.special?.message), 'special.message');
   need(isText(c?.video?.src), 'video.src');

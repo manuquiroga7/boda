@@ -1,4 +1,4 @@
-import { whatsappUrl, mapsUrl, mapsEmbedUrl } from './links.js';
+import { mapsUrl, mapsEmbedUrl } from './links.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -14,10 +14,10 @@ export function renderPortada(c, estilo = 'a', basePath = '') {
   const fotos = c.couple.photos;
   const foto = (f, cls = '') =>
     `<img${cls ? ` class="${cls}"` : ''} src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" decoding="async"${foco(f)}>`;
+  // Apellido en cursiva, medio escondido detrás del nombre (opcional: couple.surnames)
+  const apellido = (i) => (c.couple.surnames?.[i] ? `<small class="apellido">${esc(c.couple.surnames[i])}</small>` : '');
   const texto = `
-  <p class="eyebrow">Con la bendición de Dios</p>
-  <h1 class="names"><span>${esc(n1)}</span><em>&amp;</em><span>${esc(n2)}</span></h1>
-  ${c.couple.surnames ? `<p class="apellidos">${esc(n1)} ${esc(c.couple.surnames[0])} y ${esc(n2)} ${esc(c.couple.surnames[1])}</p>` : ''}
+  <h1 class="names"><span>${esc(n1)}${apellido(0)}</span><em>&amp;</em><span>${esc(n2)}${apellido(1)}</span></h1>
   <p class="date">${esc(c.couple.dateText)}</p>`;
   const hint = '<p class="hint" aria-hidden="true">Desliza para continuar</p>';
   const abre = (e) => `<section id="portada" class="sec sec--portada portada--${e} reveal">`;
@@ -93,9 +93,17 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   <div class="dato"><dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd></div>
   ${e.dressCode ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd></div>` : ''}
 </dl>`;
+  // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
+  const hm = /(\d{1,2}):(\d{2})/.exec(e.time) ?? [];
+  const inicio = `${c.couple.dateISO}T${String(hm[1] ?? 0).padStart(2, '0')}:${hm[2] ?? '00'}:00-03:00`;
+  const unidad = (k, t) => `<div><b data-u="${k}">--</b><span>${t}</span></div>`;
+  const contador = `<div class="contador" data-inicio="${esc(inicio)}" role="timer" aria-label="Tiempo que falta para la boda">${unidad('dias', 'días')}${unidad('horas', 'horas')}${unidad('minutos', 'min')}${unidad('segundos', 'seg')}</div>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
-  ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}`)}
+  ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}<p class="contador__t">Cuenta regresiva</p>${contador}`)}
+</section>
+
+<section id="mapa" class="sec sec--datos sec--mapa reveal">
   <div class="mapa">
     <iframe src="${esc(mapsEmbedUrl(e.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(e.placeName)}, ${esc(e.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
@@ -111,7 +119,22 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
     <figcaption class="banda__txt">
       <h2>¿Nos acompañas?</h2>
       <p>Cuéntanos si podrás estar con nosotros.</p>
-      <a class="btn" href="${esc(whatsappUrl(c.rsvp.whatsappNumber, c.rsvp.message))}" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+      <form class="rsvp" action="${a(c.rsvp.endpoint)}" method="post" novalidate>
+        <label class="rsvp__campo">Tu nombre
+          <input type="text" name="nombre" required minlength="2" maxlength="80" autocomplete="name">
+        </label>
+        <fieldset class="rsvp__asiste">
+          <legend class="sr-only">¿Podrás venir?</legend>
+          <label><input type="radio" name="asiste" value="si" checked> Sí, ahí estaré</label>
+          <label><input type="radio" name="asiste" value="no"> No podré</label>
+        </fieldset>
+        <label class="rsvp__campo rsvp__personas">¿Cuántas personas?
+          <select name="personas">${[1, 2, 3, 4, 5, 6].map((n) => `<option value="${n}">${n}</option>`).join('')}</select>
+        </label>
+        <input class="rsvp__trampa" type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Confirmar asistencia</button>
+        <p class="rsvp__msg" role="status" aria-live="polite"></p>
+      </form>
     </figcaption>
   </figure>
 </section>`;

@@ -11,3 +11,5 @@ docs
 tests
 scripts
 fotos-originales
+worker
+.wrangler

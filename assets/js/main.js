@@ -3,6 +3,8 @@ import { validateContent } from './validate.js';
 import { renderPage, renderPortada } from './render.js';
 import { mountCompare } from './compare.js';
 import { activarMapas } from './mapa.js';
+import { iniciarContador } from './countdown.js';
+import { iniciarRsvp } from './rsvp.js';
 import { openEnvelope } from './envelope.js';
 import { createMusic } from './music.js';
 import { initReveal } from './reveal.js';
@@ -21,6 +23,8 @@ const estilo = ESTILOS.includes(params.get('portada')) ? params.get('portada') :
 app.innerHTML = renderPage(content, variant, basePath, estilo);
 guardImages(app);
 activarMapas(app);
+iniciarContador(app);
+iniciarRsvp(app, variant);
 
 // Video de fondo en cámara lenta (velocidad en content.video.speed). Se reaplica al cargar y al reproducir porque algunos navegadores la reinician.
 app.querySelectorAll('.banda--video video').forEach((v) => {

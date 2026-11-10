@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Lista de confirmados</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/lista.css">
+</head>
+<body>
+  <main class="lista">
+    <h1>Lista de confirmados</h1>
+    <form id="entrar" class="lista__entrar">
+      <label>Clave <input type="password" id="clave" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Ver lista</button>
+    </form>
+    <p id="estado" role="status"></p>
+    <section id="datos" hidden>
+      <ul class="lista__resumen" id="resumen"></ul>
+      <p><button class="btn" type="button" id="csv">Descargar CSV</button></p>
+      <div class="lista__tabla"><table>
+        <thead><tr><th>Nombre</th><th>Asiste</th><th>Personas</th><th>Fecha</th><th></th></tr></thead>
+        <tbody id="filas"></tbody>
+      </table></div>
+    </section>
+  </main>
+  <script type="module" src="../assets/js/lista.js"></script>
+</body>
+</html>

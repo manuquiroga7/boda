@@ -6,11 +6,11 @@ import { renderPage } from '../assets/js/render.js';
 const ids = (html) => [...html.matchAll(/<section id="([^"]+)"/g)].map((m) => m[1]);
 
 test('la variante general trae las secciones en orden y sin "especial"', () => {
-  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'historia', 'datos', 'asistencia', 'pdf']);
+  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'historia', 'datos', 'mapa', 'asistencia', 'pdf']);
 });
 
 test('la variante especial pone "especial" justo después del versículo', () => {
-  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'historia', 'datos', 'asistencia', 'pdf']);
+  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'historia', 'datos', 'mapa', 'asistencia', 'pdf']);
 });
 
 test('las fotos de la historia son diferidas y tienen alt', () => {
@@ -23,8 +23,11 @@ test('las fotos de la historia son diferidas y tienen alt', () => {
   }
 });
 
-test('el enlace de asistencia es de WhatsApp', () => {
-  assert.match(renderPage(content, 'general'), /href="https:\/\/wa\.me\//);
+test('la asistencia se confirma con un formulario dentro de la web', () => {
+  const html = renderPage(content, 'general');
+  assert.match(html, /<form class="rsvp" action="api\/rsvp" method="post"/);
+  assert.doesNotMatch(html, /wa\.me/);
+  for (const n of ['nombre', 'asiste', 'personas']) assert.match(html, new RegExp(`name="${n}"`));
 });
 
 test('el único iframe es el mapa de Google y el marcador de galería queda como comentario', () => {
@@ -93,8 +96,8 @@ test('las fotos de la portada respetan basePath', () => {
   assert.match(renderPortada(content, 'a', '../'), /src="\.\.\/assets\/img\/pareja\//);
 });
 
-test('la sección de datos incrusta el Google Maps real, diferido y con título accesible', () => {
-  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+test('la sección del mapa incrusta el Google Maps real, diferido y con título accesible', () => {
+  const datos = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
   const iframe = datos.match(/<iframe [^>]*>/)[0];
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\?q=Burgues%203826%2C%20Montevideo&amp;output=embed"/);
   assert.match(iframe, /loading="lazy"/);
@@ -103,7 +106,7 @@ test('la sección de datos incrusta el Google Maps real, diferido y con título 
 });
 
 test('el mapa viene bloqueado hasta tocarlo (para no atrapar el scroll en el celular) y deja el botón Cómo llegar', () => {
-  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  const datos = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
   assert.match(datos, /<button type="button" class="mapa__activar"/);
   assert.match(datos, /Cómo llegar/);
   assert.match(datos, /href="https:\/\/www\.google\.com\/maps\/search\/\?api=1/);
@@ -172,13 +175,19 @@ test('la portada B con una sola foto igual arma las tres polaroids', () => {
   assert.equal(fotos, 3);
 });
 
-test('"¿Nos acompañas?" lleva un video de fondo mudo, en bucle, sin foto de respaldo y el botón de WhatsApp', () => {
+test('"¿Nos acompañas?" lleva un video de fondo mudo, en bucle, sin foto de respaldo y el formulario de confirmación', () => {
   const html = renderPage(content, 'general', '../');
   const sec = html.match(/<section id="asistencia"[\s\S]*?<\/section>/)[0];
   const video = sec.match(/<video [^>]*>/)[0];
   for (const a of ['muted', 'loop', 'playsinline', 'autoplay']) assert.match(video, new RegExp(` ${a}[ >]`));
   assert.doesNotMatch(video, /poster=/);
   assert.match(sec, /<source src="\.\.\/assets\/video\/[^"]+\.mp4"/);
-  assert.match(sec, /href="https:\/\/wa\.me\//);
+  assert.match(sec, /<form class="rsvp" action="\.\.\/api\/rsvp"/);
   assert.match(sec, /<h2>¿Nos acompañas\?<\/h2>/);
+});
+
+test('la cuenta regresiva va al pie de "Te esperamos", con título y fecha de inicio', () => {
+  const s = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  assert.match(s, /Cuenta regresiva<\/p>\s*<div class="contador"/);
+  assert.match(s, /data-inicio="2027-03-20T17:00:00-03:00"/);
 });
