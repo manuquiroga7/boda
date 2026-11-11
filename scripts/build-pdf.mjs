@@ -90,7 +90,12 @@ export async function buildPdf(c) {
   center(c.verse.ref.toUpperCase(), sans, 8, COLORS.bordo, 18);
 
   const e = c.event;
-  center('HORA', sans, 7.5, COLORS.verde);
+  if (e.civil) {
+    center('CEREMONIA CIVIL', sans, 7.5, COLORS.verde);
+    center(`${e.civil.time} · ${e.civil.placeName}`, serif, 13, COLORS.chocolate, 4);
+    if (e.civil.address) center(e.civil.address, sans, 9.5, COLORS.chocolate, 4);
+  }
+  center('CEREMONIA EN LA IGLESIA · HORA', sans, 7.5, COLORS.verde);
   center(e.time, serif, 13, COLORS.chocolate, 4);
   center('LUGAR', sans, 7.5, COLORS.verde);
   center(e.placeName, serif, 13, COLORS.chocolate);

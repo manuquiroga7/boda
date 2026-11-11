@@ -6,21 +6,11 @@ import { renderPage } from '../assets/js/render.js';
 const ids = (html) => [...html.matchAll(/<section id="([^"]+)"/g)].map((m) => m[1]);
 
 test('la variante general trae las secciones en orden y sin "especial"', () => {
-  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'historia', 'datos', 'mapa', 'asistencia', 'pdf']);
+  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'cuenta', 'datos', 'mapa', 'asistencia', 'pdf']);
 });
 
 test('la variante especial pone "especial" justo después del versículo', () => {
-  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'historia', 'datos', 'mapa', 'asistencia', 'pdf']);
-});
-
-test('las fotos de la historia son diferidas y tienen alt', () => {
-  const historia = renderPage(content, 'general').match(/<section id="historia"[\s\S]*?<\/section>/)[0];
-  const imgs = [...historia.matchAll(/<img [^>]*>/g)].map((m) => m[0]);
-  assert.equal(imgs.length, content.story.length);
-  for (const img of imgs) {
-    assert.match(img, /loading="lazy"/);
-    assert.match(img, /alt="[^"]+"/);
-  }
+  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'cuenta', 'datos', 'mapa', 'asistencia', 'pdf']);
 });
 
 test('la asistencia se confirma con un formulario dentro de la web', () => {
@@ -46,7 +36,7 @@ test('escapa el texto del contenido', () => {
 
 test('basePath se antepone a las rutas de assets', () => {
   const html = renderPage(content, 'general', '../');
-  assert.match(html, /src="\.\.\/assets\/img\/story\/historia-1.jpg"/);
+  assert.match(html, /src="\.\.\/assets\/img\/pareja\//);
   assert.match(html, /href="\.\.\/assets\/pdf\/invitacion\.pdf"/);
 });
 
@@ -157,15 +147,16 @@ test('sin vestimenta la grilla tiene tres celdas', () => {
   const c = structuredClone(content);
   delete c.event.dressCode;
   const datos = renderPage(c, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  assert.equal((datos.match(/<div class="dato">/g) ?? []).length, 3);
+  const iglesia = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/)[1];
+  assert.equal((iglesia.match(/<div class="dato">/g) ?? []).length, 3);
 });
 
 test('el foco de cada foto se aplica como object-position (para que no se corten las caras)', () => {
   const html = renderPage(content, 'general');
   assert.match(html, /<img [^>]*style="object-position:\d+% \d+%"/);
   const c = structuredClone(content);
-  c.story[0].focus = '10% 20%';
-  assert.match(renderPage(c, 'general'), /historia-1\.jpg"[^>]*style="object-position:10% 20%"/);
+  c.couple.photos[0].focus = '10% 20%';
+  assert.match(renderPage(c, 'general'), /portada\.jpg"[^>]*style="object-position:10% 20%"/);
 });
 
 test('la portada B con una sola foto igual arma las tres polaroids', () => {
@@ -186,8 +177,26 @@ test('"¿Nos acompañas?" lleva un video de fondo mudo, en bucle, sin foto de re
   assert.match(sec, /<h2>¿Nos acompañas\?<\/h2>/);
 });
 
-test('la cuenta regresiva va al pie de "Te esperamos", con título y fecha de inicio', () => {
-  const s = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  assert.match(s, /Cuenta regresiva<\/p>\s*<div class="contador"/);
+test('la cuenta regresiva es su propia sección, justo debajo del versículo, con título y fecha de inicio', () => {
+  const html = renderPage(content, 'general');
+  assert.ok(html.indexOf('id="versiculo"') < html.indexOf('id="cuenta"') && html.indexOf('id="cuenta"') < html.indexOf('id="datos"'));
+  const s = html.match(/<section id="cuenta"[\s\S]*?<\/section>/)[0];
+  assert.match(s, /<h2>Cuenta regresiva<\/h2>/);
   assert.match(s, /data-inicio="2027-03-20T17:00:00-03:00"/);
+});
+
+test('"Te esperamos" muestra la ceremonia civil debajo de la de la iglesia, con fecha, hora y lugar', () => {
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
+  assert.ok(datos.indexOf('Ceremonia en la iglesia') < datos.indexOf('Ceremonia civil'));
+  const civil = datos.slice(datos.indexOf('Ceremonia civil'));
+  assert.match(civil, /Sábado 20 de marzo de 2027/);
+  assert.match(civil, /15:00 hs/);
+  assert.match(civil, /Registro Civil/);
+  assert.doesNotMatch(civil, /Vestimenta/);
+});
+
+test('sin datos del civil no aparece el bloque', () => {
+  const c = structuredClone(content);
+  delete c.event.civil;
+  assert.doesNotMatch(renderPage(c, 'general'), /Ceremonia civil/);
 });

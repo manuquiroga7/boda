@@ -67,40 +67,29 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   <p>${esc(c.special.message)}</p>
 </section>`;
 
-  const historia = `
-<section id="historia" class="sec sec--historia">
-  <h2 class="reveal">Nuestra historia</h2>
-  ${c.story
-    .map(
-      (s) => `
-  <article class="momento reveal">
-    <img src="${a(s.photo)}" alt="${esc(s.alt)}" loading="lazy" width="640" height="480"${foco(s)}>
-    <h3>${esc(s.title)}</h3>
-    <p>${esc(s.text)}</p>
-  </article>`
-    )
-    .join('')}
-</section>`;
-
   const e = c.event;
   // Foto de ancho completo que se funde con el papel (sin marco ni sombra).
   const banda = (f, n, txt = '') =>
     `<figure class="banda banda--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}><div class="banda__velo"></div>${txt ? `<figcaption class="banda__txt">${txt}</figcaption>` : ''}</figure>`;
-  const grilla = `
+  const lugar = (nombre, direccion) => `${esc(nombre)}${direccion ? `<br><span>${esc(direccion)}</span>` : ''}`;
+  const bloque = (titulo, ev, vestimenta = '') => `
+<h3 class="datos__titulo">${esc(titulo)}</h3>
 <dl class="datos__grid">
   <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
-  <div class="dato"><dt>Hora</dt><dd>${esc(e.time)}</dd></div>
-  <div class="dato"><dt>Lugar</dt><dd>${esc(e.placeName)}<br><span>${esc(e.address)}</span></dd></div>
-  ${e.dressCode ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(e.dressCode)}</dd></div>` : ''}
+  <div class="dato"><dt>Hora</dt><dd>${esc(ev.time)}</dd></div>
+  <div class="dato"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>
+  ${vestimenta ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(vestimenta)}</dd></div>` : ''}
 </dl>`;
+  // Ceremonia en la iglesia y, debajo, el civil (mismo día)
+  const grilla = bloque('Ceremonia en la iglesia', e, e.dressCode) + (e.civil ? bloque('Ceremonia civil', e.civil) : '');
   // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
   const hm = /(\d{1,2}):(\d{2})/.exec(e.time) ?? [];
   const inicio = `${c.couple.dateISO}T${String(hm[1] ?? 0).padStart(2, '0')}:${hm[2] ?? '00'}:00-03:00`;
   const unidad = (k, t) => `<div><b data-u="${k}">--</b><span>${t}</span></div>`;
-  const contador = `<div class="contador" data-inicio="${esc(inicio)}" role="timer" aria-label="Tiempo que falta para la boda">${unidad('dias', 'días')}${unidad('horas', 'horas')}${unidad('minutos', 'min')}${unidad('segundos', 'seg')}</div>`;
+  const contador = `<div class="contador" data-inicio="${esc(inicio)}" role="timer" aria-label="Tiempo que falta para la boda">${[unidad('dias', 'días'), unidad('horas', 'horas'), unidad('minutos', 'min'), unidad('segundos', 'seg')].join('<i class="contador__sep" aria-hidden="true">:</i>')}</div>`;
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
-  ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}<p class="contador__t">Cuenta regresiva</p>${contador}`)}
+  ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}`)}
 </section>
 
 <section id="mapa" class="sec sec--datos sec--mapa reveal">
@@ -152,5 +141,12 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   <svg viewBox="0 0 24 24" aria-hidden="true"><path class="mute__cono" d="M4 9v6h4l5 4V5L8 9H4z"/><path class="mute__on" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="mute__off" d="M16 9l5 6m0-6l-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
 </button>`;
 
-  return [mute, portada, versiculo, variant === 'especial' ? especial : '', historia, datos, asistencia, pdf].join('\n');
+  const cuenta = `
+<section id="cuenta" class="sec sec--cuenta reveal">
+  <h2>Cuenta regresiva</h2>
+  <p class="cuenta__sub">para el gran día</p>
+  ${contador}
+</section>`;
+
+  return [mute, portada, versiculo, variant === 'especial' ? especial : '', cuenta, datos, asistencia, pdf].join('\n');
 }

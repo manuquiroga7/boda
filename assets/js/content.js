@@ -15,35 +15,14 @@ export const content = {
     text: 'Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto.',
     ref: 'Eclesiastés 4:12',
   },
-  story: [
-    {
-      title: 'Cuando nos conocimos',
-      text: 'Nunca imaginamos que un día cualquiera iba a cambiarlo todo. Dios ya estaba escribiendo nuestra historia, aun cuando todavía no lo sabíamos.',
-      photo: 'assets/img/story/historia-1.jpg',
-      alt: 'Emanuel y Belén sonriendo en un selfie al aire libre, en un parque',
-      focus: '50% 8%',
-    },
-    {
-      title: 'Aprendimos a esperar',
-      text: 'Hubo días difíciles y silencios largos. En cada uno de ellos Él nos sostuvo, nos enseñó a confiar y nos fue acercando.',
-      photo: 'assets/img/story/historia-2.jpg',
-      alt: 'Emanuel y Belén de pie, abrazados, en un hall',
-      focus: '50% 25%',
-    },
-    {
-      title: 'Y dijimos que sí',
-      text: 'Hoy queremos compartir contigo la alegría de empezar este camino, con Dios en el centro de nuestro hogar.',
-      photo: 'assets/img/story/historia-3.jpg',
-      alt: 'Belén sonriendo y mostrando su anillo en un jardín',
-      focus: '50% 22%',
-    },
-  ],
   event: {
     placeName: 'Iglesia Cristo es la Respuesta',
     address: 'Burgues 3826, Montevideo',
     time: '17:00 hs',
     mapsQuery: 'Burgues 3826, Montevideo',
     dressCode: 'Elegante, en tonos tierra y verde',
+    // Ceremonia civil (mismo día). 'address' es opcional.
+    civil: { time: '15:00 hs', placeName: 'Registro Civil' },
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.
     photos: [
       { src: 'assets/img/pareja/polaroid-1.jpg', alt: 'Emanuel y Belén sentados en un restaurante, sonriendo', focus: '45% 50%' },

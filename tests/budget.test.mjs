@@ -17,7 +17,3 @@ test('assets (sin la música ni el video) pesan menos de 3 MB', () => {
 test('el video de fondo pesa menos de 12 MB (Cloudflare rechaza archivos de más de 25 MB)', () => {
   for (const f of files('assets/video')) assert.ok(statSync(f).size < 12 * 1024 * 1024, `${f} es demasiado pesado`);
 });
-
-test('ninguna foto de la historia pesa más de 300 KB', () => {
-  for (const f of files('assets/img/story')) assert.ok(statSync(f).size <= 300 * 1024, `${f} es demasiado pesada`);
-});

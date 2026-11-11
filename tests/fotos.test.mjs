@@ -5,13 +5,11 @@ import { content } from '../assets/js/content.js';
 
 const fotos = [
   ...content.couple.photos.map((f) => ({ donde: 'couple.photos', ...f })),
-  ...content.story.map((s) => ({ donde: 'story', src: s.photo, alt: s.alt, focus: s.focus })),
   ...content.event.photos.map((f) => ({ donde: 'event.photos', ...f })),
 ];
 
-test('hay fotos cargadas en la portada, la historia y "Te esperamos"', () => {
+test('hay fotos cargadas en la portada y "Te esperamos"', () => {
   assert.ok(content.couple.photos.length >= 1);
-  assert.equal(content.story.length, 3);
   assert.equal(content.event.photos.length, 3);
 });
 

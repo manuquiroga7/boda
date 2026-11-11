@@ -221,7 +221,6 @@ img.is-broken { visibility: hidden; }
 .sec--datos { max-width: none; padding-left: 0; padding-right: 0; padding-top: 0; overflow: hidden; }
 .sec--datos > :not(.banda) { max-width: 31rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; }
 .sec--mapa { padding-top: 1rem; }
-.contador__t { margin: 0 0 .6rem; font-family: var(--serif); font-size: 1.15rem; color: var(--bordo); }
 .banda__txt .contador { margin-bottom: 0; }
 .sec--datos > .datos__grid, .sec--datos > .mapa { width: calc(100% - 3rem); padding: 0; }
 .banda { position: relative; overflow: hidden; margin: 0; height: min(75vw, 20rem); }
@@ -263,3 +262,20 @@ img.is-broken { visibility: hidden; }
 .rsvp__msg { min-height: 1.3em; margin: 0; text-align: center; font-size: .9rem; color: var(--bordo); }
 .rsvp__gracias { font-family: var(--serif); font-size: 1.2rem; text-align: center; color: var(--bordo); }
 .rsvp [hidden] { display: none; }
+
+/* Cuenta regresiva: título en cursiva con filetes a los lados, y los números separados por ":" */
+.sec--cuenta h2 { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(2.5rem, 12vw, 3.4rem); line-height: 1.1; color: var(--bordo); }
+.sec--cuenta h2::before, .sec--cuenta h2::after { content: ""; flex: 0 1 3.2rem; height: 1px; background: linear-gradient(to right, transparent, var(--bordo)); opacity: .55; }
+.sec--cuenta h2::after { transform: scaleX(-1); }
+.cuenta__sub { margin: 0 0 1.6rem; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--verde); }
+.contador { gap: clamp(.15rem, 1.5vw, .5rem); align-items: flex-start; }
+.contador__sep { font-style: normal; font-family: var(--serif); font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1.1; color: var(--bordo); opacity: .55; }
+
+/* "Te esperamos": dos ceremonias, cada una con su título y su grilla */
+.datos__titulo { margin: 0 0 .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(1.7rem, 7vw, 2.1rem); color: var(--bordo); }
+.datos__grid + .datos__titulo { margin-top: .4rem; }
+
+/* "Te esperamos": la foto mantiene su tamaño y el texto (ahora con dos ceremonias) sigue en la parte blanca, debajo */
+.banda--1 { --h1: min(165vw, 46rem); min-height: calc(var(--h1) + 16rem); background: var(--papel); }
+.banda--1 img { height: calc(var(--h1) + 6rem); }
+.banda--1 .banda__velo { bottom: auto; height: var(--h1); }

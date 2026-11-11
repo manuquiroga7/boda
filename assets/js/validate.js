@@ -17,15 +17,6 @@ export function validateContent(c) {
   need(isText(c?.verse?.text), 'verse.text');
   need(isText(c?.verse?.ref), 'verse.ref');
 
-  need(Array.isArray(c?.story) && c.story.length > 0, 'story');
-  (c?.story ?? []).forEach((s, i) => {
-    need(isText(s?.title), `story[${i}].title`);
-    need(isText(s?.text), `story[${i}].text`);
-    need(isText(s?.photo), `story[${i}].photo`);
-    need(isText(s?.alt), `story[${i}].alt`);
-  });
-
-  for (const k of ['placeName', 'address', 'time', 'mapsQuery']) need(isText(c?.event?.[k]), `event.${k}`);
   need(Array.isArray(c?.event?.photos) && c.event.photos.length >= 3, 'event.photos');
   (c?.event?.photos ?? []).forEach((p, i) => {
     need(isText(p?.src), `event.photos[${i}].src`);
