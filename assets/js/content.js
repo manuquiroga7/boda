@@ -22,7 +22,7 @@ export const content = {
     mapsQuery: 'Burgues 3826, Montevideo',
     dressCode: 'Elegante, en tonos tierra y verde',
     // Ceremonia civil (mismo día). 'address' es opcional.
-    civil: { time: '15:00 hs', placeName: 'Registro Civil' },
+    civil: { time: '15:00 hs', placeName: 'Registro Civil', mapsQuery: 'Registro Civil, Montevideo, Uruguay' },
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.
     photos: [
       { src: 'assets/img/pareja/polaroid-1.jpg', alt: 'Emanuel y Belén sentados en un restaurante, sonriendo', focus: '45% 50%' },

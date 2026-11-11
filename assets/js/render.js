@@ -80,8 +80,8 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   <div class="dato"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>
   ${vestimenta ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(vestimenta)}</dd></div>` : ''}
 </dl>`;
-  // Ceremonia en la iglesia y, debajo, el civil (mismo día)
-  const grilla = bloque('Ceremonia en la iglesia', e, e.dressCode) + (e.civil ? bloque('Ceremonia civil', e.civil) : '');
+  // Primero el civil y, debajo, la ceremonia en la iglesia (mismo día)
+  const grilla = (e.civil ? bloque('Ceremonia civil', e.civil) : '') + bloque('Ceremonia en la iglesia', e, e.dressCode);
   // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
   const hm = /(\d{1,2}):(\d{2})/.exec(e.time) ?? [];
   const inicio = `${c.couple.dateISO}T${String(hm[1] ?? 0).padStart(2, '0')}:${hm[2] ?? '00'}:00-03:00`;
@@ -93,11 +93,13 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 </section>
 
 <section id="mapa" class="sec sec--datos sec--mapa reveal">
+  ${[e.civil && { titulo: 'Registro Civil', ev: e.civil }, { titulo: 'Iglesia', ev: e }].filter(Boolean).map(({ titulo, ev }) => `
+  <h3 class="datos__titulo">${esc(titulo)}</h3>
   <div class="mapa">
-    <iframe src="${esc(mapsEmbedUrl(e.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(e.placeName)}, ${esc(e.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
     <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
   </div>
-  <a class="btn" href="${esc(mapsUrl(e.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>
+  <a class="btn" href="${esc(mapsUrl(ev.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>`).join('')}
 </section>`;
 
   const asistencia = `

@@ -20,9 +20,9 @@ test('la asistencia se confirma con un formulario dentro de la web', () => {
   for (const n of ['nombre', 'asiste', 'personas']) assert.match(html, new RegExp(`name="${n}"`));
 });
 
-test('el único iframe es el mapa de Google y el marcador de galería queda como comentario', () => {
+test('los únicos iframes son los dos mapas de Google (civil e iglesia) y el marcador de galería queda como comentario', () => {
   const html = renderPage(content, 'general');
-  assert.equal((html.match(/<iframe/g) ?? []).length, 1);
+  assert.equal((html.match(/<iframe/g) ?? []).length, 2);
   assert.match(html, /<!-- futuro: galería -->/);
 });
 
@@ -88,7 +88,7 @@ test('las fotos de la portada respetan basePath', () => {
 
 test('la sección del mapa incrusta el Google Maps real, diferido y con título accesible', () => {
   const datos = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
-  const iframe = datos.match(/<iframe [^>]*>/)[0];
+  const iframe = datos.match(/<iframe [^>]*>/g)[1]; // el segundo: la iglesia
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\?q=Burgues%203826%2C%20Montevideo&amp;output=embed"/);
   assert.match(iframe, /loading="lazy"/);
   assert.match(iframe, /title="Mapa de Google Maps: [^"]+"/);
@@ -105,7 +105,7 @@ test('el mapa viene bloqueado hasta tocarlo (para no atrapar el scroll en el cel
 test('con una clave de API usa el Embed API oficial', () => {
   const c = structuredClone(content);
   c.event.mapsApiKey = 'CLAVE_DE_PRUEBA';
-  const iframe = renderPage(c, 'general').match(/<iframe [^>]*>/)[0];
+  const iframe = renderPage(c, 'general').match(/<iframe [^>]*>/g)[1];
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\/embed\/v1\/place\?key=CLAVE_DE_PRUEBA&amp;q=Burgues%203826%2C%20Montevideo"/);
 });
 
@@ -133,7 +133,7 @@ test('las fotos de datos respetan basePath', () => {
 
 test('los datos van en una grilla de cuatro celdas: Fecha, Hora, Lugar y Vestimenta, en ese orden', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  const grilla = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/)[1];
+  const grilla = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/g)[1]; // la segunda: iglesia
   const celdas = grilla.match(/<div class="dato">[\s\S]*?<\/div>/g) ?? [];
   assert.equal(celdas.length, 4);
   const titulos = celdas.map((c) => c.match(/<dt>([^<]+)<\/dt>/)[1]);
@@ -147,7 +147,7 @@ test('sin vestimenta la grilla tiene tres celdas', () => {
   const c = structuredClone(content);
   delete c.event.dressCode;
   const datos = renderPage(c, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  const iglesia = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/)[1];
+  const iglesia = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/g)[1];
   assert.equal((iglesia.match(/<div class="dato">/g) ?? []).length, 3);
 });
 
@@ -185,10 +185,10 @@ test('la cuenta regresiva es su propia sección, justo debajo del versículo, co
   assert.match(s, /data-inicio="2027-03-20T17:00:00-03:00"/);
 });
 
-test('"Te esperamos" muestra la ceremonia civil debajo de la de la iglesia, con fecha, hora y lugar', () => {
+test('"Te esperamos" muestra primero la ceremonia civil y debajo la de la iglesia, con fecha, hora y lugar', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  assert.ok(datos.indexOf('Ceremonia en la iglesia') < datos.indexOf('Ceremonia civil'));
-  const civil = datos.slice(datos.indexOf('Ceremonia civil'));
+  assert.ok(datos.indexOf('Ceremonia civil') < datos.indexOf('Ceremonia en la iglesia'));
+  const civil = datos.slice(datos.indexOf('Ceremonia civil'), datos.indexOf('Ceremonia en la iglesia'));
   assert.match(civil, /Sábado 20 de marzo de 2027/);
   assert.match(civil, /15:00 hs/);
   assert.match(civil, /Registro Civil/);
@@ -199,4 +199,20 @@ test('sin datos del civil no aparece el bloque', () => {
   const c = structuredClone(content);
   delete c.event.civil;
   assert.doesNotMatch(renderPage(c, 'general'), /Ceremonia civil/);
+});
+
+test('hay dos mapas: primero el del Registro Civil y después el de la iglesia, cada uno con su "Cómo llegar"', () => {
+  const sec = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
+  const iframes = sec.match(/<iframe [^>]*>/g);
+  assert.equal(iframes.length, 2);
+  assert.match(iframes[0], /q=Registro%20Civil%2C%20Montevideo%2C%20Uruguay/);
+  assert.match(iframes[1], /q=Burgues%203826/);
+  assert.equal((sec.match(/Cómo llegar/g) ?? []).length, 2);
+  assert.ok(sec.indexOf('Registro Civil</h3>') < sec.indexOf('Iglesia</h3>'));
+});
+
+test('sin datos del civil queda un solo mapa', () => {
+  const c = structuredClone(content);
+  delete c.event.civil;
+  assert.equal((renderPage(c, 'general').match(/<iframe/g) ?? []).length, 1);
 });

@@ -273,9 +273,10 @@ img.is-broken { visibility: hidden; }
 
 /* "Te esperamos": dos ceremonias, cada una con su título y su grilla */
 .datos__titulo { margin: 0 0 .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(1.7rem, 7vw, 2.1rem); color: var(--bordo); }
-.datos__grid + .datos__titulo { margin-top: .4rem; }
+.datos__grid + .datos__titulo { margin-top: 2.6rem; }
 
 /* "Te esperamos": la foto mantiene su tamaño y el texto (ahora con dos ceremonias) sigue en la parte blanca, debajo */
 .banda--1 { --h1: min(165vw, 46rem); min-height: calc(var(--h1) + 16rem); background: var(--papel); }
 .banda--1 img { height: calc(var(--h1) + 6rem); }
 .banda--1 .banda__velo { bottom: auto; height: var(--h1); }
+.sec--mapa .btn + .datos__titulo { margin-top: 3rem; }
