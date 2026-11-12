@@ -20,7 +20,14 @@ export const content = {
     address: 'Burgues 3826, Montevideo',
     time: '17:00 hs',
     mapsQuery: 'Burgues 3826, Montevideo',
-    dressCode: 'Elegante, en tonos tierra y verde',
+    // Lista de puntos (también acepta un solo texto)
+    dressCode: [
+      'Vestimenta formal',
+      'Blanco o asemejados, reservado para la novia',
+      'Damas de vestido largo',
+      'Caballeros de traje',
+      'Colores que no se pueden usar: blanco, beige, marrón, crema y café',
+    ],
     // Ceremonia civil (mismo día). 'address' es opcional.
     civil: { time: '15:00 hs', placeName: 'Registro Civil', mapsQuery: 'Registro Civil, Montevideo, Uruguay' },
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.

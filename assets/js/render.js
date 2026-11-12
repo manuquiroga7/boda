@@ -77,11 +77,11 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 <dl class="datos__grid">
   <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
   <div class="dato"><dt>Hora</dt><dd>${esc(ev.time)}</dd></div>
-  <div class="dato"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>
-  ${vestimenta ? `<div class="dato"><dt>Vestimenta</dt><dd>${esc(vestimenta)}</dd></div>` : ''}
+  <div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>
+  ${vestimenta ? `<div class="dato dato--ancho"><dt>Vestimenta</dt><dd><ul class="dato__lista">${[].concat(vestimenta).map((p) => `<li>${esc(p)}</li>`).join('')}</ul></dd></div>` : ''}
 </dl>`;
   // Primero el civil y, debajo, la ceremonia en la iglesia (mismo día)
-  const grilla = (e.civil ? bloque('Ceremonia civil', e.civil) : '') + bloque('Ceremonia en la iglesia', e, e.dressCode);
+  const grilla = (e.civil ? bloque('Civil', e.civil) : '') + bloque('Ceremonia', e, e.dressCode);
   // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
   const hm = /(\d{1,2}):(\d{2})/.exec(e.time) ?? [];
   const inicio = `${c.couple.dateISO}T${String(hm[1] ?? 0).padStart(2, '0')}:${hm[2] ?? '00'}:00-03:00`;

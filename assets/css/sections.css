@@ -63,7 +63,11 @@
 .datos__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 0 2rem; }
 .dato { padding: 1.3rem .6rem; }
 .dato:nth-child(n+3) { border-top: 1px solid var(--beige); }
-.dato:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.dato:last-child:nth-child(odd), .dato--ancho { grid-column: 1 / -1; }
+/* Vestimenta: lista de puntos (mismo tamaño que el resto de los datos) */
+.datos__grid dd .dato__lista { list-style: none; margin: 0; padding: 0; }
+.datos__grid dd .dato__lista li { margin: .2rem 0; }
+.datos__grid dd .dato__lista li::before { content: "•"; color: var(--bordo); margin-right: .5em; }
 .datos__grid dt { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); margin-bottom: .35rem; }
 .datos__grid dd { margin: 0; font-family: var(--serif); font-size: clamp(1.02rem, 4.2vw, 1.3rem); line-height: 1.35; overflow-wrap: anywhere; }
 .datos__grid dd span { display: block; margin-top: .25rem; font-family: var(--sans); font-size: .85rem; opacity: .8; }
@@ -276,7 +280,7 @@ img.is-broken { visibility: hidden; }
 .datos__grid + .datos__titulo { margin-top: 2.6rem; }
 
 /* "Te esperamos": la foto mantiene su tamaño y el texto (ahora con dos ceremonias) sigue en la parte blanca, debajo */
-.banda--1 { --h1: min(165vw, 46rem); min-height: calc(var(--h1) + 16rem); background: var(--papel); }
+.banda--1 { --h1: min(165vw, 46rem); min-height: calc(var(--h1) + 16rem); padding-top: calc(var(--h1) * .52); background: var(--papel); }
 .banda--1 img { height: calc(var(--h1) + 6rem); }
 .banda--1 .banda__velo { bottom: auto; height: var(--h1); }
 .sec--mapa .btn + .datos__titulo { margin-top: 3rem; }

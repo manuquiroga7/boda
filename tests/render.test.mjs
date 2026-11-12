@@ -134,7 +134,7 @@ test('las fotos de datos respetan basePath', () => {
 test('los datos van en una grilla de cuatro celdas: Fecha, Hora, Lugar y Vestimenta, en ese orden', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   const grilla = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/g)[1]; // la segunda: iglesia
-  const celdas = grilla.match(/<div class="dato">[\s\S]*?<\/div>/g) ?? [];
+  const celdas = grilla.match(/<div class="dato[^"]*">[\s\S]*?<\/div>/g) ?? [];
   assert.equal(celdas.length, 4);
   const titulos = celdas.map((c) => c.match(/<dt>([^<]+)<\/dt>/)[1]);
   assert.deepEqual(titulos, ['Fecha', 'Hora', 'Lugar', 'Vestimenta']);
@@ -148,7 +148,7 @@ test('sin vestimenta la grilla tiene tres celdas', () => {
   delete c.event.dressCode;
   const datos = renderPage(c, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   const iglesia = datos.match(/<dl class="datos__grid">([\s\S]*?)<\/dl>/g)[1];
-  assert.equal((iglesia.match(/<div class="dato">/g) ?? []).length, 3);
+  assert.equal((iglesia.match(/<div class="dato[ "]/g) ?? []).length, 3);
 });
 
 test('el foco de cada foto se aplica como object-position (para que no se corten las caras)', () => {
@@ -187,8 +187,8 @@ test('la cuenta regresiva es su propia sección, justo debajo del versículo, co
 
 test('"Te esperamos" muestra primero la ceremonia civil y debajo la de la iglesia, con fecha, hora y lugar', () => {
   const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
-  assert.ok(datos.indexOf('Ceremonia civil') < datos.indexOf('Ceremonia en la iglesia'));
-  const civil = datos.slice(datos.indexOf('Ceremonia civil'), datos.indexOf('Ceremonia en la iglesia'));
+  assert.ok(datos.indexOf('>Civil<') < datos.indexOf('>Ceremonia<'));
+  const civil = datos.slice(datos.indexOf('>Civil<'), datos.indexOf('>Ceremonia<'));
   assert.match(civil, /Sábado 20 de marzo de 2027/);
   assert.match(civil, /15:00 hs/);
   assert.match(civil, /Registro Civil/);
@@ -198,7 +198,7 @@ test('"Te esperamos" muestra primero la ceremonia civil y debajo la de la iglesi
 test('sin datos del civil no aparece el bloque', () => {
   const c = structuredClone(content);
   delete c.event.civil;
-  assert.doesNotMatch(renderPage(c, 'general'), /Ceremonia civil/);
+  assert.doesNotMatch(renderPage(c, 'general'), />Civil</);
 });
 
 test('hay dos mapas: primero el del Registro Civil y después el de la iglesia, cada uno con su "Cómo llegar"', () => {

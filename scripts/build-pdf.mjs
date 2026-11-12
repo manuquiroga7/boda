@@ -91,18 +91,18 @@ export async function buildPdf(c) {
 
   const e = c.event;
   if (e.civil) {
-    center('CEREMONIA CIVIL', sans, 7.5, COLORS.verde);
+    center('CIVIL', sans, 7.5, COLORS.verde);
     center(`${e.civil.time} · ${e.civil.placeName}`, serif, 13, COLORS.chocolate, 4);
     if (e.civil.address) center(e.civil.address, sans, 9.5, COLORS.chocolate, 4);
   }
-  center('CEREMONIA EN LA IGLESIA · HORA', sans, 7.5, COLORS.verde);
+  center('CEREMONIA · HORA', sans, 7.5, COLORS.verde);
   center(e.time, serif, 13, COLORS.chocolate, 4);
   center('LUGAR', sans, 7.5, COLORS.verde);
   center(e.placeName, serif, 13, COLORS.chocolate);
   center(e.address, sans, 9.5, COLORS.chocolate, 4);
   if (e.dressCode) {
     center('VESTIMENTA', sans, 7.5, COLORS.verde);
-    center(e.dressCode, serif, 12, COLORS.chocolate, 4);
+    [].concat(e.dressCode).forEach((p, i, l) => center(p, serif, 12, COLORS.chocolate, i === l.length - 1 ? 4 : 0));
   }
   center('MAPA', sans, 7.5, COLORS.verde);
   center(mapsUrl(e.mapsQuery), sans, 7, COLORS.bordo);
