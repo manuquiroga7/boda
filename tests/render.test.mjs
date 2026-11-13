@@ -6,11 +6,11 @@ import { renderPage } from '../assets/js/render.js';
 const ids = (html) => [...html.matchAll(/<section id="([^"]+)"/g)].map((m) => m[1]);
 
 test('la variante general trae las secciones en orden y sin "especial"', () => {
-  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'cuenta', 'datos', 'mapa', 'asistencia', 'pdf']);
+  assert.deepEqual(ids(renderPage(content, 'general')), ['portada', 'versiculo', 'cuenta', 'datos', 'asistencia', 'pdf']);
 });
 
 test('la variante especial pone "especial" justo después del versículo', () => {
-  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'cuenta', 'datos', 'mapa', 'asistencia', 'pdf']);
+  assert.deepEqual(ids(renderPage(content, 'especial')), ['portada', 'versiculo', 'especial', 'cuenta', 'datos', 'asistencia', 'pdf']);
 });
 
 test('la asistencia se confirma con un formulario dentro de la web', () => {
@@ -86,8 +86,8 @@ test('las fotos de la portada respetan basePath', () => {
   assert.match(renderPortada(content, 'a', '../'), /src="\.\.\/assets\/img\/pareja\//);
 });
 
-test('la sección del mapa incrusta el Google Maps real, diferido y con título accesible', () => {
-  const datos = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
+test('el mapa incrusta el Google Maps real, diferido y con título accesible', () => {
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   const iframe = datos.match(/<iframe [^>]*>/g)[1]; // el segundo: la iglesia
   assert.match(iframe, /src="https:\/\/www\.google\.com\/maps\?q=Burgues%203826%2C%20Montevideo&amp;output=embed"/);
   assert.match(iframe, /loading="lazy"/);
@@ -96,7 +96,7 @@ test('la sección del mapa incrusta el Google Maps real, diferido y con título 
 });
 
 test('el mapa viene bloqueado hasta tocarlo (para no atrapar el scroll en el celular) y deja el botón Cómo llegar', () => {
-  const datos = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
+  const datos = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   assert.match(datos, /<button type="button" class="mapa__activar"/);
   assert.match(datos, /Cómo llegar/);
   assert.match(datos, /href="https:\/\/www\.google\.com\/maps\/search\/\?api=1/);
@@ -201,14 +201,15 @@ test('sin datos del civil no aparece el bloque', () => {
   assert.doesNotMatch(renderPage(c, 'general'), />Civil</);
 });
 
-test('hay dos mapas: primero el del Registro Civil y después el de la iglesia, cada uno con su "Cómo llegar"', () => {
-  const sec = renderPage(content, 'general').match(/<section id="mapa"[\s\S]*?<\/section>/)[0];
+test('cada mapa va debajo de su ceremonia: el del civil bajo "Civil" y el de la iglesia bajo "Ceremonia", cada uno con su "Cómo llegar"', () => {
+  const sec = renderPage(content, 'general').match(/<section id="datos"[\s\S]*?<\/section>/)[0];
   const iframes = sec.match(/<iframe [^>]*>/g);
   assert.equal(iframes.length, 2);
   assert.match(iframes[0], /q=Registro%20Civil%2C%20Montevideo%2C%20Uruguay/);
   assert.match(iframes[1], /q=Burgues%203826/);
   assert.equal((sec.match(/Cómo llegar/g) ?? []).length, 2);
-  assert.ok(sec.indexOf('Registro Civil</h3>') < sec.indexOf('Iglesia</h3>'));
+  const [i1, i2, h1, h2] = [sec.indexOf('<iframe'), sec.lastIndexOf('<iframe'), sec.indexOf('>Civil<'), sec.indexOf('>Ceremonia<')];
+  assert.ok(h1 < i1 && i1 < h2 && h2 < i2);
 });
 
 test('sin datos del civil queda un solo mapa', () => {

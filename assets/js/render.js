@@ -77,9 +77,14 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 <dl class="datos__grid">
   <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
   <div class="dato"><dt>Hora</dt><dd>${esc(ev.time)}</dd></div>
-  <div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>
+  ${ev.address || ev !== e.civil ? `<div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>` : ''}
   ${vestimenta ? `<div class="dato dato--ancho"><dt>Vestimenta</dt><dd><ul class="dato__lista">${[].concat(vestimenta).map((p) => `<li>${esc(p)}</li>`).join('')}</ul></dd></div>` : ''}
-</dl>`;
+</dl>
+<div class="mapa">
+  <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
+</div>
+<a class="btn" href="${esc(mapsUrl(ev.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>`;
   // Primero el civil y, debajo, la ceremonia en la iglesia (mismo día)
   const grilla = (e.civil ? bloque('Civil', e.civil) : '') + bloque('Ceremonia', e, e.dressCode);
   // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
@@ -90,16 +95,6 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   const datos = `
 <section id="datos" class="sec sec--datos reveal">
   ${banda(e.photos[2], 1, `<h2>Te esperamos</h2>${grilla}`)}
-</section>
-
-<section id="mapa" class="sec sec--datos sec--mapa reveal">
-  ${[e.civil && { titulo: 'Registro Civil', ev: e.civil }, { titulo: 'Iglesia', ev: e }].filter(Boolean).map(({ titulo, ev }) => `
-  <h3 class="datos__titulo">${esc(titulo)}</h3>
-  <div class="mapa">
-    <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
-  </div>
-  <a class="btn" href="${esc(mapsUrl(ev.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>`).join('')}
 </section>`;
 
   const asistencia = `

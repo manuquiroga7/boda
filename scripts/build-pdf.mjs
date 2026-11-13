@@ -92,7 +92,7 @@ export async function buildPdf(c) {
   const e = c.event;
   if (e.civil) {
     center('CIVIL', sans, 7.5, COLORS.verde);
-    center(`${e.civil.time} · ${e.civil.placeName}`, serif, 13, COLORS.chocolate, 4);
+    center(e.civil.time, serif, 13, COLORS.chocolate, 4);
     if (e.civil.address) center(e.civil.address, sans, 9.5, COLORS.chocolate, 4);
   }
   center('CEREMONIA · HORA', sans, 7.5, COLORS.verde);
