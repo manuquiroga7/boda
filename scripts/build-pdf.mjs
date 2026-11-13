@@ -102,7 +102,10 @@ export async function buildPdf(c) {
   center(e.address, sans, 9.5, COLORS.chocolate, 4);
   if (e.dressCode) {
     center('VESTIMENTA', sans, 7.5, COLORS.verde);
-    [].concat(e.dressCode).forEach((p, i, l) => center(p, serif, 12, COLORS.chocolate, i === l.length - 1 ? 4 : 0));
+    const d = e.dressCode;
+    center(d.nota, serif, 10.5, COLORS.chocolate);
+    center(`${d.damas} · ${d.caballeros}`, serif, 10.5, COLORS.chocolate);
+    center(`No usar: ${d.evitar.map((c) => c.nombre.toLowerCase()).join(', ')}`, serif, 10.5, COLORS.chocolate, 4);
   }
   center('MAPA', sans, 7.5, COLORS.verde);
   center(mapsUrl(e.mapsQuery), sans, 7, COLORS.bordo);

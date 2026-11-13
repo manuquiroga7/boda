@@ -64,10 +64,17 @@
 .dato { padding: 1.3rem .6rem; }
 .dato:nth-child(n+3) { border-top: 1px solid var(--beige); }
 .dato:last-child:nth-child(odd), .dato--ancho { grid-column: 1 / -1; }
-/* Vestimenta: lista de puntos (mismo tamaño que el resto de los datos) */
-.datos__grid dd .dato__lista { list-style: none; margin: 0; padding: 0; }
-.datos__grid dd .dato__lista li { margin: .2rem 0; }
-.datos__grid dd .dato__lista li::before { content: "•"; color: var(--bordo); margin-right: .5em; }
+/* Vestimenta: nota, dos figuras en trazo fino y colores que no se pueden usar */
+.vest__nota { margin: 0 0 1.1rem; font-style: italic; }
+.vest__figuras { display: flex; justify-content: center; gap: 1.2rem; margin: 0 0 1.4rem; }
+.vest__figuras figure { margin: 0; flex: 1 1 0; max-width: 10rem; }
+.vest__fig { display: block; width: auto; height: 11.5rem; max-width: 100%; margin: 0 auto .5rem; color: var(--chocolate); }
+.vest__figuras figcaption { font-size: .9rem; line-height: 1.3; }
+.vest__titulo { margin: 0 0 .7rem; font-family: var(--sans); font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); }
+.vest__colores { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem .9rem; font-family: var(--sans); font-size: .72rem; }
+.vest__colores li { display: flex; flex-direction: column; align-items: center; gap: .35rem; min-width: 3rem; }
+.vest__color { position: relative; display: block; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1px solid rgba(90, 58, 51, .35); overflow: hidden; }
+.vest__color::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; border-top: 2px solid var(--bordo); box-shadow: 0 0 0 1px rgba(254, 252, 248, .85); transform: rotate(-45deg); }
 .datos__grid dt { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); margin-bottom: .35rem; }
 .datos__grid dd { margin: 0; font-family: var(--serif); font-size: clamp(1.02rem, 4.2vw, 1.3rem); line-height: 1.35; overflow-wrap: anywhere; }
 .datos__grid dd span { display: block; margin-top: .25rem; font-family: var(--sans); font-size: .85rem; opacity: .8; }
@@ -276,7 +283,7 @@ img.is-broken { visibility: hidden; }
 .contador__sep { font-style: normal; font-family: var(--serif); font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1.1; color: var(--bordo); opacity: .55; }
 
 /* "Te esperamos": dos ceremonias, cada una con su título y su grilla */
-.datos__titulo { margin: 0 0 .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(1.7rem, 7vw, 2.1rem); color: var(--bordo); }
+.datos__titulo { margin: 0 0 .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(2.5rem, 10.5vw, 3.2rem); color: var(--bordo); }
 .datos__grid + .datos__titulo { margin-top: 2.6rem; }
 
 /* "Te esperamos": la foto mantiene su tamaño y el texto (ahora con dos ceremonias) sigue en la parte blanca, debajo */
@@ -284,5 +291,6 @@ img.is-broken { visibility: hidden; }
 .banda--1 img { height: calc(var(--h1) + 6rem); }
 .banda--1 .banda__velo { bottom: auto; height: var(--h1); }
 /* Cada mapa va debajo de su ceremonia */
-.banda__txt .datos__grid { margin-bottom: 1.2rem; }
-.banda__txt .btn + .datos__titulo { margin-top: 3rem; }
+.banda__txt .datos__grid { margin-bottom: 2.4rem; }
+.banda__txt .btn + .datos__titulo { margin-top: 5.5rem; }
+.banda__txt .mapa { width: 72%; margin-left: auto; margin-right: auto; }

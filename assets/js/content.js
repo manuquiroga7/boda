@@ -20,14 +20,19 @@ export const content = {
     address: 'Burgues 3826, Montevideo',
     time: '17:00 hs',
     mapsQuery: 'Burgues 3826, Montevideo',
-    // Lista de puntos (también acepta un solo texto)
-    dressCode: [
-      'Vestimenta formal',
-      'Blanco o asemejados, reservado para la novia',
-      'Damas de vestido largo',
-      'Caballeros de traje',
-      'Colores que no se pueden usar: blanco, beige, marrón, crema y café',
-    ],
+    // Vestimenta: nota, leyendas de las dos figuras y colores que no se pueden usar
+    dressCode: {
+      nota: 'Vestimenta formal. Nos reservamos el blanco, o tonos asemejados, para la novia.',
+      damas: 'Damas de vestido largo',
+      caballeros: 'Caballeros de traje',
+      evitar: [
+        { nombre: 'Blanco', color: '#FFFFFF' },
+        { nombre: 'Beige', color: '#E4D3B8' },
+        { nombre: 'Marrón', color: '#8B5A3C' },
+        { nombre: 'Crema', color: '#F6EEDF' },
+        { nombre: 'Café', color: '#5A3A28' },
+      ],
+    },
     // Ceremonia civil (mismo día). 'address' es opcional.
     civil: { time: '15:00 hs', placeName: 'Registro Civil', mapsQuery: 'Registro Civil, Montevideo, Uruguay' },
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.

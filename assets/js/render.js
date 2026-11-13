@@ -1,4 +1,5 @@
 import { mapsUrl, mapsEmbedUrl } from './links.js';
+import { renderVestimenta } from './vestimenta.js';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -78,7 +79,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
   <div class="dato"><dt>Hora</dt><dd>${esc(ev.time)}</dd></div>
   ${ev.address || ev !== e.civil ? `<div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>` : ''}
-  ${vestimenta ? `<div class="dato dato--ancho"><dt>Vestimenta</dt><dd><ul class="dato__lista">${[].concat(vestimenta).map((p) => `<li>${esc(p)}</li>`).join('')}</ul></dd></div>` : ''}
+  ${vestimenta ? `<div class="dato dato--ancho"><dt>Vestimenta</dt><dd>${renderVestimenta(vestimenta, esc)}</dd></div>` : ''}
 </dl>
 <div class="mapa">
   <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
