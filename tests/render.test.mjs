@@ -51,13 +51,13 @@ import { renderPortada } from '../assets/js/render.js';
 const imgsDe = (html) => [...html.matchAll(/<img [^>]*>/g)].map((m) => m[0]);
 
 for (const estilo of ['a', 'b', 'c']) {
-  test(`portada ${estilo}: tiene nombres, fecha, fotos con alt y no se difiere la carga`, () => {
+  test(`portada ${estilo}: tiene nombres (sin fecha), fotos con alt y no se difiere la carga`, () => {
     const html = renderPortada(content, estilo);
     assert.match(html, new RegExp(`id="portada"[^>]*class="[^"]*portada--${estilo}`));
     assert.match(html, /<h1/);
     assert.match(html, /Emanuel/);
     assert.match(html, /Belén/);
-    assert.match(html, /Sábado 20 de marzo de 2027/);
+    assert.doesNotMatch(html, /Sábado 20 de marzo de 2027/); // la portada no lleva la fecha
     const fotos = imgsDe(html).filter((i) => !/class="plant/.test(i));
     assert.ok(fotos.length >= 1);
     for (const f of fotos) {

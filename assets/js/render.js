@@ -18,8 +18,7 @@ export function renderPortada(c, estilo = 'a', basePath = '') {
   // Apellido en cursiva, medio escondido detrás del nombre (opcional: couple.surnames)
   const apellido = (i) => (c.couple.surnames?.[i] ? `<small class="apellido">${esc(c.couple.surnames[i])}</small>` : '');
   const texto = `
-  <h1 class="names"><span>${esc(n1)}${apellido(0)}</span><em>&amp;</em><span>${esc(n2)}${apellido(1)}</span></h1>
-  <p class="date">${esc(c.couple.dateText)}</p>`;
+  <h1 class="names"><span>${esc(n1)}${apellido(0)}</span><em>&amp;</em><span>${esc(n2)}${apellido(1)}</span></h1>`;
   const hint = '<p class="hint" aria-hidden="true">Desliza para continuar</p>';
   const abre = (e) => `<section id="portada" class="sec sec--portada portada--${e} reveal">`;
 

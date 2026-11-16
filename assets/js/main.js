@@ -85,7 +85,7 @@ openEnvelope({
   root: envelopeRoot,
   inertElements: app.querySelectorAll('section'),
   focusAfter: portadaTitle,
-  carta: { nombres: content.couple.names.join(' y '), fecha: content.couple.dateText },
+  carta: { nombres: content.couple.names.join(' y ') },
   onOpen() {
     music.start().then(syncMute);
     // Las secciones aparecen cuando el sobre empieza a salir (de inmediato con movimiento reducido).
