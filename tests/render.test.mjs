@@ -139,7 +139,7 @@ test('los datos van en una grilla de cuatro celdas: Fecha, Hora, Lugar y Vestime
   const titulos = celdas.map((c) => c.match(/<dt>([^<]+)<\/dt>/)[1]);
   assert.deepEqual(titulos, ['Fecha', 'Hora', 'Lugar', 'Vestimenta']);
   assert.match(celdas[0], /Sábado 20 de marzo de 2027/);
-  assert.match(celdas[1], /17:00 hs/);
+  assert.match(celdas[1], /19:30 hs/);
   assert.match(celdas[2], /Iglesia Cristo es la Respuesta[\s\S]*Burgues 3826/);
 });
 
@@ -182,7 +182,7 @@ test('la cuenta regresiva es su propia sección, justo debajo del versículo, co
   assert.ok(html.indexOf('id="versiculo"') < html.indexOf('id="cuenta"') && html.indexOf('id="cuenta"') < html.indexOf('id="datos"'));
   const s = html.match(/<section id="cuenta"[\s\S]*?<\/section>/)[0];
   assert.match(s, /<h2>Cuenta regresiva<\/h2>/);
-  assert.match(s, /data-inicio="2027-03-20T17:00:00-03:00"/);
+  assert.match(s, /data-inicio="2027-03-20T19:30:00-03:00"/);
 });
 
 test('"Te esperamos" muestra primero la ceremonia civil y debajo la de la iglesia, con fecha, hora y lugar', () => {

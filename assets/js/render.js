@@ -63,7 +63,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 
   const especial = `
 <section id="especial" class="sec sec--especial reveal">
-  <h2>${esc(c.special.title)}</h2>
+  <h2>${c.special.highlight ? esc(c.special.title).replace(esc(c.special.highlight), (t) => `<em class="cursiva">${t}</em>`) : esc(c.special.title)}</h2>
   <p>${esc(c.special.message)}</p>
 </section>`;
 
@@ -71,23 +71,25 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
   // Foto de ancho completo que se funde con el papel (sin marco ni sombra).
   const banda = (f, n, txt = '') =>
     `<figure class="banda banda--${n}"><img src="${a(f.src)}" alt="${esc(f.alt)}" width="600" height="800" loading="lazy" decoding="async"${foco(f)}><div class="banda__velo"></div>${txt ? `<figcaption class="banda__txt">${txt}</figcaption>` : ''}</figure>`;
-  const lugar = (nombre, direccion) => `${esc(nombre)}${direccion ? `<br><span>${esc(direccion)}</span>` : ''}`;
+  const lugar = (nombre, direccion) => (nombre ? `${esc(nombre)}${direccion ? `<br><span>${esc(direccion)}</span>` : ''}` : esc(direccion ?? ''));
   const bloque = (titulo, ev, vestimenta = '') => `
 <h3 class="datos__titulo">${esc(titulo)}</h3>
 <dl class="datos__grid">
   <div class="dato"><dt>Fecha</dt><dd>${esc(c.couple.dateText)}</dd></div>
   <div class="dato"><dt>Hora</dt><dd>${esc(ev.time)}</dd></div>
-  ${ev.address || ev !== e.civil ? `<div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName, ev.address)}</dd></div>` : ''}
+  ${ev.address || (ev.placeName && ev !== e.civil) ? `<div class="dato dato--ancho"><dt>Lugar</dt><dd>${lugar(ev.placeName ?? '', ev.address)}</dd></div>` : ''}
   ${vestimenta ? `<div class="dato dato--ancho"><dt>Vestimenta</dt><dd>${renderVestimenta(vestimenta, esc)}</dd></div>` : ''}
-</dl>
+</dl>${ev.mapsQuery ? `
 <div class="mapa">
-  <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  <iframe src="${esc(mapsEmbedUrl(ev.mapsQuery, e.mapsApiKey))}" title="Mapa de Google Maps: ${esc(ev.placeName ?? titulo)}${ev.address ? `, ${esc(ev.address)}` : ''}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
   <button type="button" class="mapa__activar"><span>Toca para mover el mapa</span></button>
 </div>
-<a class="btn" href="${esc(mapsUrl(ev.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>`;
-  // Primero el civil y, debajo, la ceremonia en la iglesia (mismo día)
-  const grilla = (e.civil ? bloque('Civil', e.civil) : '') + bloque('Ceremonia', e, e.dressCode);
-  // Hora de inicio (Uruguay, UTC-3) tomada de "17:00 hs"
+<a class="btn" href="${esc(mapsUrl(ev.mapsQuery))}" target="_blank" rel="noopener">Cómo llegar</a>` : ''}`;
+  // Variantes: 'general' (civil y ceremonia), 'fiesta' (más la fiesta) y 'especial' (damas y testigos: todo, con mensaje)
+  const conFiesta = variant === 'fiesta' || variant === 'especial';
+  // Primero el civil, después la ceremonia en la iglesia y, si corresponde, la fiesta (mismo día)
+  const grilla = (e.civil ? bloque('Civil', e.civil) : '') + bloque('Ceremonia', e, e.dressCode) + (conFiesta && e.party ? bloque('Fiesta', e.party) : '');
+  // Hora de inicio (Uruguay, UTC-3) tomada de la hora de la ceremonia, p. ej. "19:30 hs"
   const hm = /(\d{1,2}):(\d{2})/.exec(e.time) ?? [];
   const inicio = `${c.couple.dateISO}T${String(hm[1] ?? 0).padStart(2, '0')}:${hm[2] ?? '00'}:00-03:00`;
   const unidad = (k, t) => `<div><b data-u="${k}">--</b><span>${t}</span></div>`;
@@ -129,7 +131,7 @@ export function renderPage(c, variant = 'general', basePath = '', estilo = 'c') 
 <section id="pdf" class="sec sec--pdf reveal">
   <h2>Guarda los datos</h2>
   <p>Descarga la invitación con toda la información.</p>
-  <a class="btn" href="${a(c.pdf.src)}" download>Descargar PDF</a>
+  <a class="btn" href="${a(conFiesta && c.pdf.srcFiesta ? c.pdf.srcFiesta : c.pdf.src)}" download>Descargar PDF</a>
 </section>
 <!-- futuro: galería -->`;
 

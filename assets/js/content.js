@@ -18,7 +18,7 @@ export const content = {
   event: {
     placeName: 'Iglesia Cristo es la Respuesta',
     address: 'Burgues 3826, Montevideo',
-    time: '17:00 hs',
+    time: '19:30 hs',
     mapsQuery: 'Burgues 3826, Montevideo',
     // Vestimenta: nota, leyendas de las dos figuras y colores que no se pueden usar
     dressCode: {
@@ -35,6 +35,13 @@ export const content = {
     },
     // Ceremonia civil (mismo día). 'address' es opcional.
     civil: { time: '15:00 hs', placeName: 'Registro Civil', mapsQuery: 'Registro Civil, Montevideo, Uruguay' },
+    // Fiesta (mismo día): solo la ven las variantes "fiesta" y "especial". 'placeName', 'address' y
+    // 'mapsQuery' son opcionales: sin 'mapsQuery' no se muestra el mapa.
+    party: {
+      time: '21:30 hs',
+      address: 'Gibraltar y Av. Carlos María Ramírez, Montevideo',
+      mapsQuery: '-34.8759109,-56.2643702', // el punto exacto del link de Maps
+    },
     // Fotos de la sección "Te esperamos" (polaroids). Distintas de las de la portada.
     photos: [
       { src: 'assets/img/pareja/polaroid-1.jpg', alt: 'Emanuel y Belén sentados en un restaurante, sonriendo', focus: '45% 50%' },
@@ -47,11 +54,13 @@ export const content = {
   },
   special: {
     title: 'Para ti, que has sido parte de nuestra historia',
+    highlight: 'nuestra historia', // parte del título que se muestra en cursiva (opcional)
     message:
       'Gracias por el lugar tan importante que tienes en nuestras vidas. Tu cariño, tu apoyo y tu presencia han sido un regalo de Dios para nosotros. Por eso queremos que estés a nuestro lado en este día tan especial.',
   },
   // Video de fondo de "¿Nos acompañas?" (assets/video/). Sin foto de respaldo: mientras carga se ve el papel.
   video: { src: 'assets/video/nosotros.mp4', focus: '50% 22%', speed: 0.6 },
   music: { src: 'assets/audio/ambient.mp3' },
-  pdf: { src: 'assets/pdf/invitacion.pdf' },
+  // PDF sin fiesta (variante general) y con fiesta (variantes "fiesta" y "especial")
+  pdf: { src: 'assets/pdf/invitacion.pdf', srcFiesta: 'assets/pdf/invitacion-fiesta.pdf' },
 };

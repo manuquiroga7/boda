@@ -5,7 +5,7 @@ import { JSDOM } from 'jsdom';
 import { content } from '../assets/js/content.js';
 import { guardImages } from '../assets/js/images.js';
 
-for (const file of ['index.html', 'para-ti-k7q2/index.html']) {
+for (const file of ['index.html', 'para-ti-k7q2/index.html', 'fiesta-m4x9/index.html']) {
   test(`${file} trae dentro de #app un respaldo con fecha, hora y lugar del contenido`, () => {
     const html = readFileSync(file, 'utf8');
     const block = html.match(/<main id="app">([\s\S]*?)<\/main>/);

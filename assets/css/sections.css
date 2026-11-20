@@ -51,7 +51,11 @@
 .sec--versiculo cite { display: block; margin-top: 1rem; font-style: normal; letter-spacing: .2em; font-size: .85rem; text-transform: uppercase; color: var(--bordo); }
 
 .sec--especial { background: var(--papel); border-top: 1px solid var(--beige); border-bottom: 1px solid var(--beige); }
-.sec--especial h2 { color: var(--verde); }
+.sec--especial h2 { color: var(--verde); font-size: clamp(2rem, 8.5vw, 2.8rem); line-height: 1.2; }
+/* El mensaje usa la misma tipografía (serif) que los textos de la vestimenta */
+.sec--especial p { font-family: var(--serif); font-size: 1.1rem; line-height: 1.55; }
+/* "nuestra historia" en su propia línea y más grande que el resto del título */
+.sec--especial h2 .cursiva { display: block; margin-top: .1em; font-family: 'Great Vibes', cursive; font-style: normal; font-weight: 400; font-size: clamp(2.7rem, 12.5vw, 3.7rem); line-height: 1.05; color: var(--bordo); }
 
 .momento { margin-bottom: 3.5rem; }
 .momento img { width: 100%; border-radius: 14px; box-shadow: 0 12px 28px rgba(90, 58, 51, .18); background: var(--beige); aspect-ratio: 4 / 3; object-fit: cover; margin-bottom: 1.2rem; }
@@ -73,8 +77,8 @@
 .vest__titulo { margin: 0 0 .7rem; font-family: var(--sans); font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); }
 .vest__colores { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem .9rem; font-family: var(--sans); font-size: .72rem; }
 .vest__colores li { display: flex; flex-direction: column; align-items: center; gap: .35rem; min-width: 3rem; }
-.vest__color { position: relative; display: block; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1px solid rgba(90, 58, 51, .35); overflow: hidden; }
-.vest__color::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; border-top: 2px solid var(--bordo); box-shadow: 0 0 0 1px rgba(254, 252, 248, .85); transform: rotate(-45deg); }
+.vest__color { position: relative; display: block; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1.5px solid #000; overflow: hidden; }
+.vest__color::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; border-top: 2px solid #000; box-shadow: 0 0 0 1px rgba(254, 252, 248, .85); transform: rotate(-45deg); }
 .datos__grid dt { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--verde); margin-bottom: .35rem; }
 .datos__grid dd { margin: 0; font-family: var(--serif); font-size: clamp(1.02rem, 4.2vw, 1.3rem); line-height: 1.35; overflow-wrap: anywhere; }
 .datos__grid dd span { display: block; margin-top: .25rem; font-family: var(--sans); font-size: .85rem; opacity: .8; }
@@ -257,7 +261,7 @@ img.is-broken { visibility: hidden; }
 /* El video baja dentro del contenedor (encuadre fino con object-position, sin difuminado arriba */
 .banda--video video { filter: grayscale(1) contrast(1.05); position: absolute; left: 0; width: 100%; top: 0; height: var(--video-h); object-fit: cover; background: var(--papel); }
 .banda--video .banda__txt { padding-bottom: 3.5rem; }
-.banda--video .banda__velo { bottom: auto; height: var(--video-h); background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }
+.banda--video .banda__velo { bottom: auto; height: calc(var(--video-h) + 3px); background: linear-gradient(to bottom, rgba(254, 252, 248, 0) 0%, rgba(254, 252, 248, 0) 18%, rgba(254, 252, 248, .45) 36%, rgba(254, 252, 248, .86) 52%, rgba(254, 252, 248, .97) 66%, var(--papel) 80%); }
 
 /* Confirmación de asistencia (formulario sobre el degradado del video) */
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -283,14 +287,24 @@ img.is-broken { visibility: hidden; }
 .contador__sep { font-style: normal; font-family: var(--serif); font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1.1; color: var(--bordo); opacity: .55; }
 
 /* "Te esperamos": dos ceremonias, cada una con su título y su grilla */
-.datos__titulo { margin: 0 0 .2rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(2.5rem, 10.5vw, 3.2rem); color: var(--bordo); }
+.datos__titulo { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0 0 .4rem; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: clamp(3.6rem, 17vw, 5rem); line-height: 1.05; color: var(--bordo); }
+.datos__titulo::before, .datos__titulo::after { content: ""; flex: 0 1 2.6rem; height: 1px; background: linear-gradient(to right, transparent, var(--bordo)); opacity: .55; }
+.datos__titulo::after { transform: scaleX(-1); }
 .datos__grid + .datos__titulo { margin-top: 2.6rem; }
 
 /* "Te esperamos": la foto mantiene su tamaño y el texto (ahora con dos ceremonias) sigue en la parte blanca, debajo */
 .banda--1 { --h1: min(165vw, 46rem); min-height: calc(var(--h1) + 16rem); padding-top: calc(var(--h1) * .52); background: var(--papel); }
 .banda--1 img { height: calc(var(--h1) + 6rem); }
-.banda--1 .banda__velo { bottom: auto; height: var(--h1); }
+.banda--1 .banda__velo { bottom: auto; height: calc(var(--h1) + 3px); }
 /* Cada mapa va debajo de su ceremonia */
 .banda__txt .datos__grid { margin-bottom: 2.4rem; }
 .banda__txt .btn + .datos__titulo { margin-top: 5.5rem; }
 .banda__txt .mapa { width: 72%; margin-left: auto; margin-right: auto; }
+
+/* Solo en celular: la tarjeta ocupa toda la pantalla (sin mesa, márgenes, borde ni sombra) */
+@media (max-width: 600px) {
+  body { padding: 0; }
+  .carta { max-width: none; }
+  #app { border-radius: 0; box-shadow: none; }
+  .sec--portada { min-height: 100svh; }
+}

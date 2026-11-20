@@ -57,7 +57,8 @@ export function pdfFingerprint(c) {
   return createHash('sha256').update(JSON.stringify(data)).digest('hex');
 }
 
-export async function buildPdf(c) {
+// conFiesta: agrega la hora (y el lugar, si está) de la fiesta. El PDF general no la lleva.
+export async function buildPdf(c, conFiesta = false) {
   const doc = await PDFDocument.create();
   doc.setSubject(pdfFingerprint(c));
   const page = doc.addPage([420, 595]);
@@ -107,6 +108,11 @@ export async function buildPdf(c) {
     center(`${d.damas} · ${d.caballeros}`, serif, 10.5, COLORS.chocolate);
     center(`No usar: ${d.evitar.map((c) => c.nombre.toLowerCase()).join(', ')}`, serif, 10.5, COLORS.chocolate, 4);
   }
+  if (conFiesta && e.party) {
+    center('FIESTA', sans, 7.5, COLORS.verde);
+    center([e.party.time, e.party.placeName].filter(Boolean).join(' · '), serif, 13, COLORS.chocolate, 4);
+    if (e.party.address) center(e.party.address, sans, 9.5, COLORS.chocolate, 4);
+  }
   center('MAPA', sans, 7.5, COLORS.verde);
   center(mapsUrl(e.mapsQuery), sans, 7, COLORS.bordo);
 
@@ -116,5 +122,6 @@ export async function buildPdf(c) {
 if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
   mkdirSync('assets/pdf', { recursive: true });
   writeFileSync('assets/pdf/invitacion.pdf', await buildPdf(content));
-  console.log('assets/pdf/invitacion.pdf');
+  writeFileSync('assets/pdf/invitacion-fiesta.pdf', await buildPdf(content, true));
+  console.log('assets/pdf/invitacion.pdf\nassets/pdf/invitacion-fiesta.pdf');
 }

@@ -55,3 +55,12 @@ test('cambiar las fotos de la sección de datos no obliga a regenerar el PDF', a
   c.event.photos[0].src = 'assets/img/pareja/otra.jpg';
   assert.equal(pdfFingerprint(c), pdfFingerprint(content));
 });
+
+test('el PDF con fiesta está actualizado y el general no menciona la fiesta', async () => {
+  const { pdfFingerprint } = await import('../scripts/build-pdf.mjs');
+  const { readFileSync } = await import('node:fs');
+  const doc = await PDFDocument.load(readFileSync('assets/pdf/invitacion-fiesta.pdf'));
+  assert.equal(doc.getSubject(), pdfFingerprint(content));
+  const { buildPdf } = await import('../scripts/build-pdf.mjs');
+  assert.ok((await buildPdf(content, true)).length !== (await buildPdf(content, false)).length);
+});

@@ -11,7 +11,7 @@ export function validarRsvp(b) {
     personas = Number(b.personas);
     if (!Number.isInteger(personas) || personas < 1 || personas > 10) return { error: 'Cantidad inválida' };
   }
-  const variante = b.variante === 'especial' ? 'especial' : 'general';
+  const variante = ['fiesta', 'especial'].includes(b.variante) ? b.variante : 'general';
   return { valor: { nombre, asiste: b.asiste, personas, variante } };
 }
 
